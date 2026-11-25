@@ -1,0 +1,1 @@
+1.解釋名詞，若兩者有關係請說明或比較A.Circuit switching vs. packet switchingB.Qos vs. SLAC.ADSL vs. CableD.Baseband vs. Broadband2.說明Threat environment , Plan, Protect, Response 之間的關係，最好畫圖說明3.舉例說明OAMP4.同學們在課堂上作了多次和課程內容有關的分組報告，請就你印象最深刻的一組，說明該報告的，已報告過的同學請註明你的題目：(10%)(1) 主要內容(2) 和課程的哪一部分有什麼關係(3) 心得（不可以包括你自己的題目，有報告過的同學請寫出你報告過的題目）

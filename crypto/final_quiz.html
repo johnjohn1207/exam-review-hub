@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>期末選擇題練習（105 題）｜密碼學期末複習</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/light_theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <style>
+        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.4rem 0; }
+    </style>
+</head>
+<body class="bg-neutral-50 text-neutral-800 min-h-screen font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+
+    <!-- 極簡白色頂部導覽列 -->
+    <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200">
+        <div class="max-w-5xl mx-auto px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+            <a href="index.html" class="font-bold text-neutral-900 text-sm sm:text-base tracking-tight hover:text-blue-600 transition">
+                密碼學期末複習
+            </a>
+            <nav id="site-nav" class="flex flex-wrap items-center gap-1 text-xs sm:text-[13px]">
+                <a href="../index.html" class="px-2.5 py-1.5 rounded-lg text-blue-600 hover:bg-blue-50 font-medium transition">&larr; 科目總覽</a>
+                <a href="index.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">首頁</a>
+                <a href="final_ch9_cca_ae.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.5 CCA 與 AE</a>
+                <a href="final_ch11_dh_hard_problems.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.7 DH 與 RSA</a>
+                <a href="final_1_8_ecc_signatures.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.8 橢圓曲線與簽章</a>
+                <a href="final_quiz.html" class="px-3.5 py-1.5 rounded-lg bg-neutral-900 text-white font-medium transition ml-1">選擇題練習</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-5 py-8 space-y-6">
+
+        <!-- 標題與進度條 -->
+        <div class="space-y-3 border-b border-neutral-200 pb-5">
+            <div class="flex flex-wrap items-end justify-between gap-3">
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">期末選擇題練習</h1>
+                    <p class="text-xs text-neutral-500 mt-0.5">涵蓋 1.5、1.7 與 1.8，作答後即時顯示白話解析與考場防呆。</p>
+                </div>
+                <div class="flex items-center gap-3 text-xs bg-white border border-neutral-200 px-3.5 py-2 rounded-xl">
+                    <span class="text-neutral-500">進度 <strong class="text-neutral-900"><span id="stat-answered">0</span>/<span id="stat-total">105</span></strong></span>
+                    <span class="text-neutral-200">|</span>
+                    <span class="text-neutral-500">答對率 <strong class="text-emerald-700"><span id="stat-accuracy">0</span>%</strong></span>
+                    <span class="text-neutral-200">|</span>
+                    <span class="text-neutral-500">錯題 <strong class="text-rose-600"><span id="stat-wrong">0</span></strong></span>
+                </div>
+            </div>
+            <!-- 細長進度條 -->
+            <div class="w-full h-1.5 bg-neutral-200 rounded-full overflow-hidden">
+                <div id="quiz-progress-fill" class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- 控制面板 -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-white border border-neutral-200 space-y-3.5">
+            <!-- 第一排：模式 + 狀態篩選 -->
+            <div class="flex flex-wrap items-center justify-between gap-2.5">
+                <div class="inline-flex p-1 rounded-xl bg-neutral-100 text-xs">
+                    <button type="button" onclick="switchMode('practice')" id="btn-mode-practice" class="px-3.5 py-1.5 rounded-lg font-medium bg-white text-neutral-900 shadow-sm transition">
+                        即時刷題
+                    </button>
+                    <button type="button" onclick="switchMode('exam')" id="btn-mode-exam" class="px-3.5 py-1.5 rounded-lg font-medium text-neutral-600 hover:text-neutral-900 transition">
+                        限時模擬考
+                    </button>
+                </div>
+
+                <div id="practice-actions" class="flex flex-wrap items-center gap-1.5 text-xs">
+                    <button type="button" onclick="setStatusFilter('all')" id="filter-btn-all" class="px-2.5 py-1.5 rounded-lg bg-neutral-900 text-white font-medium transition">全部</button>
+                    <button type="button" onclick="setStatusFilter('unanswered')" id="filter-btn-unanswered" class="px-2.5 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition">未作答</button>
+                    <button type="button" onclick="setStatusFilter('wrong')" id="filter-btn-wrong" class="px-2.5 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition">錯題 (<span id="wrong-count-badge">0</span>)</button>
+                    <button type="button" onclick="resetAllAnswers()" class="px-2.5 py-1.5 rounded-lg text-neutral-400 hover:text-rose-600 transition ml-1">重設</button>
+                </div>
+            </div>
+
+            <!-- 第二排：章節範圍 -->
+            <div class="flex flex-wrap items-center gap-1.5 pt-3 border-t border-neutral-100 text-xs">
+                <span class="text-neutral-400 mr-1">章節：</span>
+                <button type="button" onclick="filterByScope('ALL')" id="scope-btn-all" class="scope-btn px-3 py-1.5 rounded-lg font-medium bg-blue-600 text-white transition">
+                    全部（105）
+                </button>
+                <button type="button" onclick="filterByScope('1.5')" id="scope-btn-1.5" class="scope-btn px-3 py-1.5 rounded-lg font-medium bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition">
+                    1.5（38）
+                </button>
+                <button type="button" onclick="filterByScope('1.7')" id="scope-btn-1.7" class="scope-btn px-3 py-1.5 rounded-lg font-medium bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition">
+                    1.7（32）
+                </button>
+                <button type="button" onclick="filterByScope('1.8')" id="scope-btn-1.8" class="scope-btn px-3 py-1.5 rounded-lg font-medium bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition">
+                    1.8（35）
+                </button>
+            </div>
+
+            <!-- 細分主題（選定單一章節時才顯示） -->
+            <div id="topic-filters-container" class="hidden flex-wrap items-center gap-1.5 pt-2.5 border-t border-neutral-100 text-[11px]"></div>
+
+            <!-- 可收合題號速查導覽 -->
+            <details class="pt-2.5 border-t border-neutral-100">
+                <summary class="text-xs text-neutral-500 hover:text-neutral-800 cursor-pointer select-none list-none flex items-center justify-between">
+                    <span>題號快速跳轉（點開查看答題狀態）</span>
+                    <span class="text-[11px] text-neutral-400">綠＝對 · 紅＝錯 · 灰＝未答</span>
+                </summary>
+                <div id="question-nav-grid" class="flex flex-wrap gap-1.5 pt-3"></div>
+            </details>
+        </div>
+
+        <!-- 限時模擬考控制列（預設隱藏） -->
+        <div id="exam-mode-panel" class="hidden p-4 sm:p-5 rounded-2xl bg-amber-50 border border-amber-200 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="text-xs text-amber-900">
+                    <strong>模擬考進行中</strong>（作答時隱藏解析，交卷後統一計分，不影響刷題紀錄）
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <span class="font-mono text-sm font-bold text-amber-900 bg-white border border-amber-200 px-3 py-1 rounded-lg">
+                        <span id="exam-timer">37:30</span>
+                    </span>
+                    <button type="button" onclick="submitExam()" class="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium transition">
+                        交卷計分
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-xs text-amber-800">
+                <span>抽題數：</span>
+                <button type="button" onclick="setExamQuestionCount(25)" class="exam-cnt-btn px-2.5 py-1 rounded-lg bg-amber-600 text-white font-medium" data-count="25">25 題</button>
+                <button type="button" onclick="setExamQuestionCount(50)" class="exam-cnt-btn px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-amber-900 hover:bg-amber-100" data-count="50">50 題</button>
+                <button type="button" onclick="setExamQuestionCount(105)" class="exam-cnt-btn px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-amber-900 hover:bg-amber-100" data-count="105">全部</button>
+            </div>
+        </div>
+
+        <!-- 模擬考成績卡（預設隱藏） -->
+        <div id="exam-result-banner" class="hidden p-6 rounded-2xl bg-white border border-neutral-200 space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="font-bold text-neutral-900 text-base">模擬考成績結算</h2>
+                <button type="button" onclick="document.getElementById('exam-result-banner').classList.add('hidden')" class="text-xs text-neutral-400 hover:text-neutral-800">關閉</button>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+                    <div class="text-[11px] text-neutral-500">總分</div>
+                    <div class="text-xl font-bold text-blue-600" id="res-score">0</div>
+                </div>
+                <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+                    <div class="text-[11px] text-neutral-500">答對</div>
+                    <div class="text-xl font-bold text-emerald-700" id="res-correct">0</div>
+                </div>
+                <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+                    <div class="text-[11px] text-neutral-500">答錯</div>
+                    <div class="text-xl font-bold text-rose-600" id="res-wrong">0</div>
+                </div>
+                <div class="p-3 rounded-xl bg-neutral-50 border border-neutral-200">
+                    <div class="text-[11px] text-neutral-500">評級</div>
+                    <div class="text-xl font-bold text-neutral-900" id="res-grade">S</div>
+                </div>
+            </div>
+            <p class="text-xs text-neutral-600" id="res-feedback"></p>
+        </div>
+
+        <!-- 題目列表 -->
+        <div id="quiz-list-container" class="space-y-4"></div>
+
+    </main>
+
+    <!-- 回頂部按鈕 -->
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hidden fixed bottom-6 right-6 px-3.5 py-2 rounded-full bg-white border border-neutral-200 shadow-sm text-xs font-medium text-neutral-600 hover:text-neutral-900 hover:border-neutral-300 transition z-40">
+        ↑ 回頂部
+    </button>
+
+    <script src="js/final_mcq_data.js"></script>
+    <script>
+        let currentMode = 'practice';     // 'practice' | 'exam'
+        let currentScope = 'ALL';         // 'ALL' | '1.5' | '1.7' | '1.8'
+        let currentTopic = 'ALL';
+        let statusFilter = 'all';         // 'all' | 'unanswered' | 'wrong'
+        let practiceAnswers = {};
+        let examAnswers = {};
+        let examQuestions = [];
+        let examCount = 25;
+        let examSubmitted = false;
+        let examTimerInterval = null;
+        let timeRemaining = 2250;
+
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('back-to-top');
+            if (btn) btn.classList.toggle('hidden', window.scrollY < 400);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSavedAnswers();
+            const urlParams = new URLSearchParams(window.location.search);
+            const scopeParam = urlParams.get('scope');
+            const filterParam = urlParams.get('filter');
+            const modeParam = urlParams.get('mode');
+
+            if (scopeParam && ['ALL', '1.5', '1.7', '1.8'].includes(scopeParam)) {
+                filterByScope(scopeParam, false);
+            }
+            if (filterParam && ['all', 'unanswered', 'wrong'].includes(filterParam)) {
+                setStatusFilter(filterParam, false);
+            }
+            if (modeParam === 'exam') {
+                switchMode('exam');
+                return;
+            }
+            renderTopicPills();
+            renderQuestions();
+            updateStats();
+        });
+
+        function getQuestionScope(q) {
+            const num = parseInt(q.id.replace('q', ''), 10);
+            if (num <= 38) return '1.5';
+            if (num <= 70) return '1.7';
+            return '1.8';
+        }
+
+        function getActiveAnswers() {
+            return currentMode === 'exam' ? examAnswers : practiceAnswers;
+        }
+
+        function loadSavedAnswers() {
+            try {
+                const saved = localStorage.getItem('final_mcq_answers');
+                if (saved) practiceAnswers = JSON.parse(saved);
+            } catch (e) {
+                practiceAnswers = {};
+            }
+        }
+
+        function saveAnswers() {
+            try {
+                localStorage.setItem('final_mcq_answers', JSON.stringify(practiceAnswers));
+            } catch (e) {}
+        }
+
+        function setStatusFilter(filter, rerender = true) {
+            statusFilter = filter;
+            ['all', 'unanswered', 'wrong'].forEach(f => {
+                const btn = document.getElementById(`filter-btn-${f}`);
+                if (!btn) return;
+                if (f === filter) {
+                    btn.className = f === 'wrong'
+                        ? "px-2.5 py-1.5 rounded-lg bg-rose-600 text-white font-medium transition"
+                        : "px-2.5 py-1.5 rounded-lg bg-neutral-900 text-white font-medium transition";
+                } else {
+                    btn.className = "px-2.5 py-1.5 rounded-lg bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition";
+                }
+            });
+            if (rerender) renderQuestions();
+        }
+
+        function filterByScope(scope, rerender = true) {
+            currentScope = scope;
+            currentTopic = 'ALL';
+            document.querySelectorAll('.scope-btn').forEach(btn => {
+                btn.className = "scope-btn px-3 py-1.5 rounded-lg font-medium bg-neutral-100 text-neutral-600 hover:text-neutral-900 transition";
+            });
+            const activeBtn = document.getElementById(`scope-btn-${scope.toLowerCase()}`);
+            if (activeBtn) {
+                activeBtn.className = "scope-btn px-3 py-1.5 rounded-lg font-medium bg-blue-600 text-white transition";
+            }
+
+            try {
+                const url = new URL(window.location);
+                if (scope === 'ALL') url.searchParams.delete('scope');
+                else url.searchParams.set('scope', scope);
+                window.history.replaceState({}, '', url);
+            } catch (e) {}
+
+            renderTopicPills();
+            if (currentMode === 'exam') {
+                startExam();
+            } else if (rerender) {
+                renderQuestions();
+                updateStats();
+            }
+        }
+
+        function renderTopicPills() {
+            const container = document.getElementById('topic-filters-container');
+            if (currentMode === 'exam' || currentScope === 'ALL') {
+                container.classList.add('hidden');
+                container.classList.remove('flex');
+                return;
+            }
+            const scoped = FINAL_MCQ_DATA.filter(q => getQuestionScope(q) === currentScope);
+            const topics = [...new Set(scoped.map(q => q.topic))];
+            container.classList.remove('hidden');
+            container.classList.add('flex');
+            container.innerHTML = [
+                `<button type="button" onclick="filterByTopic('ALL')" class="px-2.5 py-1 rounded-md transition ${currentTopic === 'ALL' ? 'bg-blue-600 text-white font-medium' : 'bg-neutral-100 text-neutral-600 hover:text-neutral-900'}">全部主題 (${scoped.length})</button>`,
+                ...topics.map(t => {
+                    const cnt = scoped.filter(q => q.topic === t).length;
+                    const active = currentTopic === t;
+                    return `<button type="button" onclick="filterByTopic('${t.replace(/'/g, "\\'")}')" class="px-2.5 py-1 rounded-md transition ${active ? 'bg-blue-600 text-white font-medium' : 'bg-neutral-100 text-neutral-600 hover:text-neutral-900'}">${t} (${cnt})</button>`;
+                })
+            ].join('');
+        }
+
+        function filterByTopic(topic) {
+            currentTopic = topic;
+            renderTopicPills();
+            renderQuestions();
+        }
+
+        function getActiveQuestionList() {
+            if (currentMode === 'exam') return examQuestions;
+            let list = FINAL_MCQ_DATA;
+            if (currentScope !== 'ALL') {
+                list = list.filter(q => getQuestionScope(q) === currentScope);
+            }
+            if (currentTopic !== 'ALL') {
+                list = list.filter(q => q.topic === currentTopic);
+            }
+            if (statusFilter === 'unanswered') {
+                list = list.filter(q => practiceAnswers[q.id] === undefined);
+            } else if (statusFilter === 'wrong') {
+                list = list.filter(q => practiceAnswers[q.id] !== undefined && practiceAnswers[q.id] !== q.answer);
+            }
+            return list;
+        }
+
+        function renderNavGrid(questions) {
+            const grid = document.getElementById('question-nav-grid');
+            if (!grid) return;
+            const answers = getActiveAnswers();
+            const reveal = (currentMode === 'practice') || examSubmitted;
+
+            grid.innerHTML = questions.map((q, idx) => {
+                const ans = answers[q.id];
+                let cls = "bg-neutral-100 text-neutral-600 hover:bg-neutral-200";
+                if (ans !== undefined) {
+                    if (reveal) {
+                        cls = (ans === q.answer)
+                            ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                            : "bg-rose-100 text-rose-800 border border-rose-200";
+                    } else {
+                        cls = "bg-blue-100 text-blue-800 border border-blue-200";
+                    }
+                }
+                return `<a href="#card-${q.id}" class="w-8 h-7 rounded-md text-[11px] font-mono font-medium flex items-center justify-center transition ${cls}">${idx + 1}</a>`;
+            }).join('');
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('quiz-list-container');
+            const questions = getActiveQuestionList();
+            const answers = getActiveAnswers();
+            const revealFeedback = (currentMode === 'practice') || examSubmitted;
+
+            renderNavGrid(questions);
+
+            if (questions.length === 0) {
+                container.innerHTML = `
+                    <div class="p-12 text-center text-neutral-500 bg-white border border-neutral-200 rounded-2xl text-sm">
+                        目前沒有符合條件的題目。
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = questions.map((q, index) => {
+                const userChoice = answers[q.id];
+                const isAnswered = userChoice !== undefined;
+                const isCorrect = isAnswered && userChoice === q.answer;
+                const scope = getQuestionScope(q);
+
+                const cardBorder = (revealFeedback && isAnswered)
+                    ? (isCorrect ? 'border-emerald-200' : 'border-rose-200')
+                    : 'border-neutral-200';
+
+                return `
+                    <div class="p-5 sm:p-6 rounded-2xl bg-white border ${cardBorder} space-y-4 scroll-mt-24" id="card-${q.id}">
+                        <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono font-semibold text-neutral-400">#${index + 1}</span>
+                                <span class="px-2 py-0.5 rounded-md bg-neutral-100 text-neutral-600 font-medium">投影片 ${scope}</span>
+                                <span class="text-neutral-400">${q.topic}</span>
+                            </div>
+                            <div>
+                                ${revealFeedback && isAnswered
+                                    ? (isCorrect
+                                        ? '<span class="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 font-semibold">答對</span>'
+                                        : '<span class="px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 font-semibold">答錯</span>')
+                                    : `<span class="text-neutral-400">${q.difficulty}</span>`}
+                            </div>
+                        </div>
+
+                        <div class="text-sm sm:text-[15px] font-medium text-neutral-900 leading-relaxed">
+                            ${q.question}
+                        </div>
+
+                        <div class="space-y-2">
+                            ${q.options.map((opt, optIdx) => {
+                                let style = "bg-white border-neutral-200 hover:border-neutral-400 hover:bg-neutral-50 text-neutral-700";
+                                let letterStyle = "text-neutral-400";
+                                if (isAnswered) {
+                                    if (revealFeedback) {
+                                        if (optIdx === q.answer) {
+                                            style = "bg-emerald-50 border-emerald-400 text-emerald-950 font-medium";
+                                            letterStyle = "text-emerald-700";
+                                        } else if (optIdx === userChoice) {
+                                            style = "bg-rose-50 border-rose-400 text-rose-950 font-medium";
+                                            letterStyle = "text-rose-700";
+                                        } else {
+                                            style = "bg-neutral-50/60 border-neutral-100 text-neutral-400";
+                                        }
+                                    } else if (optIdx === userChoice) {
+                                        style = "bg-blue-50 border-blue-500 text-blue-950 font-medium";
+                                        letterStyle = "text-blue-700";
+                                    }
+                                }
+                                return `
+                                    <button type="button" onclick="selectOption('${q.id}', ${optIdx})" class="w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm transition flex items-start gap-3 ${style}">
+                                        <span class="font-mono text-xs font-bold shrink-0 mt-0.5 ${letterStyle}">${['A','B','C','D'][optIdx]}.</span>
+                                        <span class="leading-relaxed flex-1">${opt.replace(/^[A-D]\.\s*/, '')}</span>
+                                    </button>
+                                `;
+                            }).join('')}
+                        </div>
+
+                        ${revealFeedback && isAnswered ? `
+                            <div class="pt-3 border-t border-neutral-100 space-y-2.5 text-xs sm:text-sm">
+                                <div class="p-4 rounded-xl bg-neutral-50 border border-neutral-200 space-y-1">
+                                    <div class="font-semibold text-neutral-900">解析（正確答案：${['A','B','C','D'][q.answer]}）</div>
+                                    <p class="text-neutral-700 leading-relaxed">${q.explanation}</p>
+                                </div>
+                                ${q.trap ? `
+                                    <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-xs leading-relaxed">
+                                        <strong class="text-amber-800">考場防呆：</strong>${q.trap}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            if (window.renderMathInElement) {
+                renderMathInElement(container, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function selectOption(qId, optIdx) {
+            if (currentMode === 'exam') {
+                if (examSubmitted) return;
+                examAnswers[qId] = optIdx;
+            } else {
+                practiceAnswers[qId] = optIdx;
+                saveAnswers();
+            }
+            renderQuestions();
+            updateStats();
+        }
+
+        function updateStats() {
+            let relevant = currentMode === 'exam' ? examQuestions : FINAL_MCQ_DATA;
+            if (currentMode === 'practice' && currentScope !== 'ALL') {
+                relevant = FINAL_MCQ_DATA.filter(q => getQuestionScope(q) === currentScope);
+            }
+            const answers = getActiveAnswers();
+            const total = relevant.length;
+            let answered = 0;
+            let correct = 0;
+            relevant.forEach(q => {
+                if (answers[q.id] !== undefined) {
+                    answered++;
+                    if (answers[q.id] === q.answer) correct++;
+                }
+            });
+            const wrong = answered - correct;
+            const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+            const pct = total > 0 ? Math.round((answered / total) * 100) : 0;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-answered').innerText = answered;
+            document.getElementById('stat-accuracy').innerText = accuracy;
+            document.getElementById('stat-wrong').innerText = wrong;
+            document.getElementById('wrong-count-badge').innerText = wrong;
+            document.getElementById('quiz-progress-fill').style.width = `${pct}%`;
+        }
+
+        function resetAllAnswers() {
+            if (confirm("確定要清除目前的刷題作答紀錄嗎？")) {
+                practiceAnswers = {};
+                saveAnswers();
+                renderQuestions();
+                updateStats();
+            }
+        }
+
+        function switchMode(mode) {
+            currentMode = mode;
+            const btnPractice = document.getElementById('btn-mode-practice');
+            const btnExam = document.getElementById('btn-mode-exam');
+            const examPanel = document.getElementById('exam-mode-panel');
+            const practiceActions = document.getElementById('practice-actions');
+            const resultBanner = document.getElementById('exam-result-banner');
+
+            if (mode === 'practice') {
+                btnPractice.className = "px-3.5 py-1.5 rounded-lg font-medium bg-white text-neutral-900 shadow-sm transition";
+                btnExam.className = "px-3.5 py-1.5 rounded-lg font-medium text-neutral-600 hover:text-neutral-900 transition";
+                examPanel.classList.add('hidden');
+                resultBanner.classList.add('hidden');
+                practiceActions.classList.remove('hidden');
+                clearInterval(examTimerInterval);
+                renderTopicPills();
+                renderQuestions();
+                updateStats();
+            } else {
+                btnExam.className = "px-3.5 py-1.5 rounded-lg font-medium bg-white text-neutral-900 shadow-sm transition";
+                btnPractice.className = "px-3.5 py-1.5 rounded-lg font-medium text-neutral-600 hover:text-neutral-900 transition";
+                examPanel.classList.remove('hidden');
+                practiceActions.classList.add('hidden');
+                renderTopicPills();
+                startExam();
+            }
+        }
+
+        function setExamQuestionCount(cnt) {
+            examCount = cnt;
+            document.querySelectorAll('.exam-cnt-btn').forEach(btn => {
+                const active = parseInt(btn.getAttribute('data-count'), 10) === cnt;
+                btn.className = active
+                    ? "exam-cnt-btn px-2.5 py-1 rounded-lg bg-amber-600 text-white font-medium"
+                    : "exam-cnt-btn px-2.5 py-1 rounded-lg bg-white border border-amber-200 text-amber-900 hover:bg-amber-100";
+            });
+            startExam();
+        }
+
+        function startExam() {
+            const pool = currentScope === 'ALL'
+                ? FINAL_MCQ_DATA
+                : FINAL_MCQ_DATA.filter(q => getQuestionScope(q) === currentScope);
+            const shuffled = [...pool].sort(() => 0.5 - Math.random());
+            examQuestions = shuffled.slice(0, Math.min(examCount, shuffled.length));
+            examAnswers = {};
+            examSubmitted = false;
+            document.getElementById('exam-result-banner').classList.add('hidden');
+
+            timeRemaining = Math.round(examQuestions.length * 1.5 * 60);
+            clearInterval(examTimerInterval);
+            updateTimerDisplay();
+            examTimerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                if (timeRemaining <= 0) {
+                    clearInterval(examTimerInterval);
+                    submitExam();
+                }
+            }, 1000);
+            renderQuestions();
+            updateStats();
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(Math.max(0, timeRemaining) / 60);
+            const s = Math.max(0, timeRemaining) % 60;
+            document.getElementById('exam-timer').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function submitExam() {
+            clearInterval(examTimerInterval);
+            examSubmitted = true;
+            let correct = 0;
+            examQuestions.forEach(q => {
+                if (examAnswers[q.id] === q.answer) correct++;
+            });
+            const wrong = examQuestions.length - correct;
+            const score = examQuestions.length > 0 ? Math.round((correct / examQuestions.length) * 100) : 0;
+
+            document.getElementById('res-score').innerText = `${score} 分`;
+            document.getElementById('res-correct').innerText = correct;
+            document.getElementById('res-wrong').innerText = wrong;
+
+            let grade = 'S';
+            let feedback = '觀念非常穩固，考點與常見陷阱皆已掌握。';
+            if (score < 60) {
+                grade = 'C';
+                feedback = '建議先回重點講義複習核心概念，再檢視下方解析。';
+            } else if (score < 80) {
+                grade = 'B';
+                feedback = '已掌握多數基礎題，建議重點加強下方的錯題與防呆提醒。';
+            } else if (score < 90) {
+                grade = 'A';
+                feedback = '表現優良，檢視剩餘少數錯題即可穩定拿高分。';
+            }
+
+            document.getElementById('res-grade').innerText = grade;
+            document.getElementById('res-feedback').innerText = feedback;
+            document.getElementById('exam-result-banner').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderQuestions();
+        }
+    </script>
+</body>
+</html>

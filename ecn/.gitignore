@@ -1,0 +1,17 @@
+# Python & Intermediate Cache
+__pycache__/
+*.pyc
+*.pyo
+extracted_*.txt
+pdf_chapters_deep_dive.txt
+chapter_slide_index.txt
+
+# Temp scripts
+inspect_*.py
+dump_*.py
+summarize_*.py
+parse_*.py
+create_gen.py
+build_*.py
+generate_final_site.py
+compile_simulation_data.py

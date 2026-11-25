@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密碼學期末複習｜上課重點與選擇題練習</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/light_theme.css">
+</head>
+<body class="bg-neutral-50 text-neutral-800 min-h-screen flex flex-col font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+
+    <!-- 極簡白色頂部導覽列 -->
+    <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200">
+        <div class="max-w-5xl mx-auto px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+            <a href="index.html" class="font-bold text-neutral-900 text-sm sm:text-base tracking-tight hover:text-blue-600 transition">
+                密碼學期末複習
+            </a>
+            <nav id="site-nav" class="flex flex-wrap items-center gap-1 text-xs sm:text-[13px]">
+                <a href="../index.html" class="px-2.5 py-1.5 rounded-lg text-blue-600 hover:bg-blue-50 font-medium transition">&larr; 科目總覽</a>
+                <a href="index.html" class="px-3 py-1.5 rounded-lg bg-neutral-900 text-white font-medium transition">首頁</a>
+                <a href="final_ch9_cca_ae.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.5 CCA 與 AE</a>
+                <a href="final_ch11_dh_hard_problems.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.7 DH 與 RSA</a>
+                <a href="final_1_8_ecc_signatures.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.8 橢圓曲線與簽章</a>
+                <a href="final_quiz.html" class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition ml-1">選擇題練習</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-5 py-10 sm:py-12 space-y-12 flex-grow w-full">
+
+        <!-- 標題與整體學習進度 -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-neutral-200 pb-6">
+            <div class="space-y-1.5">
+                <h1 class="text-2xl sm:text-3xl font-bold text-neutral-900 tracking-tight">現代與後量子密碼學・期末複習</h1>
+                <p class="text-sm text-neutral-500">先讀重點整理，再做選擇題驗收。</p>
+            </div>
+            <div id="overall-progress-box" class="flex items-center gap-4 text-xs bg-white border border-neutral-200 rounded-xl px-4 py-2.5 shrink-0">
+                <div>
+                    <div class="text-neutral-400">總刷題進度</div>
+                    <div class="font-semibold text-neutral-900 text-sm"><span id="home-answered">0</span> / 105 題</div>
+                </div>
+                <div class="h-6 w-px bg-neutral-200"></div>
+                <div>
+                    <div class="text-neutral-400">答對率</div>
+                    <div class="font-semibold text-emerald-700 text-sm"><span id="home-accuracy">0</span>%</div>
+                </div>
+                <div class="h-6 w-px bg-neutral-200"></div>
+                <div>
+                    <div class="text-neutral-400">待複習錯題</div>
+                    <div class="font-semibold text-rose-600 text-sm"><span id="home-wrong">0</span> 題</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 區塊一：上課重點講義 -->
+        <section class="space-y-4">
+            <div class="flex items-baseline justify-between">
+                <h2 class="text-base font-bold text-neutral-900">一、上課重點講義</h2>
+                <span class="text-xs text-neutral-400">共 3 份投影片</span>
+            </div>
+            <div id="final-modules-container" class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Rendered from js/final_data.js -->
+            </div>
+        </section>
+
+        <!-- 區塊二：期末選擇題練習 -->
+        <section class="space-y-4">
+            <div class="flex items-baseline justify-between">
+                <h2 class="text-base font-bold text-neutral-900">二、期末選擇題練習</h2>
+                <span class="text-xs text-neutral-400">共 105 題・附解析與考場防呆</span>
+            </div>
+            <div class="p-6 sm:p-7 rounded-2xl bg-white border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div class="space-y-1.5 max-w-xl">
+                    <div class="font-bold text-neutral-900 text-base">即時刷題 ＆ 限時模擬考</div>
+                    <p class="text-sm text-neutral-500 leading-relaxed">
+                        涵蓋 1.5（38 題）、1.7（32 題）與 1.8（35 題）。支援「只看未作答」、「只看錯題」、題號快速跳轉與隨機抽題限時模考。
+                    </p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                    <a href="final_quiz.html" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition">
+                        開始刷題
+                    </a>
+                    <a href="final_quiz.html?filter=wrong" class="px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-700 text-sm font-medium transition">
+                        複習錯題
+                    </a>
+                    <a href="final_quiz.html?mode=exam" class="px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-700 text-sm font-medium transition">
+                        限時模擬考
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/final_data.js"></script>
+    <script src="js/final_mcq_data.js"></script>
+    <script>
+        function getScope(q) {
+            const num = parseInt(q.id.replace('q', ''), 10);
+            if (num <= 38) return '1.5';
+            if (num <= 70) return '1.7';
+            return '1.8';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let saved = {};
+            try {
+                const raw = localStorage.getItem('final_mcq_answers');
+                if (raw) saved = JSON.parse(raw);
+            } catch (e) {}
+
+            // Compute overall & per-scope stats
+            const stats = {
+                total: 0, answered: 0, correct: 0,
+                byScope: { '1.5': { t: 0, a: 0, c: 0 }, '1.7': { t: 0, a: 0, c: 0 }, '1.8': { t: 0, a: 0, c: 0 } }
+            };
+
+            if (typeof FINAL_MCQ_DATA !== 'undefined') {
+                FINAL_MCQ_DATA.forEach(q => {
+                    const sc = getScope(q);
+                    stats.total++;
+                    stats.byScope[sc].t++;
+                    if (saved[q.id] !== undefined) {
+                        stats.answered++;
+                        stats.byScope[sc].a++;
+                        if (saved[q.id] === q.answer) {
+                            stats.correct++;
+                            stats.byScope[sc].c++;
+                        }
+                    }
+                });
+            }
+
+            const wrong = stats.answered - stats.correct;
+            const acc = stats.answered > 0 ? Math.round((stats.correct / stats.answered) * 100) : 0;
+            document.getElementById('home-answered').innerText = stats.answered;
+            document.getElementById('home-accuracy').innerText = acc;
+            document.getElementById('home-wrong').innerText = wrong;
+
+            const container = document.getElementById('final-modules-container');
+            if (!container || typeof FINAL_EXAM_MODULES === 'undefined') return;
+
+            container.innerHTML = FINAL_EXAM_MODULES.map(mod => {
+                const scStat = stats.byScope[mod.quiz_scope] || { t: mod.quiz_count, a: 0, c: 0 };
+                const pct = scStat.t > 0 ? Math.round((scStat.a / scStat.t) * 100) : 0;
+                return `
+                    <div class="p-6 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-300 hover:shadow-sm transition flex flex-col justify-between gap-5">
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="font-semibold text-blue-600">${mod.chapter}</span>
+                                <span class="text-neutral-400">${mod.pages}</span>
+                            </div>
+                            <h3 class="font-bold text-neutral-900 text-base leading-snug">${mod.title}</h3>
+                            <p class="text-[13px] text-neutral-500 leading-relaxed">${mod.summary}</p>
+                        </div>
+
+                        <div class="space-y-3 pt-3 border-t border-neutral-100">
+                            <div class="space-y-1">
+                                <div class="flex items-center justify-between text-[11px] text-neutral-400">
+                                    <span>選擇題進度</span>
+                                    <span>${scStat.a} / ${scStat.t} 題（${pct}%）</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                                    <div class="h-full bg-blue-600 rounded-full transition-all" style="width: ${pct}%"></div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2">
+                                <a href="${mod.page_url}" class="flex-1 py-2 px-3 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-medium text-center transition">
+                                    閱讀重點
+                                </a>
+                                <a href="final_quiz.html?scope=${mod.quiz_scope}" class="py-2 px-3.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 text-neutral-700 text-xs font-medium text-center transition">
+                                    練 ${mod.quiz_count} 題
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投影片 1.7 講義詳解（Sec 1 至 Sec 3 ｜ P.1-49）｜ 現代與後量子密碼學導論</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        slate: { 850: '#151f32', 950: '#070d19' },
+                        emerald: { 450: '#10b981', 950: '#022c22' }
+                    }
+                }
+            }
+        };
+    </script>
+    <!-- KaTeX CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ],
+            throwOnError: false
+        });"></script>
+    <style>
+        :root { --header-height: 72px; }
+        html { scroll-behavior: smooth; }
+        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 0.5rem 0; }
+        pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+        .sticky-subnav { top: var(--header-height); }
+    </style>
+    <link rel="stylesheet" href="css/light_theme.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-emerald-500 selection:text-white light-override">
+
+    <!-- 全域頂部導覽列 (Universal Nav) -->
+    <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-neutral-200">
+        <div class="max-w-5xl mx-auto px-5 py-3.5 flex flex-wrap items-center justify-between gap-3">
+            <a href="index.html" class="font-bold text-neutral-900 text-sm sm:text-base tracking-tight hover:text-blue-600 transition">
+                密碼學期末複習
+            </a>
+            <nav id="site-nav" class="flex flex-wrap items-center gap-1 text-xs sm:text-[13px]">
+                <a href="../index.html" class="px-2.5 py-1.5 rounded-lg text-blue-600 hover:bg-blue-50 font-medium transition">&larr; 科目總覽</a>
+                <a href="index.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">首頁</a>
+                <a href="final_ch9_cca_ae.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.5 CCA 與 AE</a>
+                <a href="final_ch11_dh_hard_problems.html" class="px-3 py-1.5 rounded-lg bg-neutral-900 text-white font-medium transition">1.7 DH 與 RSA</a>
+                <a href="final_1_8_ecc_signatures.html" class="px-3 py-1.5 rounded-lg text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 transition">1.8 橢圓曲線與簽章</a>
+                <a href="final_quiz.html" class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition ml-1">選擇題練習</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+        <!-- Hero Header -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-950/70 via-slate-900 to-slate-900 border border-emerald-500/30 p-6 sm:p-10 shadow-2xl">
+            <div class="relative z-10 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    <span>期末核心講義・投影片 1.7 完整剖析 (P.1 - 49)</span>
+                </div>
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                    困難問題（Hard Problems）、群論與 Diffie-Hellman 金鑰交換
+                </h1>
+                <p class="text-sm sm:text-base text-slate-300 max-w-4xl leading-relaxed">
+                    公鑰密碼學與現代網際網路安全通訊的奠基之作（1976 年）。本單元解析密碼學如何將安全性錨定於計算上極難的數學難題，
+                    建立<strong>乘法循環群 $\mathbb{Z}_p^*$</strong>、<strong>離散對數問題（DLP）</strong>與 <strong>Diffie-Hellman 協定</strong>，
+                    嚴格推導 <strong>$\text{DDH} \le \text{CDH} \le \text{DLP}$ 難度層級</strong>、實務 <strong>KDF 白化（Whitening）</strong>、<strong>中間人攻擊（MITM）</strong>與<strong>認證金鑰交換（AKE）</strong>，並剖析 RSA 的歷史定位與退役原因。
+                </p>
+
+                <!-- 模組指標資訊 -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3">
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-[11px] text-slate-400 font-mono">數論代數基石</div>
+                        <div class="text-base font-bold text-emerald-300">循環群 $\mathbb{Z}_p^*$ & 生成元 $g$</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-[11px] text-slate-400 font-mono">難題層級歸約</div>
+                        <div class="text-base font-bold text-amber-300">$\text{DDH} \le \text{CDH} \le \text{DLP}$</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-[11px] text-slate-400 font-mono">工程白化法則</div>
+                        <div class="text-base font-bold text-cyan-300">HKDF (防 Raccoon 攻擊)</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                        <div class="text-[11px] text-slate-400 font-mono">防禦主動篡改</div>
+                        <div class="text-base font-bold text-purple-300">AKE 認證金鑰交換</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快速章節目錄導覽 Bar (Sticky Subnav) -->
+        <nav class="sticky-subnav z-30 bg-slate-900/90 backdrop-blur border border-slate-800 rounded-2xl p-2.5 shadow-lg flex items-center gap-2 overflow-x-auto text-xs font-mono">
+            <span class="text-slate-400 px-2 shrink-0">模組跳轉：</span>
+            <a href="#sec-hard-problems" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">1. 計算難度與非對稱性</a>
+            <a href="#sec-group-theory" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">2. 數學群與離散對數 (DLP)</a>
+            <a href="#sec-dh-protocol" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">3. Diffie-Hellman 協定與手算</a>
+            <a href="#sec-problem-hierarchy" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">4. DLP vs CDH vs DDH 層級</a>
+            <a href="#sec-real-world-kdf" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">5. 實務 KDF 白化與協定</a>
+            <a href="#sec-mitm-ake" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">6. 中間人攻擊 (MITM) 與 AKE</a>
+            <a href="#sec-rsa-pioneer" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-emerald-600 hover:text-white text-slate-200 transition shrink-0">7. RSA 歷史定位與退役原因</a>
+            <a href="#sec-dh-quiz" class="px-3 py-1.5 rounded-lg bg-emerald-950/80 border border-emerald-500/50 hover:bg-emerald-600 text-emerald-200 hover:text-white transition shrink-0">8. 期末高頻考題實戰</a>
+        </nav>
+
+        <!-- ================= SECTION 1: 計算難度與非對稱性 ================= -->
+        <section id="sec-hard-problems" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Section 1 ｜ P.2 - P.8</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">計算複雜度、困難問題與密碼學的本質</h2>
+            </div>
+
+            <!-- 直觀大腦模型 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                <div class="flex items-center gap-2 text-emerald-400 font-semibold text-sm">
+                    <span class="font-mono text-base">🧠</span>
+                    <span>直觀大腦模型：公開場合下的「真實魔法」</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    想像 Alice 與 Bob 在滿座的公開會議室中初次見面，現場所有竊聽者都能聽到他們說的每一個字。
+                    在完全不預先共享任何暗號的前提下，他們能否僅憑公開對話，創造出一個唯獨彼此知曉、全世界任何人都無法推測出的共用秘密？
+                    <strong>這正是 Diffie-Hellman 在 1976 年實現的奇蹟，也是現代密碼學的誕生時刻。</strong>
+                </p>
+            </div>
+
+            <!-- 對稱與非對稱原語對比 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="font-mono font-bold text-sky-400">非對稱原語（Asymmetric Primitives）</span>
+                        <span class="text-[10px] font-mono bg-sky-950 text-sky-300 px-2 py-0.5 rounded border border-sky-800">代數結構</span>
+                    </div>
+                    <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                        <li><strong>核心代表：</strong>Diffie-Hellman、RSA、ML-KEM（Kyber）。</li>
+                        <li><strong>運作機制：</strong>每個參與方持有「公鑰」與「私鑰」。</li>
+                        <li><strong>安全性根基：</strong>嚴格建立在<strong>數學難題的單向性假設（Hard Mathematical Problems）</strong>之上。一旦底層數學難題被演算法攻破，密碼體系瞬間全毀。</li>
+                    </ul>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <span class="font-mono font-bold text-emerald-400">對稱原語（Symmetric Primitives）</span>
+                        <span class="text-[10px] font-mono bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">無結構工程</span>
+                    </div>
+                    <ul class="text-xs sm:text-sm text-slate-300 space-y-2">
+                        <li><strong>核心代表：</strong>AES、SHA-256、ChaCha20、HMAC。</li>
+                        <li><strong>運作機制：</strong>通訊雙方共享同一組秘密金鑰。</li>
+                        <li><strong>安全性根基：</strong>依賴<strong>混淆（Confusion）與擴散（Diffusion）</strong>，經歷數十年的密碼分析檢驗，無特定代數難題可套用，在形式證明中常被抽象為隨機預言機（Random Oracle）。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 計算難度分類 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                <h3 class="font-bold text-white text-base">計算難度分類（P 類 vs 難解問題）</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div class="font-bold text-emerald-400 font-mono">容易問題（Easy Problems / Class P）</div>
+                        <p class="text-slate-300">能在輸入長度的多項式時間 $\mathcal{O}(n^c)$ 內解決。例如：排序、搜尋、大整數乘法、模指數運算（Square-and-Multiply 僅需 $\mathcal{O}(\log x)$ 次乘法）。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div class="font-bold text-amber-400 font-mono">困難問題（Hard Problems）</div>
+                        <p class="text-slate-300">目前已知最佳演算法需要超多項式（次指數或指數級）時間。例如：大質數分解、離散對數問題（DLP）。這為合法使用者（走容易方向）與攻擊者（被迫走逆向）創造了<strong>巨大的計算不對稱性</strong>。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 2: 數學群與離散對數 (DLP) ================= -->
+        <section id="sec-group-theory" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Section 2 ｜ P.9 - P.18</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">數學群論基礎與離散對數問題（DLP）</h2>
+            </div>
+
+            <!-- 數學群與群公理 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <h3 class="font-bold text-white text-base">1. 密碼學數學群：模 $p$ 乘法群 $\mathbb{Z}_p^*$（投影片 P.13-14）</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    令 $p$ 為質數，集合 $\mathbb{Z}_p^* = \{1, 2, 3, \dots, p-1\}$ 搭配<strong>模 $p$ 乘法</strong>構成一個有限阿貝爾群（群的大小 / 階數為 $p-1$）。
+                    其運算滿足四項基本公理：
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs font-mono">
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="text-emerald-400 font-bold">封閉性 (Closure)</div>
+                        <div class="text-slate-400 text-[11px] pt-1">$\forall a, b \in \mathbb{Z}_p^*, (a \cdot b) \bmod p \in \mathbb{Z}_p^*$。乘積絕不脫離群。</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="text-cyan-400 font-bold">單位元素 (Identity)</div>
+                        <div class="text-slate-400 text-[11px] pt-1">存在唯一元素 $1$，滿足 $1 \cdot a \equiv a \pmod p$。</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="text-amber-400 font-bold">反元素 (Inverses)</div>
+                        <div class="text-slate-400 text-[11px] pt-1">每個元素皆存在模逆元 $a^{-1}$，使 $a \cdot a^{-1} \equiv 1 \pmod p$。</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-950 border border-slate-800">
+                        <div class="text-purple-400 font-bold">結合律 (Associativity)</div>
+                        <div class="text-slate-400 text-[11px] pt-1">$(a \cdot b) \cdot c \equiv a \cdot (b \cdot c) \pmod p$。運算順序不影響結果。</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 生成元 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                <h3 class="font-bold text-white text-base">2. 生成元（Generator / Primitive Root）（投影片 P.15）</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    若群中存在一元素 $g$，其所有次幂 $\{g^1, g^2, g^3, \dots, g^{p-1}\} \pmod p$ 恰好能生成群內的<strong>每一個元素</strong>，則稱 $g$ 為該群的<strong>生成元（Generator）</strong>或本原根（Primitive Root）。
+                </p>
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-slate-300 space-y-1">
+                    <span class="text-emerald-400 font-bold">數值範例（$\mathbb{Z}_5^*$，元素為 $\{1, 2, 3, 4\}$）：</span><br>
+                    選取 $g = 2$：<br>
+                    $2^1 \equiv 2 \pmod 5$, &nbsp;$2^2 \equiv 4 \pmod 5$, &nbsp;$2^3 \equiv 8 \equiv 3 \pmod 5$, &nbsp;$2^4 \equiv 16 \equiv 1 \pmod 5$。<br>
+                    生成的集合為 $\{2, 4, 3, 1\}$，剛好等於全群 $\mathbb{Z}_5^*$，因此 $g = 2$ 是合法的生成元！
+                </div>
+            </div>
+
+            <!-- 離散對數問題 DLP -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-white text-base">3. 離散對數問題（Discrete Logarithm Problem, DLP）（投影片 P.16-18）</h3>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/30">單向難題核心</span>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2 text-xs sm:text-sm">
+                    <div class="font-mono text-emerald-400 font-bold">形式化定義：</div>
+                    <div class="text-slate-200 font-mono">
+                        給定大質數 $p$、生成元 $g \in \mathbb{Z}_p^*$，以及群元素 $h \in \mathbb{Z}_p^*$，<br>
+                        求解整數 $x \in \{0, 1, \dots, p-2\}$ 使得：
+                        $$\mathbf{g^x \equiv h \pmod p}$$
+                    </div>
+                </div>
+
+                <!-- 攻擊演算法比較表 -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left border border-slate-800 rounded-xl overflow-hidden">
+                        <thead class="bg-slate-950 text-slate-400 font-mono">
+                            <tr>
+                                <th class="p-3">攻擊演算法</th>
+                                <th class="p-3">時間複雜度</th>
+                                <th class="p-3">空間複雜度</th>
+                                <th class="p-3">特性與評價</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800 text-slate-300">
+                            <tr>
+                                <td class="p-3 font-semibold text-rose-400">窮舉搜尋（Brute Force）</td>
+                                <td class="p-3 font-mono">$\mathcal{O}(p)$</td>
+                                <td class="p-3 font-mono">$\mathcal{O}(1)$</td>
+                                <td class="p-3 text-slate-400">最笨方法，對於 2048 位元質數需超過宇宙年齡。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-amber-400">Baby-Step Giant-Step (BSGS)</td>
+                                <td class="p-3 font-mono">$\mathcal{O}(\sqrt{p})$</td>
+                                <td class="p-3 font-mono">$\mathcal{O}(\sqrt{p})$</td>
+                                <td class="p-3 text-slate-400">空間換時間，建查表。但 $\sqrt{2^{2048}} = 2^{1024}$ 仍屬天文數字。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-amber-400">Pollard's rho</td>
+                                <td class="p-3 font-mono">$\mathcal{O}(\sqrt{p})$</td>
+                                <td class="p-3 font-mono">$\mathcal{O}(1)$</td>
+                                <td class="p-3 text-slate-400">利用 Floyd 循環檢測，幾乎無記憶體開銷。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-purple-400">數體篩法（Index Calculus / GNFS）</td>
+                                <td class="p-3 font-mono">$L_p[1/3, c]$ 次指數級</td>
+                                <td class="p-3 font-mono">龐大矩陣儲存</td>
+                                <td class="p-3 text-slate-400">針對 $\mathbb{Z}_p^*$ 特化，使 2048 位元等效安全強度約為 112 bits。</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-rose-500">Shor 量子演算法</td>
+                                <td class="p-3 font-mono">$\mathcal{O}((\log p)^3)$ 多項式級</td>
+                                <td class="p-3 font-mono">量子位元</td>
+                                <td class="p-3 text-rose-300"><strong>徹底破壞經典 DLP！</strong>量子電腦可在多項式時間內秒解。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 3: Diffie-Hellman 協定與手算 ================= -->
+        <section id="sec-dh-protocol" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Section 2 ｜ P.19 - P.21</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">Diffie-Hellman 協定運作與考場手算示範</h2>
+            </div>
+
+            <!-- 協定流程架構 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <h3 class="font-bold text-white text-base">1. 協定數學流程（投影片 P.19）</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="text-emerald-400 font-bold font-mono">步驟 1：公開參數建立</div>
+                        <p class="text-slate-300">雙方公開協商大質數 $p$ 與生成元 $g$（竊聽者 Eve 完全看得到）。</p>
+                        <div class="text-emerald-400 font-bold font-mono pt-2">步驟 2：獨立產生私鑰</div>
+                        <p class="text-slate-300">Alice 隨機選取秘密私鑰 $a \in \{1, \dots, p-2\}$。<br>Bob 隨機選取秘密私鑰 $b \in \{1, \dots, p-2\}$。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="text-emerald-400 font-bold font-mono">步驟 3：公開交換公鑰</div>
+                        <p class="text-slate-300">Alice 計算 $A = g^a \bmod p$ 並送給 Bob。<br>Bob 計算 $B = g^b \bmod p$ 並送給 Alice。</p>
+                        <div class="text-emerald-400 font-bold font-mono pt-2">步驟 4：各自計算共享秘密 $S$</div>
+                        <p class="text-slate-300">
+                            Alice 計算：$S = B^a \bmod p = (g^b)^a = \mathbf{g^{ab} \bmod p}$。<br>
+                            Bob 計算：$S = A^b \bmod p = (g^a)^b = \mathbf{g^{ab} \bmod p}$。
+                        </p>
+                    </div>
+                </div>
+                <div class="p-3.5 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-xs text-emerald-300 font-mono">
+                    <strong>核心等式：</strong>$S = (g^b)^a \equiv (g^a)^b \equiv g^{ab} \pmod p$。雙方在從未傳輸私鑰 $a$ 與 $b$ 的情況下，成功協商出相同秘密 $S$！
+                </div>
+            </div>
+
+            <!-- 投影片 P.20 手算範例一 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-white text-base">2. 手算範例一：小型數值（投影片 P.20）</h3>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-slate-800 text-slate-300">經典例題</span>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm font-mono space-y-2">
+                    <div><strong>給定公開參數：</strong>$p = 13, g = 2$。私鑰：$a = 5, b = 7$。</div>
+                    <div class="text-slate-300">
+                        1. Alice 計算公鑰：$A = 2^5 \bmod 13 = 32 \bmod 13 = \mathbf{6}$。<br>
+                        2. Bob 計算公鑰：$B = 2^7 \bmod 13 = 128 \bmod 13 = \mathbf{11}$。<br>
+                        3. Alice 計算共享秘密：$S = B^a = 11^5 \equiv (-2)^5 = -32 \equiv \mathbf{7} \pmod{13}$。<br>
+                        4. Bob 計算共享秘密：$S = A^b = 6^7 \bmod 13 = 279936 \bmod 13 = \mathbf{7}$。
+                    </div>
+                    <div class="text-emerald-400">雙方共享秘密 $S = 7$。竊聽者僅知 $(p=13, g=2, A=6, B=11)$。</div>
+                </div>
+            </div>
+
+            <!-- 投影片 P.21 課堂手算練習二 (期末必考) -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-white text-base">3. 課堂手算實戰二：逐步模運算化簡（投影片 P.21 必考手算題）</h3>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/30">投影片原題</span>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs sm:text-sm space-y-3">
+                    <div class="font-mono text-amber-300">
+                        題目：公開參數 $p = 23, g = 5$。Alice 挑選私鑰 $a = 6$，Bob 挑選私鑰 $b = 15$。請計算雙方公鑰與共享秘密。
+                    </div>
+                    <div class="space-y-2 text-slate-300 text-xs font-mono">
+                        <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                            <strong class="text-emerald-400">【計算 Alice 公鑰 $A$】</strong><br>
+                            $A = 5^6 \pmod{23}$。<br>
+                            先算 $5^2 = 25 \equiv 2 \pmod{23}$。<br>
+                            則 $A = (5^2)^3 \equiv 2^3 = \mathbf{8} \pmod{23}$。Alice 送出 $\mathbf{A = 8}$。
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                            <strong class="text-sky-400">【計算 Bob 公鑰 $B$】</strong><br>
+                            $B = 5^{15} \pmod{23}$。<br>
+                            分解指數：$5^{15} = 5^8 \cdot 5^4 \cdot 5^2 \cdot 5^1$。<br>
+                            $5^2 \equiv 2$；$5^4 \equiv 2^2 = 4$；$5^8 \equiv 4^2 = 16 \equiv -7 \pmod{23}$。<br>
+                            $5^{14} = 5^8 \cdot 5^4 \cdot 5^2 \equiv (-7) \cdot 4 \cdot 2 = -56 \equiv 13 \pmod{23}$。<br>
+                            $5^{15} = 5^{14} \cdot 5 \equiv 13 \cdot 5 = 65 \equiv \mathbf{19} \pmod{23}$。Bob 送出 $\mathbf{B = 19}$。
+                        </div>
+                        <div class="p-2.5 rounded bg-slate-900 border border-slate-800">
+                            <strong class="text-purple-400">【計算共享秘密 $S$】</strong><br>
+                            理論值：$S = g^{ab} = 5^{6 \times 15} = 5^{90} \pmod{23}$。<br>
+                            由費馬小定理：$5^{22} \equiv 1 \pmod{23}$。指數對 22 取模：$90 \equiv 90 - 4 \times 22 = 2 \pmod{22}$。<br>
+                            故 $\mathbf{S \equiv 5^2 = 25 \equiv 2 \pmod{23}}$！<br>
+                            驗證 Alice：$S = B^a = 19^6 \equiv (-4)^6 = 4096 \equiv 2 \pmod{23}$。<br>
+                            驗證 Bob：$S = A^b = 8^{15} = (2^3)^{15} = 2^{45} = (2^{22})^2 \cdot 2^1 \equiv 1 \cdot 2 = \mathbf{2} \pmod{23}$。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 4: DLP vs CDH vs DDH 層級 ================= -->
+        <section id="sec-problem-hierarchy" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Section 2 ｜ P.22 - P.25</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">三大困難問題層級體系（DLP vs CDH vs DDH）</h2>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-white text-base">1. 三大問題之精確定義（投影片 P.22-25）</h3>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">期末必考核心定義</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- DLP -->
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-emerald-400">1. 離散對數問題 (DLP)</div>
+                        <p class="text-xs text-slate-300"><strong>給定：</strong>$g, g^x \pmod p$</p>
+                        <p class="text-xs text-slate-300"><strong>求解：</strong>秘密指數 $x$。</p>
+                        <div class="text-[11px] text-slate-400 pt-1 border-t border-slate-800">難度基石：最難攻破之根本數學問題。</div>
+                    </div>
+                    <!-- CDH -->
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-amber-400">2. 計算型 DH 問題 (CDH)</div>
+                        <p class="text-xs text-slate-300"><strong>給定：</strong>$g^a \bmod p, g^b \bmod p$</p>
+                        <p class="text-xs text-slate-300"><strong>求解：</strong>$g^{ab} \bmod p$（不需還原 $a$ 或 $b$）。</p>
+                        <div class="text-[11px] text-slate-400 pt-1 border-t border-slate-800">真實攻擊場景：被動竊聽者欲還原出金鑰。</div>
+                    </div>
+                    <!-- DDH -->
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-rose-400">3. 判定型 DH 問題 (DDH)</div>
+                        <p class="text-xs text-slate-300"><strong>給定：</strong>$g^a, g^b$ 與候選值 $X$</p>
+                        <p class="text-xs text-slate-300"><strong>判定：</strong>$X \stackrel{?}{=} g^{ab}$ 還是隨機群元素 $g^c$。</p>
+                        <div class="text-[11px] text-slate-400 pt-1 border-t border-slate-800">語意不可區分性：ElGamal 與公鑰加密證明必備。</div>
+                    </div>
+                </div>
+
+                <!-- 難度層級歸約關係鏈 -->
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3">
+                    <div class="text-sm font-mono font-bold text-white flex items-center gap-2">
+                        <span>難度層級歸約公式：</span>
+                        <span class="text-emerald-400">$\mathbf{\text{DDH} \le \text{CDH} \le \text{DLP}}$</span>
+                    </div>
+                    <ul class="text-xs sm:text-sm text-slate-300 space-y-2 list-disc pl-5">
+                        <li>
+                            <strong>若能解 DLP，必能解 CDH（$\text{DLP} \implies \text{CDH}$）：</strong>
+                            已知 $g^a, g^b$。若有 DLP 演算法，先解出私鑰 $a$，再直接計算 $(g^b)^a = g^{ab}$。故 CDH 不會比 DLP 更難。
+                        </li>
+                        <li>
+                            <strong>若能解 CDH，必能解 DDH（$\text{CDH} \implies \text{DDH}$）：</strong>
+                            已知 $(g^a, g^b, X)$。若有 CDH 演算法，直接計算出真正的 $g^{ab}$，並比對 $X \stackrel{?}{=} g^{ab}$。故 DDH 不會比 CDH 更難。
+                        </li>
+                        <li>
+                            <strong>安全性假設強弱比較：</strong>
+                            假設 $\text{DDH 是困難的}$ 是<strong>最強的假設</strong>（最脆弱）；假設 $\text{DLP 是困難的}$ 是<strong>最弱的假設</strong>（最穩固）。
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 二次剩餘與勒讓德符號攻破 DDH -->
+                <div class="p-4 rounded-xl bg-rose-950/20 border border-rose-500/30 space-y-2 text-xs sm:text-sm">
+                    <div class="font-mono font-bold text-rose-400">⚠️ 投影片 P.25 特殊陷阱：DDH 在全群 $\mathbb{Z}_p^*$ 上不成立！</div>
+                    <p class="text-slate-300 leading-relaxed">
+                        在模 $p$ 乘法群 $\mathbb{Z}_p^*$ 中，可以利用<strong>勒讓德符號（Legendre Symbol / 二次剩餘性）</strong>輕易攻破 DDH！<br>
+                        <strong>原理：</strong>$g^{ab}$ 是二次剩餘（平方數）當且僅當 $g^a$ 或 $g^b$ 是二次剩餘；然而隨機挑選的 $g^c$ 為二次剩餘的機率嚴格為 $1/2$。<br>
+                        攻擊者無需破解 CDH，只需檢查勒讓德符號即可顯著區分 $X$ 是否為 $g^{ab}$！<br>
+                        <strong class="text-emerald-400">現代密碼學解決方案：</strong>
+                        必須在<strong>質數階子群（Subgroup of Prime Order $q$）</strong>中運作（例如安全質數 $p = 2q+1$ 的階 $q$ 子群，或 Curve25519 質數階橢圓曲線）。在質數階群中此漏洞消失，DDH 假設方告成立。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 5: 實務 KDF 白化與協定 ================= -->
+        <section id="sec-real-world-kdf" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Subsection 2.1 ｜ P.26 - P.33</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">實務工程細節：金鑰衍生函數（KDF 白化）與現代通訊協定</h2>
+            </div>
+
+            <!-- 絕不可直接使用 gab 作為金鑰 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-white text-base">1. 鐵律：絕不可直接將 $g^{ab} \pmod p$ 作為對稱加密金鑰（投影片 P.29）</h3>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/30">工程死穴</span>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-300 space-y-2 leading-relaxed">
+                    <p>許多工程師誤以為雙方算出了 $S = g^{ab} \pmod p$，就可以直接拿 $S$ 當作 AES 金鑰。這是極度危險的錯誤：</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>非均勻隨機（Not Uniform）：</strong>$S$ 是一個特定代數群的元素，存在數學結構分佈偏誤（如二次剩餘性質），絕非密碼學要求的均勻隨機 $\{0,1\}^\lambda$ 位元串。</li>
+                        <li><strong>位元長度浮動與前導零漏洞：</strong>數值轉成位元組時長度會波動（前導零 byte）。2020 年著名的 <strong>Raccoon 攻擊</strong>就是利用 TLS 1.2 處理 $g^{ab}$ 前導零微秒級時間差，逆推部分秘密！</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- KDF Whitening -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <h3 class="font-bold text-white text-base">2. KDF 白化機制（Key Derivation Functions，HKDF）（投影片 P.31）</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    現代協定（TLS 1.3、Signal、WireGuard）必須將結構化的共享秘密 $S = g^{ab}$ 傳入 HKDF 進行<strong>白化（Whitening）</strong>，產生真正的均勻偽隨機金鑰流：
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="text-emerald-400 font-bold">階段一：HKDF-Extract</div>
+                        <p class="text-slate-300">$$\text{PRK} = \text{HMAC}(\text{salt}, S)$$</p>
+                        <p class="text-slate-400 text-[11px]">將結構化、有偏誤的 $S$ 壓縮為固定長度的偽隨機主金鑰 $\text{PRK}$。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="text-sky-400 font-bold">階段二：HKDF-Expand</div>
+                        <p class="text-slate-300">$$\{K_{\text{enc}}, K_{\text{mac}}, IV\} = \text{HKDF-Expand}(\text{PRK}, \text{info}, \text{length})$$</p>
+                        <p class="text-slate-400 text-[11px]">根據上下文標籤（$\text{info}$）將 $\text{PRK}$ 展開衍生為多把互相獨立的對稱金鑰。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 實務通訊協定應用 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+                    <div class="font-mono font-bold text-cyan-400">TLS 握手協商（投影片 P.32）</div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        瀏覽器訪問 HTTPS 網站時，Client 與 Server 在握手階段互相交換 DH 公鑰分享值（TLS 1.3 採用命名群如 X25519），計算出 $g^{ab}$ 後經 HKDF 產生會話金鑰（Session Keys），後續流量全數加密。
+                    </p>
+                </div>
+                <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
+                    <div class="font-mono font-bold text-purple-400">Signal 雙棘輪機制（投影片 P.33）</div>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        初次握手使用 X3DH（現擴充為抗量子 PQXDH）；日常聊天中<strong>每一條訊息往返都執行一次全新的 DH 金鑰交換（Double Ratchet）</strong>！
+                        提供<strong>前向保密（Forward Secrecy）</strong>與<strong>洩漏後復原（Post-Compromise Security）</strong>。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 6: 中間人攻擊 (MITM) 與 AKE ================= -->
+        <section id="sec-mitm-ake" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Subsection 2.2 ｜ P.34 - P.42</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">中間人攻擊（MITM）與認證金鑰交換（AKE）</h2>
+            </div>
+
+            <!-- MITM 攻擊步驟 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-white text-base">1. 中間人攻擊（Man-in-the-Middle Attack）完整推導（投影片 P.35-37）</h3>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/30">主動攻擊致命破綻</span>
+                </div>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    <strong>致命盲點：基礎 Diffie-Hellman 完全不具備身份認證能力！</strong>
+                    公鑰 $g^a$ 與 $g^m$ 在數學上都是均勻分佈的隨機群元素，Alice 與 Bob 完全無法分辨收到的公鑰究竟來自對方還是中間人。
+                </p>
+
+                <!-- 攻擊六步驟 -->
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 font-mono text-xs space-y-2 text-slate-300">
+                    <div class="text-rose-400 font-bold border-b border-slate-800 pb-1">中間人 Mallory 的攻擊步驟：</div>
+                    <ol class="list-decimal pl-5 space-y-1.5 leading-relaxed">
+                        <li>Alice 發送公鑰 $g^a$，遭 Mallory 攔截。</li>
+                        <li>Mallory 挑選自身私鑰 $m$，將偽造公鑰 $g^m$ 送給 Bob（Bob 誤以為來自 Alice）。</li>
+                        <li>Bob 發送公鑰 $g^b$，遭 Mallory 攔截。</li>
+                        <li>Mallory 將偽造公鑰 $g^m$ 送給 Alice（Alice 誤以為來自 Bob）。</li>
+                        <li><strong>金鑰分裂：</strong>Alice 與 Mallory 建立金鑰 $\mathbf{g^{am}}$；Bob 與 Mallory 建立金鑰 $\mathbf{g^{bm}}$。Alice 與 Bob 之間<strong>根本沒有任何共享金鑰！</strong></li>
+                        <li><strong>全透明竊聽與篡改：</strong>Alice 用 $g^{am}$ 加密訊息，Mallory 解密讀取或竄改後，再用 $g^{bm}$ 加密發送給 Bob。雙方渾然不知！</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- AKE 四大防禦體系 -->
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <h3 class="font-bold text-white text-base">2. 認證金鑰交換（Authenticated Key Exchange, AKE）四大實務架構（投影片 P.38-42）</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-emerald-400">1. 數位憑證與 CA 簽章（HTTPS / TLS）</div>
+                        <p class="text-slate-300">伺服器不僅發送 $g^b$，還必須附上受信任 CA 簽署的憑證，並用伺服器私鑰<strong>對 $g^b$ 與會話參數進行數位簽章</strong>。瀏覽器驗證簽章與網域名稱，Mallory 無法偽造合法簽章。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-sky-400">2. 帶外驗證指紋（Signal 安全碼）</div>
+                        <p class="text-slate-300">通訊雙方透過螢幕掃描 QR Code 或電話比對一組 60 位數字的「安全碼（Safety Numbers）」。該指紋由雙方長期身份金鑰雜湊而成，直接杜絕中間人假冒。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-purple-400">3. 金鑰透明度（Key Transparency）</div>
+                        <p class="text-slate-300">WhatsApp（2023）與 Signal（2026）解決群組手動驗證 $O(n^2)$ 拓展難題。伺服器維護「僅能追加（Append-only）」的可審計公鑰目錄（AKD），提供公開審計證明。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                        <div class="font-mono font-bold text-amber-400">4. 首次信任模型（TOFU - SSH）</div>
+                        <p class="text-slate-300">初次連線伺服器時將主機金鑰指紋記錄於 `~/.ssh/known_hosts`。日後連線自動比對；若指紋變動立即警示。弱點在於<strong>首次連線時毫無防禦力</strong>。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 7: RSA 歷史定位與退役原因 ================= -->
+        <section id="sec-rsa-pioneer" class="space-y-6 pt-4">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">投影片 1.7 Section 3 ｜ P.43 - P.48</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">RSA 歷史先鋒與現代淘汰原因（投影片 P.43-48）</h2>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+                <h3 class="font-bold text-white text-base">1. RSA (1977) 核心架構精華</h3>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                    由 Rivest、Shamir、Adleman 提出（英國情報局 Clifford Cocks 曾於 1973 秘密發現）。
+                    建立在<strong>大整數質因數分解問題（Factoring Problem）</strong>的陷門單向函數之上。
+                </p>
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono space-y-2 text-slate-300">
+                    <div>1. 金鑰生成：選相異大質數 $p, q$，模數 $n = p \cdot q$。歐拉函數 $\phi(n) = (p-1)(q-1)$。</div>
+                    <div>2. 選公鑰指數 $e$（常為 65537），計算私鑰指數 $d \equiv e^{-1} \pmod{\phi(n)}$，即 $e \cdot d \equiv 1 \pmod{\phi(n)}$。</div>
+                    <div>3. 加密：$c \equiv m^e \pmod n$；解密：$m \equiv c^d \pmod n$。</div>
+                    <div>4. <strong>雙重功能：</strong>公鑰加密確保機密性；私鑰簽名（$s \equiv m^d \pmod n$）確保真實性。</div>
+                </div>
+
+                <!-- 為何密碼學界正在全面淘汰 RSA -->
+                <h3 class="font-bold text-white text-base pt-2">2. 為何現代密碼學界強烈建議「全面停用 RSA」？（投影片 P.48）</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div class="font-bold text-rose-400 font-mono">1. 金鑰尺寸臃腫與安全性性價比低下</div>
+                        <p class="text-slate-300">數體篩法（GNFS）使得 RSA 金鑰必須膨脹至 2048 位元（僅 112-bit 安全強度）或 4096 位元。相較之下，ECC 橢圓曲線僅需 256 位元即可達到 128-bit 安全強度！</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div class="font-bold text-rose-400 font-mono">2. 簽章與解密效能低落</div>
+                        <p class="text-slate-300">4096-bit RSA 簽章運算耗時約 10 毫秒；而現代 Ed25519 簽章僅需約 0.1 毫秒（<strong>快 100 倍</strong>）！</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div class="font-bold text-rose-400 font-mono">3. 實作漏洞陷阱百出（Padding Oracles）</div>
+                        <p class="text-slate-300">教科書 RSA 是確定性且具備乘法延展性的，必須依賴填充。而 PKCS#1 v1.5 填充多次引發災難級的 Bleichenbacher's Oracle 攻擊（2018 年 ROBOT 漏洞）。</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                        <div class="font-bold text-rose-400 font-mono">4. 無法自然遷移至曲線群</div>
+                        <p class="text-slate-300">Diffie-Hellman 的群論數學可無縫移植到橢圓曲線（ECDH）；而 RSA 的陷門綁死在質因數分解，無法移植。現代標準（TLS 1.3、Signal、WireGuard）已全面轉向橢圓曲線與抗量子密碼。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 8: 期末高頻考題實戰 ================= -->
+                <!-- ================= SECTION 8: 1-7 全真選擇題互動實戰專區 ================= -->
+        <section id="sec-dh-quiz" class="space-y-6 pt-6">
+            <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                <span class="px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-400 font-mono text-xs font-bold">SECTION 8</span>
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-tight">投影片 1-7 全真選擇題互動特訓專區（共 14 精選題・附防呆解析）</h2>
+            </div>
+
+            <!-- 專題模擬測驗跳轉看板 -->
+            <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-950/80 via-slate-900 to-slate-900 border border-emerald-500/40 shadow-xl flex flex-wrap items-center justify-between gap-4">
+                <div class="space-y-1 max-w-2xl">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">期末題庫全收錄</span>
+                        <span class="text-xs font-mono text-slate-400">涵蓋 Section 1、2、2.1、2.2、3 全部考點</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">想在計時模擬考環境下完整刷完 1-7 的 32 道全真選擇題？</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        點擊右側按鈕，系統將自動開啟<strong>期末全真選擇題測驗中心</strong>並自動載入 1-7 專屬範圍。支援隨機抽題、即時計分、倒數計時與錯題覆盤！
+                    </p>
+                </div>
+                <a href="final_quiz.html?scope=1.7" class="px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono font-bold text-xs sm:text-sm shadow-lg transition flex items-center gap-2 shrink-0">
+                    <span>🚀 進入 1-7 專屬 32 題完整測驗</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <!-- 精選互動選擇題卡片群 -->
+            <div class="space-y-6">
+
+                <!-- 題目 1 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q1">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 1 題・非對稱密碼學的本質：單向陷阱函數</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part A：Section 1 困難問題與計算複雜度 (Hard Problems)</span>
+                        </div>
+                        <span id="badge-ch11-q1" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        非對稱密碼學（Asymmetric Cryptography）之所以能達成「雙方在公開通道上無秘密建立共享金鑰」的根本理論基礎為何？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q1">
+                        <button type="button" onclick="handleCh11Answer('ch11-q1', 0, 1)" id="opt-ch11-q1-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">採用了長度超過 10000 位元的對稱金鑰</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q1', 1, 1)" id="opt-ch11-q1-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">建立在計算複雜度的不對稱性上：正向運算為多項式時間（$P$），而逆向求值在古典計算機上無已知多項式時間演算法</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q1', 2, 1)" id="opt-ch11-q1-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">依靠香農（Shannon）的完美資訊隱密性（Perfect Secrecy）定理</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q1', 3, 1)" id="opt-ch11-q1-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">依賴硬體安全模組（HSM）的物理隔離</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q1" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.3-8，公開金鑰密碼學核心依賴「計算不對稱性」。正向計算（如模重複平方法求 $g^x \bmod p$）僅需多項式時間 $\mathcal{O}(n^c)$；逆向反推 $x$（離散對數 DLP）或因數分解則無已知多項式演算法，形成合法方與攻擊者的計算不對稱優勢。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">完美隱密性要求密鑰長度不得小於明文長度（$|K| \ge |M|$），無法在公開通道上建立小金鑰通訊。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 2 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q2">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 2 題・兩大古典困難問題的比對</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part A：Section 1 困難問題與計算複雜度 (Hard Problems)</span>
+                        </div>
+                        <span id="badge-ch11-q2" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        現代傳統非對稱密碼體系主要建立在兩大數學困難問題之上。下列配對與性質敘述何者完全正確？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q2">
+                        <button type="button" onclick="handleCh11Answer('ch11-q2', 0, 2)" id="opt-ch11-q2-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">RSA 依賴離散對數問題；Diffie-Hellman 依賴大質數分解問題</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q2', 1, 2)" id="opt-ch11-q2-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">大整數分解（Factoring）與離散對數（DLP）目前在古典電腦的最佳演算法皆為多項式時間</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q2', 2, 2)" id="opt-ch11-q2-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">RSA 依賴大整數質因數分解問題；Diffie-Hellman 依賴有限群上的離散對數問題</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q2', 3, 2)" id="opt-ch11-q2-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">大整數分解問題在量子電腦下仍然不可破解</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q2" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 C</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.8 與 P.17：RSA 建立在「大整數因數分解（Integer Factorization）」的困難性上；Diffie-Hellman 建立在「有限群上的離散對數問題（Discrete Logarithm Problem, DLP）」上。兩者在量子電腦下皆會被 Shor's Algorithm 在多項式時間內瓦解。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">不要將 RSA（分解因數）與 DH（離散對數）的底層數學問題記反。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 3 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q3">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 3 題・有限群 $\mathbb{Z}_p^*$ 與生成元（Generator）判斷</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part B：Section 2 Diffie-Hellman 數學核心與階層關係</span>
+                        </div>
+                        <span id="badge-ch11-q3" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        設 $p = 7$，考慮乘法群 $\mathbb{Z}_7^* = \{1, 2, 3, 4, 5, 6\}$。下列哪一個元素是該群的生成元（Generator）？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q3">
+                        <button type="button" onclick="handleCh11Answer('ch11-q3', 0, 1)" id="opt-ch11-q3-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">2</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q3', 1, 1)" id="opt-ch11-q3-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">3</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q3', 2, 1)" id="opt-ch11-q3-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">6</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q3', 3, 1)" id="opt-ch11-q3-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">4</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q3" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.15 生成元定義，其次方必須遍歷群內所有 $p - 1 = 6$ 個元素。計算元素 3：$3^1=3, 3^2=2, 3^3=6, 3^4=4, 3^5=5, 3^6=1 \pmod 7$，完全生成全體元素，故 3 為生成元。而 $2^3 \equiv 1$（階為 3），$6^2 \equiv 1$（階為 2），皆非生成元。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">生成元的階（Order）必須恰好等於群的大小 $p-1$。若中途提前出現 1，則階不足，無法成為生成元。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 4 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q4">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 4 題・Diffie-Hellman 手算實例計算（投影片原題）</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part B：Section 2 Diffie-Hellman 數學核心與階層關係</span>
+                        </div>
+                        <span id="badge-ch11-q4" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        （投影片 1.7 P.21 原題）公開參數為 $p = 23$，$g = 5$。Alice 挑選私鑰 $a = 6$，Bob 挑選私鑰 $b = 15$。下列關於公鑰與最終共享秘密 $S$ 的計算何者完全正確？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q4">
+                        <button type="button" onclick="handleCh11Answer('ch11-q4', 0, 0)" id="opt-ch11-q4-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">Alice 公鑰 $A = 8$，Bob 公鑰 $B = 19$，共享秘密 $S = 2$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q4', 1, 0)" id="opt-ch11-q4-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">Alice 公鑰 $A = 5$，Bob 公鑰 $B = 7$，共享秘密 $S = 13$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q4', 2, 0)" id="opt-ch11-q4-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">Alice 公鑰 $A = 8$，Bob 公鑰 $B = 12$，共享秘密 $S = 6$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q4', 3, 0)" id="opt-ch11-q4-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">Alice 公鑰 $A = 19$，Bob 公鑰 $B = 8$，共享秘密 $S = 4$</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q4" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 A</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.21 推導：(1) $A = 5^6 = (5^2)^3 = 25^3 \equiv 2^3 = 8 \pmod{23}$；(2) $B = 5^{15} = (5^6)^2 \times 5^3 = 8^2 \times 125 = 64 \times 10 \equiv 18 \times 10 = 180 \equiv 19 \pmod{23}$；(3) 共享秘密 $S = B^a = 19^6 \equiv (-4)^6 = 4096 \equiv 2 \pmod{23}$（或 $A^b = 8^{15} \equiv 2 \pmod{23}$）。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">手算時善用負數模同餘簡化：$19 \equiv -4 \pmod{23}$，則 $19^6 \equiv (-4)^6 = 16^3 \equiv (-7)^3 = -343 \equiv 2 \pmod{23}$，秒殺考題！</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 5 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q5">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 5 題・三大難題階層（DLP vs CDH vs DDH）</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part B：Section 2 Diffie-Hellman 數學核心與階層關係</span>
+                        </div>
+                        <span id="badge-ch11-q5" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        在同一循環群 $G$ 中，離散對數問題（DLP）、計算型 Diffie-Hellman 問題（CDH）與判定型 Diffie-Hellman 問題（DDH）之間的關係何者正確？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q5">
+                        <button type="button" onclick="handleCh11Answer('ch11-q5', 0, 1)" id="opt-ch11-q5-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">若存在演算法能破解 DDH，則該演算法必然能直接計算出 CDH 的答案</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q5', 1, 1)" id="opt-ch11-q5-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">若存在多項式時間演算法能解決 DLP，則必然能解決 CDH；若能解決 CDH，則必然能解決 DDH</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q5', 2, 1)" id="opt-ch11-q5-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">DDH 是三者中最困難的問題，DLP 是最容易的問題</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q5', 3, 1)" id="opt-ch11-q5-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">三者在數學邏輯上已被證明彼此等價</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q5" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.22-25 難度階層：$\text{DLP} \ge \text{CDH} \ge \text{DDH}$。若能解 DLP，即可求出私鑰 $a$ 從而算出 $g^{ab}$（破解 CDH）；若能解 CDH，算出真實的 $g^{ab}$ 後直接比對即可判定 $Z$ 是否正確（破解 DDH）。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">DDH 是「最弱安全假設（最容易破）」；能解 DDH 並不代表能算出具體數值（解 CDH）。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 6 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q6">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 6 題・DDH 破綻與非安全群的選取</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part B：Section 2 Diffie-Hellman 數學核心與階層關係</span>
+                        </div>
+                        <span id="badge-ch11-q6" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        若在整個有限乘法群 $\mathbb{Z}_p^*$（$p$ 為奇質數）上直接運行 Diffie-Hellman，DDH 假設通常不成立。其最主要的原因為何？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q6">
+                        <button type="button" onclick="handleCh11Answer('ch11-q6', 0, 0)" id="opt-ch11-q6-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">攻擊者可以透過二次剩餘（Legendre 符號）檢查，以顯著優勢判定 $g^{ab}$ 是否為二次剩餘（Quadratic Residue）</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q6', 1, 0)" id="opt-ch11-q6-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">攻擊者可以在 $\mathcal{O}(1)$ 時間內分解模數 $p$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q6', 2, 0)" id="opt-ch11-q6-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">乘法逆元不存在</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q6', 3, 0)" id="opt-ch11-q6-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">有限群中每個元素的階都相同</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q6" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 A</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">在 $\mathbb{Z}_p^*$ 中，判斷一個元素是否為二次剩餘可藉由計算尤拉準則 $x^{(p-1)/2} \pmod p$ 在多項式時間完成。由於兩二次非剩餘相乘必為二次剩餘，攻擊者可藉由符號奇偶性獲得非忽略區分優勢，攻破 DDH。實務上必須選擇質數階子群（Prime-order subgroup）。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">DDH 破裂不代表 DLP 或 CDH 被破解，但意味著加密系統無法達成 IND-CPA 語義安全。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 7 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q7">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 7 題・為何不能直接拿 $g^{ab}$ 當 AES 金鑰？</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part C：Subsection 2.1 實務 Diffie-Hellman 與 KDF</span>
+                        </div>
+                        <span id="badge-ch11-q7" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        Alice 與 Bob 成功計算出 Diffie-Hellman 共享秘密 $S = g^{ab} \bmod p$。某工程師打算直接將 $S$ 的二進位表示作為 AES-GCM 的加密金鑰，這種作法違反了密碼學的哪項核心常識？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q7">
+                        <button type="button" onclick="handleCh11Answer('ch11-q7', 0, 1)" id="opt-ch11-q7-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">$S$ 運算時間太長，AES 會逾時</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q7', 1, 1)" id="opt-ch11-q7-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">$S$ 是有限群內的群元素，在數值分佈上不具備均勻隨機性（Non-uniform distribution），且受限於子群結構；而對稱密碼要求金鑰位元必須完全均勻隨機</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q7', 2, 1)" id="opt-ch11-q7-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">AES-GCM 只接受由雜湊值產生的私鑰</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q7', 3, 1)" id="opt-ch11-q7-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">$g^{ab}$ 在傳輸過程中已經被旁路竊聽</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q7" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.29-31，群元素 $g^{ab} \bmod p$ 取值受限於模數 $p$ 與子群結構，某些 bit pattern 不可能出現或出現機率偏高，並非均勻隨機位元（Uniform bitstring）。必須透過金鑰導出函數（KDF，如 HKDF）將高熵群秘密「白化（Whiten）」為密碼學安全均勻金鑰。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">永遠記住：群元素（Group Element）$\neq$ 均勻隨機金鑰（Uniform Key）。直出必遭扣分！</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 8 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q8">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 8 題・前向保密性（Forward Secrecy）工程實踐</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part C：Subsection 2.1 實務 Diffie-Hellman 與 KDF</span>
+                        </div>
+                        <span id="badge-ch11-q8" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        現代 TLS 1.3 協定全面廢除靜態 RSA 密鑰交換，強制使用暫時性 Diffie-Hellman（ECDHE）。此變革所帶來的最主要安全優勢為何？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q8">
+                        <button type="button" onclick="handleCh11Answer('ch11-q8', 0, 1)" id="opt-ch11-q8-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">大幅降低伺服器 CPU 的負載</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q8', 1, 1)" id="opt-ch11-q8-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">保證即使伺服器的長期私鑰在未來某天洩漏，攻擊者過去所側錄保存的所有歷史加密通訊流量依然無法被解密（前向保密性）</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q8', 2, 1)" id="opt-ch11-q8-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">避免中間人攻擊</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q8', 3, 1)" id="opt-ch11-q8-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">讓客戶端不需驗證伺服器憑證即可完成連線</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q8" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.32，暫時性 ECDHE 為每次連線生成獨立暫時金鑰對，連線完畢即銷毀。即便伺服器長期簽章私鑰遭竊，攻擊者因缺乏當時的暫時私鑰仍無法還原 $g^{ab}$，這就是「前向保密性（Forward Secrecy）」。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">靜態 RSA 交換中，只要掌握伺服器私鑰，即可解開歷史上所有側錄的 Premaster Secret，完全喪失前向保密。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 9 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q9">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 9 題・未認證 Diffie-Hellman 的死穴：中間人攻擊（MITM）</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part D：Subsection 2.2 中間人攻擊與認證金鑰交換 (AKE)</span>
+                        </div>
+                        <span id="badge-ch11-q9" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        在完全沒有身分認證機制的環境下運行標準 Diffie-Hellman 協定，中間人 Mallory 在通訊鏈路上攔截 Alice 發出的 $g^a$ 與 Bob 發出的 $g^b$。Mallory 自身挑選隨機值 $m$。下列關於此攻擊過程的敘述何者正確？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q9">
+                        <button type="button" onclick="handleCh11Answer('ch11-q9', 0, 1)" id="opt-ch11-q9-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">Mallory 必須解開離散對數問題才能偽造封包</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q9', 1, 1)" id="opt-ch11-q9-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">Mallory 分別與 Alice 建立共享秘密 $g^{am}$，與 Bob 建立共享秘密 $g^{bm}$；兩端皆誤以為與對方安全連線，Mallory 可無縫解密、篡改並重新加密所有訊息</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q9', 2, 1)" id="opt-ch11-q9-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">Bob 會收到兩個不同的公鑰並觸發連線中斷警告</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q9', 3, 1)" id="opt-ch11-q9-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">此攻擊只在量子電腦出現後才成立</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q9" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.35-37，未認證的 DH 公開值 $g^a, g^m$ 外觀皆為隨機數無法辨認身分。Mallory 分別與 Alice 協商出 $g^{am}$、與 Bob 協商出 $g^{bm}$，作為中間人完全掌控明文，證明純 DH 只能防禦被動竊聽（Passive），對主動中間人（MITM）毫無防護力。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">Diffie-Hellman 本身只提供「金鑰協商」，「完全不提供身分認證（Authentication）」！</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 10 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q10">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 10 題・實務認證技術大比拼：TLS vs Signal vs SSH</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part D：Subsection 2.2 中間人攻擊與認證金鑰交換 (AKE)</span>
+                        </div>
+                        <span id="badge-ch11-q10" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        講義中展示了現代不同協定解決「DH 缺乏身分認證」的具體工程方案。下列配對與原理何者完全正確？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q10">
+                        <button type="button" onclick="handleCh11Answer('ch11-q10', 0, 1)" id="opt-ch11-q10-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">SSH 依賴全球中央憑證機構（CA）簽署每一台伺服器的 Host Key</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q10', 1, 1)" id="opt-ch11-q10-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">Signal 透過安全代碼（Safety Numbers / 60 碼指紋），由通訊雙方在離線管道（Out-of-band）比對長期身分金鑰特徵</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q10', 2, 1)" id="opt-ch11-q10-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">HTTPS / TLS 採用首次信任機制（TOFU, Trust On First Use）建立連線</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q10', 3, 1)" id="opt-ch11-q10-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">WhatsApp 要求群組內每位使用者必須兩兩手動掃描 QR Code 驗證，無法自動化</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q10" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.38-42：(1) TLS/HTTPS 依賴 CA 憑證鏈；(2) Signal 採用 60 位安全碼（Safety Numbers / QR Code 指紋）進行離線驗證；(3) SSH 採用 TOFU（首次信任）將 Host Key 記在 `known_hosts`；(4) WhatsApp 為解決大群組手動驗證 $O(N^2)$ 瓶頸，引進 Key Transparency 自動審計。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">牢記四大協定身分認證架構：TLS=CA 憑證、Signal=安全代碼指紋、SSH=TOFU 首次信任、WhatsApp=Key Transparency。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 11 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q11">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 11 題・SSH 連線的「心臟病警報」（Common Sense 工程題）</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part D：Subsection 2.2 中間人攻擊與認證金鑰交換 (AKE)</span>
+                        </div>
+                        <span id="badge-ch11-q11" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        工程師使用 SSH 連線至遠端伺服器時，終端機突然跳出巨大紅字警告：`WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!`。從密碼學原理來看，這意味著什麼？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q11">
+                        <button type="button" onclick="handleCh11Answer('ch11-q11', 0, 2)" id="opt-ch11-q11-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">伺服器的 CPU 溫度過高</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q11', 1, 2)" id="opt-ch11-q11-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">伺服器回傳的 Diffie-Hellman 公鑰無法與本地儲存的對稱金鑰完成解密</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q11', 2, 2)" id="opt-ch11-q11-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">本地 `~/.ssh/known_hosts` 中記錄的該伺服器公鑰指紋，與本次連線所出示的 Host Key 不相符；可能發生了中間人攻擊（MITM）或伺服器被重新安裝了系統</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q11', 3, 2)" id="opt-ch11-q11-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">SSH 密碼輸入錯誤超過 3 次</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q11" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 C</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.42，SSH 在首次連線時紀錄遠端 Host Key（TOFU 模型）。若後續連線發現該公鑰不相符，代表傳輸鏈路上的中間人可能正在嘗試攔截 DH 金鑰交換，或伺服器私鑰已被更換，SSH 立即強制中斷連線以策安全。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">這正是 TOFU 模型在面對金鑰變更時的防禦表現，不可盲目刪除 `known_hosts` 忽略警告。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 12 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q12">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 12 題・RSA 數學金鑰生成核心方程式</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part E：Section 3 RSA 演算法與時代演進</span>
+                        </div>
+                        <span id="badge-ch11-q12" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        在 RSA 密碼系統中，挑選兩大質數 $p, q$，計算模數 $n = p \times q$。公開指數為 $e$，私密指數為 $d$。下列哪一個數學同餘式是保證 RSA 加解密正確性的核心條件？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q12">
+                        <button type="button" onclick="handleCh11Answer('ch11-q12', 0, 1)" id="opt-ch11-q12-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">$e \times d \equiv 1 \pmod n$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q12', 1, 1)" id="opt-ch11-q12-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">$e \times d \equiv 1 \pmod{\phi(n)}$，其中 $\phi(n) = (p - 1)(q - 1)$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q12', 2, 1)" id="opt-ch11-q12-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">$e + d \equiv 0 \pmod p$</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q12', 3, 1)" id="opt-ch11-q12-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">$e^d \equiv 1 \pmod q$</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q12" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.45，尤拉定理指出若 $\gcd(M, n) = 1$，則 $M^{\phi(n)} \equiv 1 \pmod n$。金鑰滿足 $ed \equiv 1 \pmod{\phi(n)}$，使 $(M^e)^d = M^{ed} = M^{k\phi(n)+1} \equiv M \pmod n$，保證解密正確性。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">模數是 $\phi(n)$ 而非 $n$！很多同學考試粗心將模數寫成 $n$。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 13 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q13">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 13 題・RSA 的對偶功能性（Dual Functionality）</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part E：Section 3 RSA 演算法與時代演進</span>
+                        </div>
+                        <span id="badge-ch11-q13" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        RSA 演算法在歷史上被譽為劃時代創舉，主要是因為其數學結構單一卻能天然同時實現哪兩大核心密碼學功能？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q13">
+                        <button type="button" onclick="handleCh11Answer('ch11-q13', 0, 1)" id="opt-ch11-q13-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">串流加密（Stream Cipher）與雜湊函數（Hash Function）</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q13', 1, 1)" id="opt-ch11-q13-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">公鑰加密（機密性）與數位簽章（真實性／不可否認性）</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q13', 2, 1)" id="opt-ch11-q13-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">金鑰白化（Whitening）與抗量子攻擊</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q13', 3, 1)" id="opt-ch11-q13-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">零知識證明與工作量證明</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q13" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 B</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.46：(1) 加密：公鑰加密 $C = M^e \bmod n$，私鑰解密 $M = C^d \bmod n$；(2) 簽章：私鑰簽署 $S = H(M)^d \bmod n$，公鑰驗證 $H(M) = S^e \bmod n$。單一陷阱門同時達成機密性與數位簽章。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">Diffie-Hellman 原生只能做金鑰協商，無法直接簽章；而 RSA 具備完美的雙重對偶性。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 題目 14 -->
+                <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md space-y-4" id="card-ch11-q14">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-slate-800 text-slate-300 border border-slate-700">第 14 題・RSA 退場與橢圓曲線（ECC）崛起的根本原因</span>
+                            <span class="px-2 py-0.5 rounded text-[11px] font-mono bg-amber-950 text-amber-300 border border-amber-800">Part E：Section 3 RSA 演算法與時代演進</span>
+                        </div>
+                        <span id="badge-ch11-q14" class="text-xs font-mono text-slate-400">尚未作答</span>
+                    </div>
+
+                    <div class="text-sm sm:text-base font-semibold text-white leading-relaxed">
+                        近年密碼學界（如 Trail of Bits 發表「Seriously, stop using RSA」）極力倡導全面淘汰 RSA，轉向橢圓曲線密碼（ECC）。下列哪一項不是 RSA 被逐步淘汰的主要技術原因？
+                    </div>
+
+                    <div class="space-y-2 pt-1" id="opts-ch11-q14">
+                        <button type="button" onclick="handleCh11Answer('ch11-q14', 0, 3)" id="opt-ch11-q14-0" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">A</span>
+                            <div class="leading-relaxed flex-1">一般數體篩法（GNFS）對因數分解攻擊極具效率，迫使 RSA 金鑰長度必須提升至 3072 或 4096 位元才能維持安全性，導致運算效能急遽惡化</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q14', 1, 3)" id="opt-ch11-q14-1" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">B</span>
+                            <div class="leading-relaxed flex-1">RSA 私鑰解密與簽章運算速度極慢（例如 4096-bit RSA 簽章耗時約 10 ms，而 Ed25519 僅需 0.1 ms）</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q14', 2, 3)" id="opt-ch11-q14-2" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">C</span>
+                            <div class="leading-relaxed flex-1">RSA 無法平滑轉移到橢圓曲線結構上（其陷阱門與因數分解綁死）</div>
+                        </button>
+                        <button type="button" onclick="handleCh11Answer('ch11-q14', 3, 3)" id="opt-ch11-q14-3" class="w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:border-slate-700 text-slate-200 text-xs sm:text-sm transition flex items-start gap-3">
+                            <span class="w-5 h-5 rounded-full border border-slate-700 text-slate-400 flex items-center justify-center text-xs font-mono shrink-0 mt-0.5">D</span>
+                            <div class="leading-relaxed flex-1">RSA 演算法已被證明即使在古典電腦上也能被多項式時間破解</div>
+                        </button>
+                    </div>
+
+                    <div id="exp-ch11-q14" class="hidden pt-3 border-t border-slate-800/80 space-y-2.5 text-xs sm:text-sm">
+                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-emerald-400 font-mono">官方解析：正確答案為 D</span>
+                                <span class="text-[10px] text-slate-500 font-mono">投影片 1-7 原文依據</span>
+                            </div>
+                            <p class="text-slate-300 leading-relaxed">依據投影片 1.7 P.48，古典電腦目前「沒有」任何已知演算法可在多項式時間內分解大整數（GNFS 為次指數時間 Sub-exponential，非多項式時間）。RSA 退役的主因為金鑰膨脹過大、運算極慢、無法幾何移植到曲線上。</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-rose-950/30 border border-rose-500/30 text-rose-300 text-xs flex items-start gap-2">
+                            <span class="font-bold text-rose-400 font-mono shrink-0">⚠️ 考場常見陷阱：</span>
+                            <span class="leading-relaxed">不要誤認 RSA 在古典電腦已被破解；它只是因為效能低下與金鑰過長而被優雅高效的 ECC 取代。</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部再次導引 -->
+            <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-3">
+                <div class="text-sm text-slate-300 font-medium">已完成本頁 14 題精選題目？還有 18 道深入手算與安全性博弈題目等著你！</div>
+                <a href="final_quiz.html?scope=1.7" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition">
+                    <span>前往 1-7 專屬 32 題全真測驗中心 ↗</span>
+                </a>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 mt-16 py-8 text-center text-xs text-slate-400 space-y-1">
+        <p>現代與後量子密碼學導論・期末考第二核心模組（投影片 1.7 困難問題與 Diffie-Hellman 完備）</p>
+        <p class="font-mono text-slate-400">嚴格遵循台灣繁體中文排版規範與形式證明標準</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script id="header-sync-script">
+    function syncHeaderHeight() {
+        const header = document.getElementById('site-header');
+        if (header) {
+            const h = header.offsetHeight;
+            document.documentElement.style.setProperty('--header-height', `${h}px`);
+        }
+    }
+    window.addEventListener('resize', syncHeaderHeight);
+    window.addEventListener('DOMContentLoaded', syncHeaderHeight);
+    </script>
+    <script id="ch11-quiz-interactive-script">
+        function handleCh11Answer(qId, selectedIdx, correctIdx) {
+            const expDiv = document.getElementById(`exp-${qId}`);
+            const badge = document.getElementById(`badge-${qId}`);
+            const isCorrect = (selectedIdx === correctIdx);
+
+            for (let i = 0; i < 4; i++) {
+                const btn = document.getElementById(`opt-${qId}-${i}`);
+                if (!btn) continue;
+                btn.disabled = true;
+                if (i === correctIdx) {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border border-emerald-500 bg-emerald-950/60 text-emerald-200 font-bold ring-1 ring-emerald-500/50 text-xs sm:text-sm flex items-start gap-3";
+                } else if (i === selectedIdx && !isCorrect) {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border border-rose-500 bg-rose-950/60 text-rose-200 font-semibold ring-1 ring-rose-500/50 text-xs sm:text-sm flex items-start gap-3";
+                } else {
+                    btn.className = "w-full text-left p-3.5 rounded-xl border border-slate-900 bg-slate-950/40 text-slate-500 opacity-50 text-xs sm:text-sm flex items-start gap-3";
+                }
+            }
+
+            if (badge) {
+                if (isCorrect) {
+                    badge.className = "text-xs font-bold font-mono text-emerald-400";
+                    badge.innerText = "✓ 答對";
+                } else {
+                    badge.className = "text-xs font-bold font-mono text-rose-400";
+                    badge.innerText = "✗ 答錯";
+                }
+            }
+
+            if (expDiv) {
+                expDiv.classList.remove('hidden');
+            }
+
+            if (window.renderMathInElement && expDiv) {
+                renderMathInElement(expDiv, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

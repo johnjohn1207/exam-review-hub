@@ -1,0 +1,5 @@
+﻿1. OMA&P在網路管理的意義2. QoS舉兩個例子。簡單說明QoS跟SLA的關連。3. Network Message分為Headed、Data Field、Trailer，分別說明。
+4. 為什麼課本說現今的網路是Hybrid TCP/IP-OSI Architectural？5. 說明Wireless Propagation Problems？
+6. 說明802.1w(RSTP) 802.1X7. 說明Wireless hidden terminal problem
+8. 同學們在課堂上作了多次和課程內容有關的分組報告，請就你印象最深刻的一組，說明該報告的，已報告過的同學請註明你的題目：(10%)
+(1) 主要內容(2) 和課程的哪一部分有什麼關係   (3) 心得  （不可以包括你自己的題目，有報告過的同學請寫出你報告過的題目

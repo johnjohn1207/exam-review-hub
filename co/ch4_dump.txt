@@ -1,0 +1,635 @@
+=== PAGE 1 ===
+Final Exam Remains 
+on 12/23 (Wed.)
+1
+
+=== PAGE 2 ===
+NCU Communication Engineering
+Single Cycle Processor
+單一週期處理器
+CO3020 - Computer Organization 計算機組織
+江育綺
+2026-11-18
+NCU CE – CO3020 – Chapter 4 – The Processor
+
+=== PAGE 3 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Outline - Single Cycle Processor
+◼ Processor Overview
+◼ Building the datapath
+◼ A single-cycle implementation
+◼ Control for the single-cycle CPU
+◼ Main controller
+◼ ALU controller
+◼ Datapath Exercise
+3
+
+=== PAGE 4 ===
+Processor Overview
+CHAPTER 4: THE PROCESSOR
+4
+
+=== PAGE 5 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Five Classic Components in Computer
+Input Output
+Datapath Control
+Memory
+Processor
+Register, ALU
+5
+
+=== PAGE 6 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Introduction
+◼ CPU performance factors (Time = IC × CPI × Clock 
+Period)
+◼ Instruction count
+◦ Determined by ISA and compiler
+◼ CPI and Clock period
+◦ Determined by CPU hardware
+◼ Simple subset, shows most aspects
+◼ Memory reference: lw, sw
+◼ Arithmetic/logical: add, sub, and, or, slt
+◼ Control transfer: beq, j
+6
+
+=== PAGE 7 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Instruction Execution
+◼ For every instruction, the first two steps are:
+◼ PC → instruction memory, fetch (擷取) instruction
+◼ Register numbers → register file, read registers
+◼ Depending on instruction class
+◼ Memory-reference, Arithmetic-logical, and Branches
+◼ Use ALU to calculate
+◦ Arithmetic result    ➔ register operation
+◦ Memory address for load/store ➔ address calculation
+◦ Branch condition  ➔ comparison
+◼ Access data memory for load/store
+◼ PC  target address or PC + 4
+7
+
+=== PAGE 8 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+CPU Overview
+8
+
+=== PAGE 9 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+CPU Overview
+Fetch Instruction Load data Access dataArithmetic
+Operation
+9
+
+=== PAGE 10 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+CPU Overview
+Signal conflict
+◼ Can’t just join wires together
+◼ Use multiplexers
+Fetch Instruction Load data Access dataArithmetic
+Operation
+Next Instruction
+Branch Address
+10
+
+=== PAGE 11 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+MUX Branch
+PC+4Next PC
+Data Memory
+ALU Output
+Write in Reg.
+Reg.
+Offset
+ALU 
+Input
+11
+
+=== PAGE 12 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Control Branch
+PC+4
+Data Memory
+ALU Output
+Write in Reg.
+Reg.
+Offset
+ALU 
+Input
+Next PC
+12
+
+=== PAGE 13 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Datapath
+13
+
+=== PAGE 14 ===
+Logic Design Conventions
+CHAPTER 4: THE PROCESSOR
+14
+
+=== PAGE 15 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Logic Design Basics
+◼ Information encoded in binary
+◼ Low voltage = 0, High voltage = 1
+◼ One wire per bit
+◼ Multi-bit data encoded on multi-wire buses
+◼ Combinational element (組合元件) 
+◼ Operate on data
+◼ Output is a function of input
+◼ State (sequential) elements (時序元件) 
+◼ Store information
+Output is always the same with 
+the same input
+Always process the current state
+Output is calculated 
+based on the input and the internal state
+0 1
+15
+
+=== PAGE 16 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Combinational Elements(組合元件) 
+◼ AND-gate
+◼ Y = A & B
+A
+B Y
+I0
+I1 Y
+M
+u
+x
+S
+◼ Multiplexer
+◼ Y = (S ? I1 : I0)
+A
+B
+Y+
+A
+B
+YALU
+F
+◼ Adder
+◼ Y = A + B
+◼ Arithmetic/Logic Unit
+◼ Y = F(A, B)
+16
+
+=== PAGE 17 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Sequential Elements(時序元件) 
+◼ Register: stores data in a circuit
+◼ Uses a clock signal to determine when to update the stored 
+value
+◼ Edge-triggered: update when Clk changes from 0 to 1
+D
+Clk
+Q
+Clk
+D
+Q
+Rising-edge trigger
+delay delay delay
+setup hold
+17
+Setup: before edge-triggered
+Hold: after edge-triggered
+
+=== PAGE 18 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Sequential Elements(時序元件) 
+◼ Register with write control
+◼ Only updates on clock edge when write control input is 1
+◼ Used when stored value is required later
+D
+Clk
+Q
+Write
+Write
+D
+Q
+Clk
+18
+
+=== PAGE 19 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Clocking Methodology
+◼ Combinational logic transforms data during clock cycles
+◼ Between clock edges
+◼ Input from state elements, output to state element
+◼ Longest delay determines clock period
+The clock must be slow enough for
+the longest path to finish.
+Q
+(state)
+D
+(data)
+5
+6
+6
+5
+19
+
+=== PAGE 20 ===
+Building a Datapath
+CHAPTER 4: THE PROCESSOR
+20
+
+=== PAGE 21 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Building a Datapath
+◼ Datapath
+◼ Elements that process data and addresses in the CPU
+◦ Registers, ALUs, MUX’s, memories, …
+◼ We will build a MIPS datapath incrementally
+◼ Refining the overview design
+◼ Bottom-up introduction
+Overview
+21
+
+=== PAGE 22 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+How to Design a Processor?
+22
+How to execute an instruction in hardware?
+Fetch the instruction from its address in the instruction memory
+
+=== PAGE 23 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Instruction Fetch
+32-bit 
+register
+Increment by 
+4 for next 
+instruction
+23
+
+=== PAGE 24 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+How to Design a Processor?
+24
+How to execute an instruction in hardware?
+add rd, rs, rt
+R[rd] ← R[rs] + R[rt]
+
+
+=== PAGE 25 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Instruction Set Analysis – MIPS Subset
+25
+◼ Load/store
+• add rd, rs, rt
+• sub rd, rs, rt
+• and rd, rs, rt
+• or rd, rs, rt
+• slt rd, rs, rt
+• lw rt, imm16(rs)
+• sw rt, imm16(rs)
+• j  imm26
+◼ All MIPS instructions uses 3 formats: R-type, I-type, J-type
+◼ J-type op address
+6 bits 26 bits
+◼ R-type R-type
+I-type
+J-type
+op rs rt rd shamt funct
+6 bits 6 bits5 bits 5 bits 5 bits 5 bits
+op rs rt immediate
+6 bits 5 bits 5 bits 16 bits
+◼ Immediate operand
+• addi rt, rs, imm16
+◼ Branch
+• beq rs, rt, imm16
+
+=== PAGE 26 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+R-Format Instructions
+◼ Read two register operands
+◼ Perform arithmetic/logical operation
+◼ Write register result
+add rd, rs, rt
+R[rd] ← R[rs] + R[rt]
+rt
+rs
+rd
+instruction
+Read and write in R-type can be performed within one clock cycle
+26
+
+=== PAGE 27 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Register Transfer (暫存器傳輸)
+27
+Instruction Register Transfers PC Update
+add R[rd]  ← R[rs] + R[rt]
+PC ← PC + 4
+sub R[rd]  ← R[rs] - R[rt]
+lw R[rt] ← Mem[ ]
+sw Mem[ ] ← R[rt]
+addi
+beq -
+if ( R[rs] == R[rt] ) 
+then PC ← (PC + 4) +
+                                
+else  PC ←  PC + 4 
+R[rs]+SignExt(imm16)
+R[rs]+SignExt(imm16)
+SignExt(imm16) : 00
+R[rt]  ← R[rs] + SignExt(imm16)
+◼ Different instructions require different data operations.
+◼ We identify these operations before designing the datapath.
+
+=== PAGE 28 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Load/Store Instructions
+◼ Read register operands
+◼ Calculate address using 16-bit offset
+◼ Use ALU, but sign-extend offset
+◼ Load: Read memory and update register
+◼ Store: Write register value to memory
+Location relative to base address
+load
+store
+branch
+lw rt, imm16(rs)
+R[rt] ← Mem[R[rs]+SignExt(imm16)]
+sw rt, imm16(rs)
+Mem[R[rs]+SignExt(imm16)] ← R[rt]
+28
+
+=== PAGE 29 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Branch Instructions
+◼ Read register operands
+◼ Compare operands
+◼ Use ALU, subtract and check Zero output
+◼ Calculate target address
+◼ Sign-extend displacement
+◼ Shift left 2 places (word displacement)
+◼ Add to PC + 4
+◦ Already calculated by instruction fetch
+29
+
+=== PAGE 30 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Branch Instructions
+Just
+re-routes 
+wires
+Sign-bit wire 
+replicated
+30
+
+=== PAGE 31 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Composing the Elements
+◼ Single-Cycle Execution
+◼ Design goal: Execute an instruction in one clock cycle
+◼ Avoid Resource Conflicts
+◼ Use separate hardware when needed in the same instruction.
+◼ E.g., instruction and data memories
+◼ Shared Hardware
+◼ Use MUXes to share hardware across different instructions
+31
+
+=== PAGE 32 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+R-Type/Load/Store Datapath
+0: rt ➔ R-type 
+1: rt ➔ lw/sw
+0: R-type ➔ ALU result 
+1: lw ➔ data memory
+32
+
+=== PAGE 33 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Full Datapath
+Selector:
+1. PCSrc  ➔ 0 for PC+4;  1 for branch
+2. ALUSrc ➔ 0 for R-type;  1 for lw/sw
+3. MemtoReg ➔ 0 for ALU result; 1 for mem data
+33
+1
+2 3
+
+=== PAGE 34 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Overview Implementation with 
+Control Unit
+34
+
+=== PAGE 35 ===
+A Simple 
+Implementation Scheme
+CHAPTER 4: THE PROCESSOR
+35
+
+=== PAGE 36 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+ALU Control
+◼ ALU used for
+◼ Load/Store: Function = add
+◼ Branch: Function = subtract
+◼ R-type: Function depends on funct field
+ALU control Function
+0000 AND
+0001 OR
+0010 add
+0110 subtract
+0111 set-on-less-than
+1100 NOR
+36
+
+=== PAGE 37 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+ALU Control
+◼ Decodes the opcode to generate a 2-bit ALUOp signal
+◼ Load/Store: Address calculation ➔ ALUOp = 00
+◼ Branch: Branch comparison  ➔ ALUOp = 01
+◼ R-type: Check funct field   ➔ALUOp = 10
+opcode ALUOp Operation funct ALU function ALU control
+lw 00 load word XXXXXX add 0010
+sw 00 store word XXXXXX add 0010
+beq 01 branch equal XXXXXX subtract 0110
+R-type 10 add 100000 add 0010
+subtract 100010 subtract 0110
+AND 100100 AND 0000
+OR 100101 OR 0001
+set-on-less-than 101010 set-on-less-than 0111
+37
+
+=== PAGE 38 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+ALU Control
+◼ Decodes the opcode to generate a 2-bit ALUOp signal
+◼ Combinational logic derives ALU control
+opcode ALUOp Operation funct ALU function ALU control
+lw 00 load word XXXXXX add 0010
+sw 00 store word XXXXXX add 0010
+beq 01 branch equal XXXXXX subtract 0110
+R-type 10 add 100000 add 0010
+subtract 100010 subtract 0110
+AND 100100 AND 0000
+OR 100101 OR 0001
+set-on-less-than 101010 set-on-less-than 0111
+38
+
+=== PAGE 39 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+The Main Control Unit
+◼ Control signals derived from instruction
+0 rs rt rd shamt funct
+31:26 5:025:21 20:16 15:11 10:6
+35 or 43 rs rt address
+31:26 25:21 20:16 15:0
+4 rs rt address
+31:26 25:21 20:16 15:0
+R-type
+Load/
+Store
+Branch
+opcode always 
+read
+read, 
+except 
+for load
+write for 
+R-type 
+and load
+sign-extend 
+and add
+Base register offset/immediate
+Destination register
+39
+
+=== PAGE 40 ===
+NCU CE – CO3020 – Chapter 4 – The Processor 40
+Datapath with control
+Write to 
+Register Data
+rt
+rd
+
+=== PAGE 41 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Datapath with control
+41
+Signal = 0 Signal = 1
+
+=== PAGE 42 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Datapath With Integrated Control
+(PCSrc)
+42
+
+=== PAGE 43 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+R-Type Instruction
+43
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+R-format 1 0 0 1 0 0 0 1 0
+
+=== PAGE 44 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Load Instruction
+44
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+lw 0 1 1 1 1 0 0 0 0
+
+=== PAGE 45 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Branch-on-Equal Instruction
+45
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+Branch X 0 X 0 0 0 1 0 1
+
+=== PAGE 46 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Implementing Jumps
+◼ Jump uses word address
+◼ Update PC with concatenation of
+◼ Top 4 bits of (PC+4)
+◼ 26-bit jump address
+◼ 00
+◼ Need an extra control signal decoded from opcode
+2 address
+31:26 25:0
+Jump
+46
+
+=== PAGE 47 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Datapath With Jumps Added
+47
+
+=== PAGE 48 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Summary
+◼ Single cycle datapath 
+◼ CPI = 1; Long Clock Cycle Time
+◼ MIPS makes control easier
+◼ Instructions with same size (32-bit)
+◼ Source register (rs) always in the same place
+◼ Immediate with the same size and at the same location
+◼ Operations always on registers/immediate
+48
+
+=== PAGE 49 ===
+Datapath ExerciseExam
+CHAPTER 4: THE PROCESSOR
+49
+1. Make a group of 3 people to discuss the answer
+2. Choose the exercise that (sum of your student id % 4)
+3. Specify the datapath, all the control signal & input/output register/value
+4. Upload to Padlet
+5. I will randomly take the draw for each exercise.
+6. One of your group member explains your answer.
+(Extra point will be given)
+
+
+=== PAGE 50 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+0: addi $t1, $t2, 5
+50
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+addi
+
+=== PAGE 51 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+1: lw $t1, 8($s2)
+51
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+lw
+
+=== PAGE 52 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+2: sw $t1, 8($s2)
+52
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+sw
+
+=== PAGE 53 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+3: beq $t1, $t2, Label_Addr
+53
+The case that the branch is NOT taken.
+Instruction RegDst ALUSrc MemtoReg RegWrite MemRead MemWrite Branch ALUOp1 ALUOp0
+beq
+
+=== PAGE 54 ===
+NCU CE – CO3020 – Chapter 4 – The Processor
+Performance Issues
+◼ Longest delay determines clock period
+◼ Critical path: load instruction
+◼ Instruction memory → register file → ALU → data memory 
+→ register file
+◼ Not feasible to vary period for different instructions
+◼ Violates design principle
+◼ Making the common case fast
+◼ We will improve performance by pipelining
+54
+

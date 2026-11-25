@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CO3020 計算機組織：期末考衝刺特訓中心（Chapter 4 單週期處理器）</title>
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- KaTeX 數學公式即時渲染 CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+
+  <!-- 頂部導航欄 -->
+  <header class="navbar">
+    <div class="brand-container">
+      <div class="brand-title">
+        <span class="brand-tag" style="background: #10b981; color: #fff;">CO3020 期末考</span> 計算機組織：期末衝刺特訓中心（Chapter 4 單週期處理器）
+      </div>
+      <div class="brand-subtitle" id="navbarSubtitle">
+        專注期末考 Chapter 4 核心：單週期資料路徑、9 大主控制訊號真值表、ALU 雙層解碼、課堂 Exercise 4 大考題與關鍵路徑延遲計算
+      </div>
+    </div>
+    <div class="nav-controls" style="display: flex; gap: 0.75rem; align-items: center;">
+      <a href="../index.html" class="theme-toggle-btn" style="text-decoration: none; border-color: #10b981; color: #34d399;">
+        &larr; 科目總覽
+      </a>
+      <button id="themeToggleBtn" class="theme-toggle-btn">切換主題色彩</button>
+    </div>
+  </header>
+
+  <!-- 主內容容器 -->
+  <main class="container">
+    
+    <!-- ========================================================================= -->
+    <!-- 區域 A：期末考衝刺專區 (Chapter 4 單週期處理器) - 預設顯示 -->
+    <!-- ========================================================================= -->
+    <div id="sectionFinalExam">
+      
+      <!-- 第四章專用標籤導航欄 -->
+      <nav class="tab-nav" style="border-bottom: 2px solid #10b981;">
+        <button class="tab-btn active ch4-tab-btn" data-tab="tabCh4CramNotes" style="color: #34d399; font-weight: bold;">
+          ⚡ 第四章期末考超精華速背秘笈
+        </button>
+        <button class="tab-btn ch4-tab-btn" data-tab="tabCh4CheatSheet">
+          🏛️ 第四章單週期處理器重點精華與知識樹
+        </button>
+        <button class="tab-btn ch4-tab-btn" data-tab="tabCh4DatapathLab">
+          🎛️ 資料路徑與控制訊號全真互動檢測器 (Datapath Lab)
+        </button>
+        <button class="tab-btn ch4-tab-btn" data-tab="tabCh4TeacherExercise">
+          📝 老師課堂 Exercise 4 大考題全真解析 (投影片 P49-P53)
+        </button>
+        <button class="tab-btn ch4-tab-btn" data-tab="tabCh4Textbook">
+          📘 教科書 Ch4 課後習題實戰 (Ex 4.1 ~ 4.15)
+        </button>
+        <button class="tab-btn ch4-tab-btn" data-tab="tabCh4CalcArena">
+          🧮 第四章動態計算與關鍵路徑題庫 (隨機出題)
+        </button>
+      </nav>
+
+      <!-- 標籤頁 4-1：第四章超精華速背秘笈 -->
+      <section id="tabCh4CramNotes" class="tab-content active">
+        <div id="ch4CramNotesContainer"></div>
+      </section>
+
+      <!-- 標籤頁 4-2：第四章重點精華與知識樹 -->
+      <section id="tabCh4CheatSheet" class="tab-content">
+        <div id="ch4CheatSheetContainer"></div>
+      </section>
+
+      <!-- 標籤頁 4-3：資料路徑與控制訊號互動檢測器 -->
+      <section id="tabCh4DatapathLab" class="tab-content">
+        <div id="ch4DatapathLabContainer"></div>
+      </section>
+
+      <!-- 標籤頁 4-4：老師課堂 Exercise 4 大考題全真解析 -->
+      <section id="tabCh4TeacherExercise" class="tab-content">
+        <div id="ch4TeacherExerciseContainer"></div>
+      </section>
+
+      <!-- 標籤頁 4-4B：教科書 Ch4 單週期課後習題實戰 -->
+      <section id="tabCh4Textbook" class="tab-content">
+        <div id="ch4TextbookContainer"></div>
+      </section>
+
+      <!-- 標籤頁 4-5：第四章動態計算題庫 -->
+      <section id="tabCh4CalcArena" class="tab-content">
+        <div id="ch4CalculationArenaContainer"></div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- 浮動回到頂部按鈕 -->
+  <button id="backToTopBtn" class="back-to-top-btn" title="回到頂部" aria-label="回到頂部">↑</button>
+
+  <!-- 引入資料與核心邏輯模組 (期末考 Chapter 4) -->
+  <script src="js/engine/solver.js"></script>
+  <script src="js/data/chapter4.js"></script>
+  <script src="js/data/ch4_textbook_exercises.js"></script>
+  <script src="js/engine/ch4_datapath_lab.js"></script>
+  <script src="js/cram_notes_ch4.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企業電腦網路 講義精華重點與期中考古模擬全方位題庫系統</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <!-- KaTeX 數學公式即時渲染引擎 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1e293b;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+    .tab-active {
+      border-bottom: 3px solid #38bdf8;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+    .badge-high {
+      background-color: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+    }
+    .badge-mid {
+      background-color: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+    .badge-normal {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen custom-scrollbar pb-16">
+
+  <!-- 頂部導航列 -->
+  <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur border-b border-slate-800 px-4 lg:px-8 py-3.5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="../index.html" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-sky-300 transition whitespace-nowrap">
+          &larr; 科目總覽
+        </a>
+        <div class="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 font-bold text-lg">
+          ECN
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            企業電腦網路 講義精華與歷年真題模擬題庫
+            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-semibold">Ch01~Ch05 講義 + 10屆考古題解 + 擬真模擬</span>
+          </h1>
+          <p class="text-xs text-slate-400">國立中央大學資管系・陳奕明教授・期中考全題型詳解與 5 大手寫圖解指南</p>
+        </div>
+      </div>
+
+      <!-- 全局即時搜尋 -->
+      <div class="w-full md:w-96 relative">
+        <input type="text" id="globalSearch" placeholder="搜尋關鍵字（如：QoS, Target, RSTP, 802.1X, 是非題）..." 
+          class="w-full bg-slate-800 border border-slate-700 text-sm rounded-lg pl-9 pr-4 py-2 text-slate-200 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- 核心指標數據列 -->
+  <section class="max-w-7xl mx-auto px-4 lg:px-8 pt-6">
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3.5">
+      <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3.5">
+        <div class="text-xs font-medium text-slate-400">講義章節涵蓋</div>
+        <div class="text-xl font-bold text-sky-400 mt-1">Ch01 ~ Ch05</div>
+        <div class="text-xs text-slate-400 mt-0.5">295 頁 PDF 投影片全面剖析</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3.5">
+        <div class="text-xs font-medium text-slate-400">歷年期中考古題</div>
+        <div class="text-xl font-bold text-white mt-1">10 屆全題解</div>
+        <div class="text-xs text-sky-400 mt-0.5">971 ~ 1071 逐題摺疊解析</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3.5">
+        <div class="text-xs font-medium text-slate-400">超擬真模擬練習題</div>
+        <div class="text-xl font-bold text-emerald-400 mt-1">51+ 實戰題庫</div>
+        <div class="text-xs text-slate-400 mt-0.5">18組名詞 + 8問答計算 + 25是非</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3.5">
+        <div class="text-xs font-medium text-slate-400">手寫大題必考圖解</div>
+        <div class="text-xl font-bold text-amber-400 mt-1">5 大必畫架構</div>
+        <div class="text-xs text-slate-400 mt-0.5">資安循環/憑證/RSTP/封裝/SNMP</div>
+      </div>
+      <div class="bg-slate-800/60 border border-slate-700/80 rounded-xl p-3.5">
+        <div class="text-xs font-medium text-slate-400">考頻冠軍 (100%)</div>
+        <div class="text-xl font-bold text-rose-400 mt-1">QoS & SLA</div>
+        <div class="text-xs text-slate-400 mt-0.5">每年必考・指標與合約因果</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 導航分頁 Tabs -->
+  <div class="max-w-7xl mx-auto px-4 lg:px-8 mt-6">
+    <div class="flex border-b border-slate-800 overflow-x-auto gap-2 text-sm font-medium">
+      <button onclick="switchTab('tab-lectures')" id="btn-tab-lectures" class="px-4 py-3 tab-active whitespace-nowrap transition flex items-center gap-2">
+        <span>📖 五大講義各章精華重點庫</span>
+      </button>
+      <button onclick="switchTab('tab-simulation')" id="btn-tab-simulation" class="px-4 py-3 text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-2">
+        <span>🎯 歷年風格超擬真模擬考場 (51題練習)</span>
+      </button>
+      <button onclick="switchTab('tab-handwriting')" id="btn-tab-handwriting" class="px-4 py-3 text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-2">
+        <span>✍️ 考場手寫圖解與默寫骨架 (5大必考圖)</span>
+      </button>
+      <button onclick="switchTab('tab-years')" id="btn-tab-years" class="px-4 py-3 text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-2">
+        <span>📅 歷年原始考卷清單 (逐題解析+原件照片)</span>
+      </button>
+      <button onclick="switchTab('tab-frequency')" id="btn-tab-frequency" class="px-4 py-3 text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-2">
+        <span>🔥 考古題考點統計與頻率排行</span>
+      </button>
+      <button onclick="switchTab('tab-modules')" id="btn-tab-modules" class="px-4 py-3 text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-2">
+        <span>📚 考古題分類深度詳解庫</span>
+      </button>
+      <button onclick="switchTab('tab-quiz')" id="btn-tab-quiz" class="px-4 py-3 text-slate-400 hover:text-slate-200 whitespace-nowrap transition flex items-center gap-2">
+        <span>⚡ 106/107 歷年是非真題測驗</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 主內容容器 -->
+  <main class="max-w-7xl mx-auto px-4 lg:px-8 mt-6">
+
+    <!-- ==================== TAB 1: 講義各章精華重點庫 ==================== -->
+    <div id="tab-lectures" class="space-y-6">
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-sky-400"></span>
+              期中考範圍：五大章節講義（Ch01 ~ Ch05）全方位精粹解構
+            </h2>
+            <p class="text-sm text-slate-400 mt-1">完整萃取自陳奕明教授 5 份上課講義 PDF（共 295 頁投影片），零死角覆蓋觀念、協定封裝、實務案例與計算公式。</p>
+          </div>
+          <div class="flex flex-wrap gap-1.5" id="chapterFilterBtns">
+            <button onclick="filterChapter('all')" class="ch-btn px-3 py-1 rounded-lg text-xs bg-sky-500 text-white font-medium">全部章節</button>
+            <button onclick="filterChapter('ch1')" class="ch-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Ch01 雲端與基礎</button>
+            <button onclick="filterChapter('ch2')" class="ch-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Ch02 網路標準</button>
+            <button onclick="filterChapter('ch3')" class="ch-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Ch03 網路資安</button>
+            <button onclick="filterChapter('ch4')" class="ch-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Ch04 網管與治理</button>
+            <button onclick="filterChapter('ch5')" class="ch-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Ch05 乙太區域網</button>
+          </div>
+        </div>
+
+        <div id="lectureContainer" class="mt-6 space-y-6"></div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: 擬真模擬考場 ==================== -->
+    <div id="tab-simulation" class="hidden space-y-6">
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              期中考超擬真模擬考場（模擬歷年出題風格・51 道實戰題）
+            </h2>
+            <p class="text-sm text-slate-400 mt-1">嚴格仿照陳奕明教授出題模式：40% 名詞解釋對比、30% 問答計算與畫圖、20% 英文是非題、10% 情境與心得題。</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchSimSection('sim-compares')" id="btn-sim-compares" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500 text-white transition">名詞比較 (18題)</button>
+            <button onclick="switchSimSection('sim-essays')" id="btn-sim-essays" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">問答計算 (8題)</button>
+            <button onclick="switchSimSection('sim-tf')" id="btn-sim-tf" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition">英文是非 (25題)</button>
+          </div>
+        </div>
+
+        <!-- 題型一：名詞比較題 (18題) -->
+        <div id="sim-compares" class="mt-6 space-y-4">
+          <div class="p-3 bg-sky-950/30 border border-sky-800/40 rounded-lg text-xs text-sky-300 flex items-center justify-between">
+            <span><strong>【題型一說明】</strong>：歷年佔分 40%~50%，題目通常為「A vs. B」，要求分別解釋兩名詞意義並說明/比較兩者關係。</span>
+            <button onclick="toggleAllAnswers('compare-ans')" class="text-sky-400 hover:underline font-bold">全部展開/收合解答</button>
+          </div>
+          <div id="simComparesList" class="space-y-3"></div>
+        </div>
+
+        <!-- 題型二：核心問答與計算大題 (8題) -->
+        <div id="sim-essays" class="hidden mt-6 space-y-4">
+          <div class="p-3 bg-amber-950/30 border border-amber-800/40 rounded-lg text-xs text-amber-300 flex items-center justify-between">
+            <span><strong>【題型二說明】</strong>：歷年佔分 30%~40%，包含 Wi-Fi 與電波衰減計算、Target 百貨資安案分析、SPI 防火牆狀態過濾、802.1X 認證與 Switch 追蹤。</span>
+            <button onclick="toggleAllAnswers('essay-ans')" class="text-amber-400 hover:underline font-bold">全部展開/收合詳解</button>
+          </div>
+          <div id="simEssaysList" class="space-y-4"></div>
+        </div>
+
+        <!-- 題型三：高擬真英文是非題 (25題) -->
+        <div id="sim-tf" class="hidden mt-6 space-y-4">
+          <div class="p-3 bg-emerald-950/30 border border-emerald-800/40 rounded-lg text-xs text-emerald-300 flex items-center justify-between">
+            <div>
+              <span><strong>【題型三說明】</strong>：25 題高擬真全英文是非題，依據原文書與講義關鍵字精編。即點即測、即刻查看繁中錯因解析。</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs">得分：<span id="simScore" class="font-bold text-emerald-400 text-sm">0</span> / 25</span>
+              <button onclick="resetSimTf()" class="px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 text-xs text-white">重測</button>
+            </div>
+          </div>
+          <div id="simTfList" class="space-y-3"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: 考場手寫圖解與默寫骨架 (完整 5 大必畫圖) ==================== -->
+    <div id="tab-handwriting" class="hidden space-y-6">
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+          考場手寫專用：5 大核心必畫架構圖與速記模板（資訊零刪減）
+        </h2>
+        <p class="text-sm text-slate-400 mt-1">考卷題目若標註「請畫圖說明」，圖解未畫或邏輯不全將扣除至少 50% 配分。以下提供完整 5 大標準考卷圖解與速記口訣。</p>
+
+        <!-- 圖解 1: 數位憑證認證 -->
+        <div class="diagram-card bg-slate-900/80 border border-slate-700 rounded-xl p-6 mt-6">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30 font-semibold">圖解 1・高頻大題</span>
+              <h3 class="text-base font-bold text-white mt-1">數位憑證身分驗證原理（Digital Certificate Authentication）</h3>
+            </div>
+            <button onclick="copyDiagram('diagram-1-text')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 transition">複製默寫模板</button>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 overflow-x-auto">
+            <svg viewBox="0 0 850 320" class="w-full min-w-[700px] h-auto text-xs font-mono">
+              <rect x="50" y="20" width="160" height="50" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <text x="130" y="42" fill="#38bdf8" text-anchor="middle" font-weight="bold" font-size="13">Client (Supplicant)</text>
+              <text x="130" y="58" fill="#94a3b8" text-anchor="middle" font-size="11">驗證請求者</text>
+              <rect x="350" y="20" width="160" height="50" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+              <text x="430" y="42" fill="#10b981" text-anchor="middle" font-weight="bold" font-size="13">CA (憑證中心)</text>
+              <text x="430" y="58" fill="#94a3b8" text-anchor="middle" font-size="11">公正第三方機構</text>
+              <rect x="640" y="20" width="160" height="50" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+              <text x="720" y="42" fill="#f59e0b" text-anchor="middle" font-weight="bold" font-size="13">Server (Verifier)</text>
+              <text x="720" y="58" fill="#94a3b8" text-anchor="middle" font-size="11">驗證主體</text>
+              <line x1="130" y1="70" x2="130" y2="300" stroke="#334155" stroke-dasharray="4"/>
+              <line x1="430" y1="70" x2="430" y2="300" stroke="#334155" stroke-dasharray="4"/>
+              <line x1="720" y1="70" x2="720" y2="300" stroke="#334155" stroke-dasharray="4"/>
+              <line x1="430" y1="100" x2="710" y2="100" stroke="#10b981" stroke-width="1.5"/>
+              <polygon points="710,100 700,95 700,105" fill="#10b981"/>
+              <text x="575" y="93" fill="#6ee7b7" text-anchor="middle">Step 0: CA 簽發憑證 (以 CA 私鑰對 Server 公鑰簽名)</text>
+              <line x1="130" y1="135" x2="710" y2="135" stroke="#38bdf8" stroke-width="1.5"/>
+              <polygon points="710,135 700,130 700,140" fill="#38bdf8"/>
+              <text x="420" y="128" fill="#7dd3fc" text-anchor="middle">Step 1: 連線請求 (Connection Request)</text>
+              <line x1="720" y1="170" x2="140" y2="170" stroke="#f59e0b" stroke-width="1.5"/>
+              <polygon points="140,170 150,165 150,175" fill="#f59e0b"/>
+              <text x="420" y="163" fill="#fcd34d" text-anchor="middle">Step 2: 回傳 Server 數位憑證 (內含 Server 公鑰與 CA 簽章)</text>
+              <rect x="60" y="190" width="140" height="35" rx="4" fill="#0f172a" stroke="#38bdf8" stroke-width="1"/>
+              <text x="130" y="205" fill="#e2e8f0" text-anchor="middle" font-size="10">Step 3: 使用內建 CA 公鑰</text>
+              <text x="130" y="218" fill="#e2e8f0" text-anchor="middle" font-size="10">驗證簽章並取出 Server 公鑰</text>
+              <line x1="130" y1="245" x2="710" y2="245" stroke="#38bdf8" stroke-width="1.5"/>
+              <polygon points="710,245 700,240 700,250" fill="#38bdf8"/>
+              <text x="420" y="238" fill="#7dd3fc" text-anchor="middle">Step 4: 發送挑戰字串 (以 Server 公鑰加密 Pre-Master Secret)</text>
+              <line x1="720" y1="285" x2="140" y2="285" stroke="#10b981" stroke-width="2"/>
+              <polygon points="140,285 150,280 150,290" fill="#10b981"/>
+              <text x="420" y="278" fill="#6ee7b7" text-anchor="middle" font-weight="bold">Step 5: 握手成功！雙方切換至對稱式金鑰加密通道</text>
+            </svg>
+          </div>
+          <div id="diagram-1-text" class="mt-4 p-4 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 space-y-2">
+            <div class="font-bold text-amber-300">【手寫考卷作答默寫骨架】</div>
+            <div><strong>1. 角色定義</strong>：Supplicant（驗證者）、Verifier（被驗證者/伺服器）、CA（公正第三方憑證機構）。</div>
+            <div><strong>2. 核心流程</strong>：CA 簽發憑證 $ightarrow$ Client 發起連線 $ightarrow$ Server 回傳憑證 $ightarrow$ Client 以內建 CA 公鑰驗證簽章真實性並取得 Server 公鑰 $ightarrow$ 發送以 Server 公鑰加密之隨機金鑰 $ightarrow$ 握手成功切換至對稱金鑰。</div>
+            <div><strong>3. 相比其他認證優勢</strong>：杜絕中間人攻擊（MITM）；無須事先預先共享密碼，適合全球規模 Internet 與 HTTPS。</div>
+          </div>
+        </div>
+
+        <!-- 圖解 2: 資安戰略循環 -->
+        <div class="diagram-card bg-slate-900/80 border border-slate-700 rounded-xl p-6 mt-6">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30 font-semibold">圖解 2・手繪必考大題</span>
+              <h3 class="text-base font-bold text-white mt-1">資安管理生命週期（Threat -> Plan -> Protect -> Respond）與四大規劃原則</h3>
+            </div>
+            <button onclick="copyDiagram('diagram-2-text')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 transition">複製默寫模板</button>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 overflow-x-auto">
+            <svg viewBox="0 0 850 260" class="w-full min-w-[700px] h-auto text-xs font-sans">
+              <rect x="30" y="30" width="180" height="180" rx="10" fill="#1e293b" stroke="#f43f5e" stroke-width="2"/>
+              <text x="120" y="55" fill="#f43f5e" text-anchor="middle" font-weight="bold" font-size="13">Threat Environment</text>
+              <text x="120" y="75" fill="#cbd5e1" text-anchor="middle" font-size="11">【外在威脅環境】</text>
+              <text x="45" y="105" fill="#94a3b8" font-size="10">• 惡意內部員工 / 商業間諜</text>
+              <text x="45" y="125" fill="#94a3b8" font-size="10">• 網路犯罪組織 / APT 攻擊</text>
+              <text x="45" y="145" fill="#94a3b8" font-size="10">• 病毒 / 蠕蟲 / 木馬程式</text>
+              <text x="45" y="165" fill="#94a3b8" font-size="10">• 零日漏洞 (Zero-day) / DoS</text>
+              <line x1="210" y1="120" x2="245" y2="120" stroke="#94a3b8" stroke-width="2"/>
+              <polygon points="245,120 235,115 235,125" fill="#94a3b8"/>
+              <rect x="250" y="30" width="180" height="180" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <text x="340" y="55" fill="#38bdf8" text-anchor="middle" font-weight="bold" font-size="13">Plan (安全規劃原則)</text>
+              <text x="340" y="75" fill="#cbd5e1" text-anchor="middle" font-size="11">【四大指導原則】</text>
+              <text x="260" y="105" fill="#93c5fd" font-size="10">1. Risk Analysis (風險平衡)</text>
+              <text x="260" y="125" fill="#93c5fd" font-size="10">2. Comprehensive Security</text>
+              <text x="260" y="145" fill="#93c5fd" font-size="10">3. Defense in Depth (縱深)</text>
+              <text x="260" y="165" fill="#93c5fd" font-size="10">4. Least Permissions (最低限度)</text>
+              <line x1="430" y1="120" x2="465" y2="120" stroke="#94a3b8" stroke-width="2"/>
+              <polygon points="465,120 455,115 455,125" fill="#94a3b8"/>
+              <rect x="470" y="30" width="160" height="180" rx="10" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+              <text x="550" y="55" fill="#10b981" text-anchor="middle" font-weight="bold" font-size="13">Protect (安全防護)</text>
+              <text x="550" y="75" fill="#cbd5e1" text-anchor="middle" font-size="11">【日常落實執行】</text>
+              <text x="480" y="105" fill="#94a3b8" font-size="10">• 存取控管 (ACL)</text>
+              <text x="480" y="125" fill="#94a3b8" font-size="10">• 次世代防火牆 (NGFW)</text>
+              <text x="480" y="145" fill="#94a3b8" font-size="10">• 通訊加密 (SSL/IPsec)</text>
+              <text x="480" y="165" fill="#94a3b8" font-size="10">• 入侵防禦 (IPS)</text>
+              <line x1="630" y1="120" x2="665" y2="120" stroke="#94a3b8" stroke-width="2"/>
+              <polygon points="665,120 655,115 655,125" fill="#94a3b8"/>
+              <rect x="670" y="30" width="150" height="180" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+              <text x="745" y="55" fill="#f59e0b" text-anchor="middle" font-weight="bold" font-size="13">Respond (事件回應)</text>
+              <text x="745" y="75" fill="#cbd5e1" text-anchor="middle" font-size="11">【遭突破緊急應變】</text>
+              <text x="680" y="105" fill="#94a3b8" font-size="10">• 偵測 (Detect)</text>
+              <text x="680" y="125" fill="#94a3b8" font-size="10">• 隔離圍堵 (Contain)</text>
+              <text x="680" y="145" fill="#94a3b8" font-size="10">• 修復 (Repair)</text>
+              <text x="680" y="165" fill="#94a3b8" font-size="10">• 鑑識 (Forensics)</text>
+              <path d="M 745 210 L 745 240 L 340 240 L 340 215" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"/>
+              <polygon points="340,215 335,225 345,225" fill="#f59e0b"/>
+              <text x="540" y="235" fill="#fcd34d" text-anchor="middle" font-size="11">事件檢討反饋（修正安全策略與落實機制）</text>
+            </svg>
+          </div>
+          <div id="diagram-2-text" class="mt-4 p-4 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 space-y-2">
+            <div class="font-bold text-amber-300">【手寫考卷作答默寫骨架】</div>
+            <div><strong>1. 核心因果循環</strong>：Threat 決定方針 $ightarrow$ Plan 落實防護 $ightarrow$ Protect 遭突破觸發 Respond $ightarrow$ Feedback Loop 修正回 Plan。</div>
+            <div><strong>2. Plan 四大原則</strong>：Risk Analysis (合理降低風險)、Comprehensive Security (全面防堵)、Defense in Depth (多層獨立)、Least Permissions (最小權限)。</div>
+          </div>
+        </div>
+
+        <!-- 圖解 3: RSTP -->
+        <div class="diagram-card bg-slate-900/80 border border-slate-700 rounded-xl p-6 mt-6">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold">圖解 3・網路架構題</span>
+              <h3 class="text-base font-bold text-white mt-1">階層式交換網路與 802.1w RSTP 破除迴圈 / 容錯備援原理</h3>
+            </div>
+            <button onclick="copyDiagram('diagram-3-text')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 transition">複製默寫模板</button>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 overflow-x-auto">
+            <svg viewBox="0 0 850 260" class="w-full min-w-[700px] h-auto text-xs font-mono">
+              <rect x="340" y="20" width="170" height="45" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <text x="425" y="42" fill="#38bdf8" text-anchor="middle" font-weight="bold" font-size="12">Root Bridge (核心交換器)</text>
+              <text x="425" y="56" fill="#94a3b8" text-anchor="middle" font-size="10">MAC: 00:01 (Bridge ID 最低)</text>
+              <rect x="150" y="110" width="160" height="45" rx="6" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="230" y="132" fill="#f8fafc" text-anchor="middle" font-weight="bold" font-size="12">Switch A (彙聚層)</text>
+              <text x="230" y="146" fill="#94a3b8" text-anchor="middle" font-size="10">Port 1 (Root Port)</text>
+              <rect x="540" y="110" width="160" height="45" rx="6" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+              <text x="620" y="132" fill="#f8fafc" text-anchor="middle" font-weight="bold" font-size="12">Switch B (彙聚層)</text>
+              <text x="620" y="146" fill="#94a3b8" text-anchor="middle" font-size="10">Port 1 (Root Port)</text>
+              <line x1="390" y1="65" x2="250" y2="110" stroke="#10b981" stroke-width="2"/>
+              <text x="300" y="80" fill="#34d399" font-size="10">主線路 (Forwarding)</text>
+              <line x1="460" y1="65" x2="600" y2="110" stroke="#10b981" stroke-width="2"/>
+              <text x="550" y="80" fill="#34d399" font-size="10">主線路 (Forwarding)</text>
+              <line x1="310" y1="132" x2="540" y2="132" stroke="#ef4444" stroke-width="2" stroke-dasharray="6"/>
+              <circle cx="425" cy="132" r="14" fill="#ef4444" fill-opacity="0.2" stroke="#ef4444" stroke-width="1.5"/>
+              <text x="425" y="136" fill="#f87171" text-anchor="middle" font-weight="bold" font-size="12">X</text>
+              <text x="425" y="160" fill="#f87171" text-anchor="middle" font-size="10">RSTP 邏輯阻斷 (Alternate/Discarding 狀態)</text>
+              <rect x="180" y="200" width="100" height="35" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+              <text x="230" y="222" fill="#94a3b8" text-anchor="middle" font-size="11">Workgroup SW</text>
+              <line x1="230" y1="155" x2="230" y2="200" stroke="#64748b" stroke-width="1.5"/>
+              <rect x="570" y="200" width="100" height="35" rx="4" fill="#0f172a" stroke="#475569" stroke-width="1"/>
+              <text x="620" y="222" fill="#94a3b8" text-anchor="middle" font-size="11">Workgroup SW</text>
+              <line x1="620" y1="155" x2="620" y2="200" stroke="#64748b" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div id="diagram-3-text" class="mt-4 p-4 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 space-y-2">
+            <div class="font-bold text-amber-300">【手寫考卷作答默寫骨架】</div>
+            <div><strong>1. 問題背景</strong>：階層式網路中單一路徑存在單點失效。若部署備援線路會形成「實體迴圈」，造成廣播風暴癱瘓全網。</div>
+            <div><strong>2. RSTP 解法</strong>：選出 Root Bridge，將造成迴圈的備援埠置於 Discarding/Alternate 狀態。主線斷裂時數百毫秒內迅速重啟備援埠。</div>
+          </div>
+        </div>
+
+        <!-- 圖解 4: 通用訊息語法 (Header, Data Field, Trailer) -->
+        <div class="diagram-card bg-slate-900/80 border border-slate-700 rounded-xl p-6 mt-6">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 font-semibold">圖解 4・基礎結構題</span>
+              <h3 class="text-base font-bold text-white mt-1">協定訊息通用語法（General Message Syntax：Header, Data Field, Trailer）</h3>
+            </div>
+            <button onclick="copyDiagram('diagram-4-text')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 transition">複製默寫模板</button>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 overflow-x-auto">
+            <svg viewBox="0 0 850 140" class="w-full min-w-[700px] h-auto text-xs font-mono">
+              <rect x="40" y="30" width="220" height="70" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+              <text x="150" y="55" fill="#38bdf8" text-anchor="middle" font-weight="bold" font-size="14">Header (表頭)</text>
+              <text x="150" y="75" fill="#94a3b8" text-anchor="middle" font-size="11">• 來源與目的位址 (IP/MAC)</text>
+              <text x="150" y="90" fill="#94a3b8" text-anchor="middle" font-size="11">• 序號、旗標 (SYN, ACK)、長度</text>
+              <rect x="260" y="30" width="350" height="70" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+              <text x="435" y="55" fill="#10b981" text-anchor="middle" font-weight="bold" font-size="14">Data Field (資料本體 / Payload)</text>
+              <text x="435" y="75" fill="#94a3b8" text-anchor="middle" font-size="11">• 承載上一層封裝之協定資料（如 Packet 包在 Frame 內）</text>
+              <text x="435" y="90" fill="#94a3b8" text-anchor="middle" font-size="11">• 控制封包此欄位可為空（如純 ACK 或 SYN 封包）</text>
+              <rect x="610" y="30" width="200" height="70" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+              <text x="710" y="55" fill="#f59e0b" text-anchor="middle" font-weight="bold" font-size="14">Trailer (表尾 / 拖車)</text>
+              <text x="710" y="75" fill="#94a3b8" text-anchor="middle" font-size="11">• 循環冗餘檢驗碼 (CRC-32 / FCS)</text>
+              <text x="710" y="90" fill="#fcd34d" text-anchor="middle" font-size="11">★ 僅 Data Link 層訊框必有，TCP/IP 無</text>
+            </svg>
+          </div>
+          <div id="diagram-4-text" class="mt-4 p-4 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 space-y-2">
+            <div class="font-bold text-amber-300">【手寫考卷作答默寫骨架】</div>
+            <div><strong>1. Header</strong>：所有協定皆必須具備。提供導引與控制訊息（來源/目的位址、旗標、序號）。</div>
+            <div><strong>2. Data Field</strong>：傳輸的實際資料負載（Payload）。</div>
+            <div><strong>3. Trailer</strong>：位於資料後方的檢查欄位（主要為 CRC 錯誤檢查）。<strong>特別注意：並非所有協定都有 Trailer，只有第二層 Ethernet Frame 具備，TCP 與 IP 封包絕對沒有 Trailer！</strong></div>
+          </div>
+        </div>
+
+        <!-- 圖解 5: SNMP 集中式網管架構 -->
+        <div class="diagram-card bg-slate-900/80 border border-slate-700 rounded-xl p-6 mt-6">
+          <div class="flex justify-between items-center mb-4 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 font-semibold">圖解 5・網管可視性大題</span>
+              <h3 class="text-base font-bold text-white mt-1">SNMP 集中式網管架構（Manager, Agent, MIB）與網路可視性（Visibility）</h3>
+            </div>
+            <button onclick="copyDiagram('diagram-5-text')" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 border border-slate-700 transition">複製默寫模板</button>
+          </div>
+          <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 overflow-x-auto">
+            <svg viewBox="0 0 850 200" class="w-full min-w-[700px] h-auto text-xs font-mono">
+              <rect x="250" y="15" width="350" height="45" rx="6" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+              <text x="425" y="35" fill="#c084fc" text-anchor="middle" font-weight="bold" font-size="13">SNMP Manager (網管伺服器 / 視覺化儀表板)</text>
+              <text x="425" y="50" fill="#94a3b8" text-anchor="middle" font-size="10">發出 Get / Set 查詢與指令；接收 Trap 警報；提供 Network Visibility</text>
+              <line x1="320" y1="60" x2="200" y2="110" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="240" y="80" fill="#38bdf8" font-size="10">Get / Set</text>
+              <line x1="220" y1="110" x2="340" y2="60" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3"/>
+              <text x="290" y="95" fill="#f87171" font-size="10">Trap (主動告警)</text>
+              <line x1="530" y1="60" x2="650" y2="110" stroke="#38bdf8" stroke-width="1.5"/>
+              <text x="600" y="80" fill="#38bdf8" font-size="10">Get / Set</text>
+              <line x1="630" y1="110" x2="510" y2="60" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3"/>
+              <text x="560" y="95" fill="#f87171" font-size="10">Trap (主動告警)</text>
+              <rect x="100" y="115" width="220" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+              <text x="210" y="135" fill="#e2e8f0" text-anchor="middle" font-weight="bold">Core Router</text>
+              <rect x="115" y="145" width="90" height="30" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+              <text x="160" y="165" fill="#c084fc" text-anchor="middle" font-size="10">Agent 程式</text>
+              <rect x="215" y="145" width="90" height="30" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+              <text x="260" y="165" fill="#34d399" text-anchor="middle" font-size="10">MIB 資料庫</text>
+              <rect x="530" y="115" width="220" height="70" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+              <text x="640" y="135" fill="#e2e8f0" text-anchor="middle" font-weight="bold">Workgroup Switch</text>
+              <rect x="545" y="145" width="90" height="30" fill="#0f172a" stroke="#a855f7" stroke-width="1"/>
+              <text x="590" y="165" fill="#c084fc" text-anchor="middle" font-size="10">Agent 程式</text>
+              <rect x="645" y="145" width="90" height="30" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+              <text x="690" y="165" fill="#34d399" text-anchor="middle" font-size="10">MIB 資料庫</text>
+            </svg>
+          </div>
+          <div id="diagram-5-text" class="mt-4 p-4 rounded-lg bg-slate-800/80 border border-slate-700/80 text-xs text-slate-300 space-y-2">
+            <div class="font-bold text-amber-300">【手寫考卷作答默寫骨架】</div>
+            <div><strong>1. 三大核心元件</strong>：<code>Manager</code> (網管中心)、<code>Agent</code> (設備端背景程式)、<code>MIB</code> (管理資訊庫)。</div>
+            <div><strong>2. 指令與傳輸</strong>：走 UDP。Manager 週期性 <code>Get</code> 輪詢、<code>Set</code> 修改參數；設備異常主動發送 <code>Trap</code> 警告。</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: 歷年原始考卷清單 ==================== -->
+    <div id="tab-years" class="hidden space-y-6">
+      <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3" id="yearPillContainer"></div>
+      <div id="yearContentArea" class="space-y-4"></div>
+    </div>
+
+    <!-- ==================== TAB 5: 考點統計與頻率排行 ==================== -->
+    <div id="tab-frequency" class="hidden space-y-6">
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+          重複題型統計與考頻熱度總覽 (97 ~ 107 學年度)
+        </h2>
+        <div class="mt-5 overflow-x-auto">
+          <table class="w-full text-left text-sm border-collapse">
+            <thead>
+              <tr class="border-b border-slate-700 text-slate-400 text-xs uppercase bg-slate-800/60">
+                <th class="py-3 px-4">排名</th>
+                <th class="py-3 px-4">考點核心主題</th>
+                <th class="py-3 px-4">重複出現年份</th>
+                <th class="py-3 px-4 text-center">出現次數</th>
+                <th class="py-3 px-4 text-center">命題機率</th>
+                <th class="py-3 px-4 text-center">考試重要度評級</th>
+                <th class="py-3 px-4">操作</th>
+              </tr>
+            </thead>
+            <tbody id="frequencyTableBody" class="divide-y divide-slate-800"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TAB 6: 考古題分類深度詳解庫 ==================== -->
+    <div id="tab-modules" class="hidden space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-slate-800/40 border border-slate-700/60 p-4 rounded-xl">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs text-slate-400 font-medium">分類篩選：</span>
+          <button onclick="filterModule('all')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-sky-500 text-white font-medium">全部模組</button>
+          <button onclick="filterModule('qos')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">QoS & SLA</button>
+          <button onclick="filterModule('security')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">資安管理與原則</button>
+          <button onclick="filterModule('switch')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">Switch & RSTP</button>
+          <button onclick="filterModule('crypto')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">憑證與密碼學</button>
+          <button onclick="filterModule('oamp')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">OAM&P 與網管</button>
+          <button onclick="filterModule('wireless')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">無線傳播與展頻</button>
+          <button onclick="filterModule('physical')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">實體層與基頻寬頻</button>
+          <button onclick="filterModule('protocol')" class="mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700">網路架構與協定</button>
+        </div>
+        <div class="text-xs text-slate-400" id="moduleCountText">顯示全部題目</div>
+      </div>
+      <div id="moduleCardsContainer" class="space-y-4"></div>
+    </div>
+
+    <!-- ==================== TAB 7: 106/107 歷年是非真題測驗 ==================== -->
+    <div id="tab-quiz" class="hidden space-y-6">
+      <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              106 / 107 學年度英文是非題庫線上模擬測驗（20 分必拿）
+            </h2>
+            <p class="text-sm text-slate-400 mt-1">期中考固定 20 題英文是非題（佔總分 20%）。點選 (O) 或 (X) 即刻判斷正誤，並提供繁體中文錯因修訂解析。</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-300">得分：<span id="quizScore" class="font-bold text-emerald-400 text-base">0</span> / 21</span>
+            <button onclick="resetQuiz()" class="px-3 py-1.5 rounded-lg text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 transition">重新測驗</button>
+          </div>
+        </div>
+        <div id="quizContainer" class="mt-6 space-y-4"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <div id="toast" class="fixed bottom-6 right-6 bg-sky-600 text-white px-4 py-2.5 rounded-lg shadow-xl text-sm font-medium opacity-0 transition-opacity pointer-events-none duration-300 z-50">
+    已成功複製！
+  </div>
+
+  <script>
+    // --- 完整資料集注入 ---
+    const LECTURE_CHAPTERS = [{"id": "ch1", "number": "Chapter 1", "title": "Welcome to the Cloud (雲端生態系、網路基礎概念與分層標準)", "slides": "49 頁講義全析", "badge": "重點入門・歷年是非題庫大本營", "sections": [{"sub": "1. 網路本質與雲端生態系 (Netflix & AWS 案例)", "detail": "<b>網路是全有全無的系統 (Head Game)：</b>稍有一處細節或協定參數錯誤，整套系統即告癱瘓。<br/><b>Netflix 雲端架構雙軌設計：</b><br/>• <b>運算、編碼與推薦引擎：</b>建構於 Amazon AWS 雲端 (IaaS)，利用虛擬化伺服器彈性伸縮運算資源。<br/>• <b>串流影音遞送 (Video Delivery)：</b>不走 AWS 昂貴頻寬，而是自建 <b>Open Connect 內容傳遞網路 (CDN)</b>，將暫存快取伺服器直接佈建於各大 ISP 機房邊界，大幅降低骨幹網路塞車與延遲。"}, {"sub": "2. 伺服器虛擬化 (Server Virtualization) 與雲端服務模型", "detail": "<b>伺服器虛擬化：</b>在單一實體機器上運行 Hypervisor，切分出多個獨立運行的虛擬機器 (VM)。優勢在於提升 CPU 使用率 (由傳統 10% 提升至 80% 以上)、節省電力機房空間，並支援動態熱遷移 (Live Migration)。<br/><b>雲端三層服務模型 (Cloud Ecosystem)：</b><br/>• <b>IaaS (基礎設施即服務)：</b>供應商提供硬體運算力、儲存與網路 (如 AWS EC2/S3)，企業需自行維護作業系統、中介軟體與應用程式。<br/>• <b>PaaS (平台即服務)：</b>供應商提供開發環境與執行平台 (如 Heroku, Google App Engine)，開發者僅需撰寫並部署應用程式碼。<br/>• <b>SaaS (軟體即服務)：</b>終端使用者直接透過瀏覽器使用軟體功能 (如 Google Docs, Salesforce, Office 365)，無須管理任何底層架構。<br/><b>企業自建機房 (Corporate Data Centers) vs. 雲端考量：</b>雲端將資本支出 (CAPEX) 轉為營運支出 (OPEX)，但衍生<b>資料隱私 (Data Privacy)、廠商鎖定 (Vendor Lock-in) 及法規合規性</b>等重大疑慮。"}, {"sub": "3. 訊息分割 (Message Fragmentation) 核心機制", "detail": "訊息分割是將龐大應用層訊息切分為小封包 (Packets) 傳輸，兩大核心原因為：<br/>1. <b>錯誤修正效益 (Error Correction)：</b>若不分割，巨型訊息只要出現 1 bit 錯誤就必須全數重傳；分割後僅需重傳損毀的單一小封包。<br/>2. <b>統計多工通道共享 (Multiplexing)：</b>防止單一使用者的長傳輸霸佔實體線路造成佇列阻塞 (Head-of-Line Blocking)，讓多使用者的封包能交錯利用線路。"}, {"sub": "4. 單一網路 (Single Network) vs. 網際網路 (Internet)", "detail": "• <b>Single Network (單一網路)：</b>內部所有終端與交換設備皆使用<b>相同之第二層協定標準</b> (例如全乙太網路或全 Wi-Fi)。資料傳輸單元稱為 <b>Frame (訊框)</b>，定址使用 48-bit <b>EUI-48 / MAC 位址</b>，中間轉發設備稱為 <b>Switch</b>。<br/>• <b>Internet (網際網路)：</b>連結多個相異的 Single Networks。資料傳輸單元稱為 <b>Packet (封包)</b>，定址使用 32-bit <b>IP 位址</b>，跨網轉發設備稱為 <b>Router (路由器)</b>。<br/>★ <b>比喻記憶：</b>Packet 是被分割包裝好的貨物，Frame 是運送貨物的專屬貨車。當貨物跨國 (跨網路) 時，貨車 (Frame) 必須重新更換，但裡面的貨物 (Packet) 保持不變！"}]}, {"id": "ch2", "number": "Chapter 2", "title": "Network Standards (通訊標準架構、TCP/IP 與訊息語法)", "slides": "40 頁講義全析", "badge": "必考架構・協定封裝與交握", "sections": [{"sub": "1. ARPANET 起源與 RFC 機制", "detail": "1969 年運作，BBN 公司研發 <b>IMP (Interface Message Processor)</b>，為現代路由器的雛形。網際網路標準文件統稱為 <b>RFC (Request for Comments)</b>，由 IETF 組織推動，秉持「粗略共識與實作程式碼 (Rough consensus and running code)」之非官方民主決策精神。"}, {"sub": "2. 實體鏈結、資料鏈結與路由 (Physical Link vs. Data Link vs. Route)", "detail": "• <b>Physical Link (實體鏈結)：</b>相鄰兩個實體硬體裝置 (如 Host 到 Switch) 之間的直接實體連線。<br/>• <b>Data Link (資料鏈結)：</b>訊框在單一網路 (Single Network) 中從來源裝置到目的裝置所經過的整段路徑。<br/>• <b>Route (路由)：</b>封包在整個跨國/跨網的 internet 中，自來源主機抵達目的主機所跨越的端對端全路徑。<br/>★ <b>數量關係定律：</b>若通訊經過 N 個 Single Networks，則全程只有 <b>1 條 Route</b>，但包含 <b>N 條 Data Links</b>，以及更多條的 Physical Links！"}, {"sub": "3. TCP 連線導向與可靠傳輸機制 (3-Way Handshake & 4-Way Close)", "detail": "<b>連線建立 (Three-Way Handshake)：</b><br/>1. Client $\\rightarrow$ Server：發送 <code>SYN</code> 旗標 (序號 Seq = X)。<br/>2. Server $\\rightarrow$ Client：回覆 <code>SYN + ACK</code> 旗標 (確認號 Ack = X+1, 序號 Seq = Y)。<br/>3. Client $\\rightarrow$ Server：回發 <code>ACK</code> 旗標 (確認號 Ack = Y+1)。<br/><b>連線終止 (Four-Way Handshake)：</b>雙方各自獨立關閉單向傳輸通道，發送 <code>FIN</code> 並等待對端回覆 <code>ACK</code>。<br/><b>可靠傳輸 (Reliability)：</b>透過序號 (Seq) 排序重組、ACK 確認號與重傳計時器 (Retransmission Timer) 達成防丟與防重。"}, {"sub": "4. 訊息語法結構與 PCM 語音編碼", "detail": "<b>General Message Syntax：</b><br/>• <b>Header：</b>控制與導引資訊 (IP/Port/Flags)，所有協定訊息必備。<br/>• <b>Data Field：</b>承載之上層有效負載 (Payload)，控制封包此欄可為空。<br/>• <b>Trailer：</b>表尾檢錯碼 (CRC-32/FCS)，<b>僅第二層 Ethernet Frame 具備，TCP/IP 封包絕無 Trailer！</b><br/><b>PCM 語音編碼三步驟：</b>取樣 (Sampling, 8000 Hz) $\\rightarrow$ 量化 (Quantization, 8 bits / 256 階) $\\rightarrow$ 編碼 (Encoding)，產生標準電話 64 kbps (8000 $\\times$ 8) 數位語音頻寬。"}]}, {"id": "ch3", "number": "Chapter 3", "title": "Network Security (企業資安防護、攻擊手法與防火牆技術)", "slides": "81 頁講義全析", "badge": "手寫大題必出・Target 案例與防火牆", "sections": [{"sub": "1. 美國 Target 百貨資安外洩重大案例全景剖析", "detail": "2013 年聖誕購物季，Target 百貨被竊取 4000 萬筆信用卡與 7000 萬筆客戶隱私資料。攻擊鏈 (Kill Chain) 流程：<br/>1. <b>突破入口：</b>外判冷凍空調廠商 (Fazio Mechanical) 員工誤開魚叉式釣魚郵件 (Spear Phishing)，供應商連線憑證被盜。<br/>2. <b>橫向移動：</b>攻擊者登入 Target 外包廠商入口網站，發現內網並未依業務劃分安全隔離 (缺少 VLAN/微隔離)，直接橫向穿透至收銀 POS 網路。<br/>3. <b>惡意植入：</b>於 POS 機植入 <b>BlackPOS</b> 記憶體刮取程式 (RAM scraper)，在交易刷卡尚未加密前直接由記憶體攔截信用卡明文。<br/>4. <b>警報忽視：</b>安全監控軟體 (FireEye) 曾發出高危警報，但資安團隊忽視未予處置，造成嚴重管理體制失靈。"}, {"sub": "2. 惡意程式全分類 (Malware Taxonomy)", "detail": "• <b>Virus (電腦病毒)：</b>必須附著於其他宿主程式 (如執行檔、Office 巨集)，隨宿主被執行而傳播，需人為介入。<br/>• <b>Worm (電腦蠕蟲)：</b>獨立可執行程式，無需附著宿主，主動掃描網路安全漏洞 (Vulnerability) 自我複製擴散，傳播極為迅速。<br/>• <b>Trojan Horse (特洛伊木馬)：</b>偽裝成正常合法檔案，<b>本體不具備自我複製能力</b>，主要功能為潛伏並開啟後門 (Backdoor)。<br/>• <b>Zero-Day Attack (零日漏洞攻擊)：</b>廠商尚未知曉且尚未釋出修補檔 (Patch) 前所發動之弱點攻擊，傳統防毒無特徵碼可防。"}, {"sub": "3. 密碼學防禦：對稱式 vs. 公鑰密碼學與數位憑證", "detail": "• <b>對稱金鑰 (Symmetric Key, 如 AES)：</b>加解密共用單一金鑰，速度快、資源消耗少，密鑰長度至少需 100 bits 以上。<br/>• <b>非對稱公鑰密碼 (Public Key, 如 RSA)：</b>具備成對的公鑰與私鑰。公鑰加密則私鑰解密 (機密性)；反之私鑰加密則公鑰解密 (數位簽章)。<br/>• <b>數位簽章 (Digital Signature)：</b>提供真實性 (Authentication)、完整性 (Integrity) 與不可否認性 (Non-repudiation)。<br/>• <b>數位憑證 (Digital Certificate)：</b>防範中間人攻擊 (MITM)，由第三方公信機構 CA 簽署伺服器公鑰，用戶端以 CA 公鑰驗證。"}, {"sub": "4. 狀態檢視防火牆 (SPI) vs. 次世代防火牆 (NGFW)", "detail": "• <b>SPI (Stateful Packet Inspection) 防火牆：</b><br/>  - <b>連線建立狀態 (Connection-Opening State)：</b>針對 SYN 封包嚴格比對存取控制清單 (ACL) 規則，消耗較多資源，核可後加入 State Table。<br/>  - <b>通訊進行狀態 (Ongoing State)：</b>後續 99% 的封包直接查閱 State Table 快速通過，大幅降低轉發延遲。<br/>• <b>NGFW (Next-Generation Firewall)：</b>突破傳統 SPI 無法檢視加密通道與 Port 80/443 偽裝的盲點。具備<b>深度封包檢測 (DPI)</b>、<b>應用程式識別 (Application Awareness)</b>、整合式 <b>IPS (入侵防禦)</b>，並以專用硬體 <b>ASIC</b> 達到 Wire-speed 線速防護。"}]}, {"id": "ch4", "number": "Chapter 4", "title": "Network and Security Management (網管指標、QoS、流量工程與治理循環)", "slides": "70 頁講義全析", "badge": "10 年必考題庫・QoS/SLA 與四大原則", "sections": [{"sub": "1. QoS 指標與 SLA 服務合約深入度量", "detail": "• <b>Rated Speed (應然速度) vs. Throughput (實然吞吐量)：</b>宣稱規格 vs. 實測有效頻寬。<br/>• <b>Aggregate Throughput (共享總吞吐量) vs. Individual Throughput (個人分得吞吐量)：</b>熱點所有人瓜分總頻寬。<br/>• <b>Jitter (抖動)：</b>延遲時間的變異幅度 (Variability in latency)。Jitter 過大造成語音碎裂、影像延遲。<br/>• <b>SLA (服務水準協議)：</b>電信商承諾之<b>最低容忍效能 (Worst-case performance)</b>，具法律約束力與未達標罰則 (Penalty)。"}, {"sub": "2. 瞬間流量高峰 (Momentary Traffic Peaks) 四大工程解法", "detail": "1. <b>Overprovisioning (過度配置容量)：</b>容量永遠開到最大，浪費頻寬且成本昂貴。<br/>2. <b>Priority (排程優先順序)：</b>延遲敏感的 VoIP 語音設為最高優先權即刻轉發；Email 等耐延遲流量暫時排隊。<br/>3. <b>Reservation (頻寬保留)：</b>為特定核心系統劃分專用頻寬，閒置時其他流量亦不得搶佔。<br/>4. <b>Traffic Shaping / Congestion Prevention (流量整形與預防)：</b>在邊界端過濾無效流量 (如 P2P) 或限制流量百分比。"}, {"sub": "3. 資安生命週期 (Plan-Protect-Respond) 與四大規劃原則", "detail": "<b>資安管理原則：Security is primarily a management issue, not a technology issue。</b><br/>• <b>Risk Analysis (風險評估)：</b>在攻擊損失與防禦成本間取得經濟平衡，非消除所有風險，而是在合理成本下控制風險。<br/>• <b>Comprehensive Security (全面性安全)：</b>關閉所有攻擊入口，不留任何破綻。<br/>• <b>Defense in Depth (縱深防禦)：</b>佈建多層彼此獨立之防護防線，單一失效時其他防線仍能阻擋。<br/>• <b>Least Permissions (最小權限)：</b>僅賦予帳號與行程作業所需的最低授權。<br/>• <b>政策與落實：</b>Policy (定義目標) $\\rightarrow$ Guidance (Standards 強制遵守 / Guidelines 彈性指引) $\\rightarrow$ Oversight (稽核與檢視)。"}, {"sub": "4. SNMP 網路管理協定與 SDN 集中控制", "detail": "• <b>SNMP 架構：</b>Manager (管理主機) 透過 <code>Get</code> / <code>Set</code> 與被管理設備上的 Agent (代理程式) 溝通，設備將運行數據寫入 <b>MIB (管理資訊庫)</b>。異常時 Agent 主動送出 <code>Trap</code> 警報，傳輸基於 <b>UDP</b>。<br/>• <b>SDN (軟體定義網路)：</b>將控制層 (Control Plane) 與轉發層 (Data/Forwarding Plane) 分離，由中央 SDN Controller 透過 <b>OpenFlow</b> 協定統一部署全網流表 (Flow Tables)。"}]}, {"id": "ch5", "number": "Chapter 5", "title": "Ethernet (802.3) LANs (乙太網路實體層、訊框格式、交換與防迴圈)", "slides": "55 頁講義全析", "badge": "實體與鏈結層核心・802.1w RSTP 與 802.1X", "sections": [{"sub": "1. 實體層線材與傳輸技術 (UTP vs. 光纖 / 基頻 vs. 寬頻)", "detail": "• <b>Workgroup Switch (連接 Access Line 主機，採 UTP 銅線) vs. Core Switch (連接 Trunk Line 骨幹，採光纖)。</b><br/>• <b>Baseband (基頻)：</b>數位方波訊號直接注入傳輸媒介，便宜簡單，為 LAN 主流。<br/>• <b>Broadband (寬頻)：</b>訊號調變至高頻射頻載波，藉由分頻多工 (FDM) 劃分多通道，傳輸距離長，設備昂貴。<br/>• <b>UTP 雙絞線：</b>利用安培定律磁場相消 (Ampere's law) 抵消 <b>Crosstalk (串音干擾)</b>。Cat 5e (1 Gbps, 100m)、Cat 6 (10 Gbps, 55m)、Cat 6A (10 Gbps, 100m)。<br/>• <b>光纖通訊：</b>多模光纖 (MMF, 850 nm 短波長, 芯粗, 受限於<b>模態色散 Modal Dispersion</b>, 距離約 500m) vs. 單模光纖 (SMF, 1310/1550 nm 雷射, 芯細約 9 $\\mu m$, <b>無模態色散</b>, 距離數十公里)。"}, {"sub": "2. Ethernet Frame 格式與交換機運作機制", "detail": "<b>Ethernet Frame 結構：</b>Preamble (7) + SFD (1) + Destination MAC (6) + Source MAC (6) + Tag (4) + Length/Type (2) + Data + PAD + FCS/CRC (4)。<br/><b>Switch Table 運作三部曲：</b><br/>1. <b>Learning：</b>依據進入 Frame 之 Source MAC 學習並更新對應 Port。<br/>2. <b>Forwarding/Filtering：</b>依據 Destination MAC 查表轉發；同 Port 則過濾丟棄。<br/>3. <b>Flooding：</b>未知 Unicast 或 Broadcast (`FF:FF:FF:FF:FF:FF`) 則對除進入 Port 以外的所有 Port 廣播。"}, {"sub": "3. 802.1D STP 與 802.1w RSTP 破除迴圈與快速容錯", "detail": "• <b>乙太網路嚴禁實體迴圈 (No Loops Allowed in Ethernet)：</b>迴圈將引發廣播風暴 (Broadcast Storm) 癱瘓全網。<br/>• <b>802.1w RSTP 機制：</b>交換器互相交換 BPDU 選出 Root Bridge，將造成迴圈之備援連線邏輯阻斷 (Alternate/Discarding 狀態)；主線路斷線時於<b>數百毫秒內迅速重啟備援線路</b>，消除單點失效 (SPOF)。"}, {"sub": "4. 乙太網路進階安全與協定 (802.1X, VLAN, ARP)", "detail": "• <b>802.1X Port-Based 存取控制：</b>防止外人插上牆壁 RJ-45 孔入侵。包含 Supplicant (終端)、Authenticator (交換器 Switch) 與 Central Authentication Server (中央 RADIUS 伺服器)，統一權限控管。<br/>• <b>VLAN (IEEE 802.1Q)：</b>軟體劃分廣播網域 (Broadcast Domain)，限制廣播封包散播範圍，大幅提升網路安全與傳輸效率。<br/>• <b>ARP (位址解析協定)：</b>以廣播發送 ARP Request (詢問誰擁有某 IP)，目標主機以單播回覆 ARP Reply (回覆 MAC 位址)。缺乏身分驗證易衍生 ARP 欺騙 (ARP Spoofing) 攻擊。"}]}];
+    const SIM_COMPARES = [{"q": "IaaS vs. PaaS vs. SaaS (雲端三層服務模型)", "a": "• IaaS (基礎設施即服務)：供應商提供硬體運算力與儲存 (如 AWS EC2/S3)，企業自行管理 OS 與應用程式。<br/>• PaaS (平台即服務)：供應商提供開發環境與平台 (如 Heroku)，企業僅管理應用程式。<br/>• SaaS (軟體即服務)：使用者直接透過網路使用軟體 (如 Google Docs)，完全由廠商代管維護。"}, {"q": "Single Network vs. Internet (單一網路與網際網路)", "a": "• Single Network：所有設備使用相同第二層標準 (如 Ethernet/Wi-Fi)，用 Switch 轉發 Frame，使用 EUI-48 (MAC) 位址。<br/>• Internet：連結多個不同 Single Networks，用 Router 轉發 Packet，使用 IP 位址。"}, {"q": "Frame Switching vs. Packet Routing (訊框交換與封包路由)", "a": "• Switching：發生於第二層 Data Link，Switch 依據 Destination MAC 查閱 Switch Table 決定出口 Port，不需知全路徑。<br/>• Routing：發生於第三層 Internet，Router 依據 Destination IP 查閱 Routing Table 尋找最佳端對端路徑。"}, {"q": "Connection-Oriented vs. Connectionless Protocols", "a": "• Connection-Oriented (連線導向，如 TCP)：通訊前需三向交握建立虛擬連線，具備序號、確認重傳，開銷較大但高度可靠。<br/>• Connectionless (無連線，如 UDP/HTTP)：通訊前不建連線，封包獨立發送，開銷低速度快但不保證抵達。"}, {"q": "Reliable vs. Unreliable Communication", "a": "• Reliable：協定能自動檢錯並主動重傳更正 (Error correction by retransmission)，如 TCP。<br/>• Unreliable：只檢錯但不重傳，發現錯誤直接拋棄 (如 Ethernet CRC、IP 檢驗和)。"}, {"q": "Malware: Virus vs. Worm vs. Trojan Horse", "a": "• Virus (病毒)：需附著於宿主程式，隨宿主執行而感染，需人為觸發。<br/>• Worm (蠕蟲)：獨立程式，不需宿主，主動掃描漏洞自我複製傳播。<br/>• Trojan (木馬)：偽裝成正常檔案，本體不自我複製，主要在於植入後門。"}, {"q": "Vulnerability vs. Zero-Day Exploit", "a": "• Vulnerability (安全漏洞)：軟體或系統存在的設計與撰寫缺陷。<br/>• Zero-Day Exploit (零日攻擊)：在廠商釋出修補檔 (Patch) 前所發動的攻擊，防護難度最高。"}, {"q": "Symmetric Key vs. Public Key (Asymmetric) Encryption", "a": "• Symmetric (對稱式，如 AES)：單一金鑰加解密，速度極快，適合巨量資料傳輸，但金鑰分發保管不易。<br/>• Public Key (非對稱公鑰，如 RSA)：公鑰加密私鑰解密，運算沉重速度慢，適合金鑰協商與身分認證。"}, {"q": "Digital Signature vs. Digital Certificate", "a": "• Digital Signature (數位簽章)：發送者以私鑰加密 Hash 產製，提供不可否認性、完整性與身分驗證。<br/>• Digital Certificate (數位憑證)：由公正第三方 CA 簽發之證書，將公鑰與實體身分綁定，杜絕中間人攻擊。"}, {"q": "SPI Firewall vs. Next-Generation Firewall (NGFW)", "a": "• SPI：比對 Socket (IP + Port) 與連線狀態 (Opening vs Ongoing)，無法看透 Port 80/443 加密與隧道流量。<br/>• NGFW：具備 Deep Packet Inspection (DPI)、Application Awareness (應用辨識) 與整合 IPS，能線速檢測應用內容。"}, {"q": "IDS (入侵偵測) vs. IPS (入侵預防)", "a": "• IDS：旁路監聽，發現可疑流量僅發送 Alarm 警報給管理者，不主動中斷流量。<br/>• IPS：串聯於網路直路 (In-line)，具備高信心度時能直接丟棄 (Drop) 攻擊封包阻斷入侵。"}, {"q": "Rated Speed vs. Throughput (Aggregate vs. Individual)", "a": "• Rated Speed：廠商宣稱的理論最高物理速率。<br/>• Throughput：扣除 Overhead 與碰撞後實測的有效速度。Aggregate 是全體共享總量，Individual 是個人實際分得速度。"}, {"q": "Overprovisioning vs. Traffic Shaping (壅塞處理)", "a": "• Overprovisioning：盲目擴充硬體線路容量，建置昂貴且閒置浪費。<br/>• Traffic Shaping：在網路邊界對流量進行分級、過濾非必要流量 (如 P2P) 或限制流量比例。"}, {"q": "Access Line vs. Trunk Line", "a": "• Access Line：連接終端主機 (PC) 至 Workgroup Switch，距離短，採 UTP 銅線。<br/>• Trunk Line：連接 Switch 與 Switch 或 Router 之主幹骨幹，距離長、流量大，採光纖。"}, {"q": "Multi-Mode Fiber (MMF) vs. Single-Mode Fiber (SMF)", "a": "• MMF (多模光纖)：850 nm 短波長 LED/雷射，芯粗，受限於模態色散 (Modal Dispersion)，距離約數百米，設備便宜。<br/>• SMF (單模光纖)：1310/1550 nm 高精雷射，芯細 (9 微米)，無模態色散，距離數十公里，設備昂貴。"}, {"q": "IEEE 802.1D STP vs. IEEE 802.1w RSTP", "a": "• 802.1D STP：收斂時間長達 30 至 50 秒，拓樸變更時網路暫時中斷。<br/>• 802.1w RSTP：快速生成樹，引入 Alternate Port，收斂縮短至數百毫秒 (Sub-second) 內。"}, {"q": "IEEE 802.1X Mode vs. Pre-Shared Key (PSK) Mode", "a": "• PSK (預先共用金鑰)：所有設備共用同一密碼，一人洩漏全網皆破，適合家用。<br/>• 802.1X：每位使用者具備專屬憑證帳號，由中央 RADIUS 伺服器驗證，具備一致性與安全審核，適合企業。"}, {"q": "ARP Request vs. ARP Reply", "a": "• ARP Request：廣播 (Broadcast, FF:FF:FF:FF:FF:FF) 發送「誰擁有該 IP，請告訴我 MAC」。<br/>• ARP Reply：單播 (Unicast) 回傳自身 MAC 位址。因無驗證機制易遭 ARP Spoofing 偽冒攔截。"}];
+    const SIM_ESSAYS = [{"id": "e1", "title": "【計算題】Wi-Fi 熱點共享吞吐量計算 (802.11ac 20人共享)", "problem": "假設某咖啡廳提供 802.11ac Wi-Fi 熱點，無線 AP 宣稱 Rated Speed 為 867 Mbps。現場有 20 位顧客同時連線使用，實測實體環境開銷導致 Throughput 僅為 Rated Speed 的 60%。請計算：<br/>(1) 該 AP 的 Aggregate Throughput 為多少？<br/>(2) 若 20 位顧客平均競爭頻寬，每位顧客的 Individual Throughput 為多少？", "solution": "<b>(1) Aggregate Throughput (總吞吐量)：</b><br/>$$\\text{Aggregate Throughput} = \\text{Rated Speed} \\times 60\\% = 867 \\text{ Mbps} \\times 0.6 = 520.2 \\text{ Mbps}$$<br/><b>(2) Individual Throughput (個人吞吐量)：</b><br/>$$\\text{Individual Throughput} = \\frac{\\text{Aggregate Throughput}}{N} = \\frac{520.2 \\text{ Mbps}}{20} = 26.01 \\text{ Mbps}$$<br/><b>【考點關鍵字】</b>：Rated Speed 永遠大於 Throughput；Wi-Fi 為共享媒介 (Shared Media)，人數增加時個人分配吞吐量呈反比下降。"}, {"id": "e2", "title": "【計算題】無線訊號平方反比定律衰減 (Inverse Square Law Attenuation)", "problem": "無線通訊中電磁波在自由空間傳播遵守平方反比定律。已知距離天線 $r_1 = 10\\text{ m}$ 處測得訊號強度 $S_1 = 45\\text{ mW}$。當終端移動至距離 $r_2 = 30\\text{ m}$ 處時：<br/>(1) 訊號強度 $S_2$ 變為多少 mW？<br/>(2) 請說明平方反比定律對室內無線 AP 佈建規劃之啟示。", "solution": "<b>(1) 訊號強度計算：</b><br/>$$S_2 = S_1 \\times \\left(\\frac{r_1}{r_2}\\right)^2 = 45 \\text{ mW} \\times \\left(\\frac{10}{30}\\right)^2 = 45 \\times \\frac{1}{9} = 5 \\text{ mW}$$<br/><b>(2) 網規啟示：</b><br/>距離僅增加 3 倍，訊號強度驟降為原本的 1/9 (衰減近 9.5 dB)。因此室內無線網路規劃不可單靠提高單一 AP 發射功率，而應採用多顆低功率 AP 密集蜂巢式佈建，以克服距離與牆壁吸收衰減。"}, {"id": "e3", "title": "【問答題】為什麼只在 Transport Layer 做 Reliable，而不讓每層都 Reliable？", "problem": "在 TCP/IP 協定堆疊中，第二層 (Ethernet) 與第三層 (IP) 均為不可靠 (Unreliable) 服務，唯獨第四層 (TCP) 提供可靠傳輸 (Reliable)。請詳述網路標準制定時不讓每層都 Reliable 的四大工程與商業理由。", "solution": "1. <b>硬體交換成本極高：</b>每台 Switch/Router 若都要檢錯並保留緩衝區進行重傳，交換設備記憶體與晶片成本暴增，轉發延遲大幅惡化。<br/>2. <b>現代實體層錯誤率極低：</b>現代 UTP 與光纖出錯率低於 $10^{-9}$，逐跳 (Hop-by-Hop) 檢錯重傳不符經濟效益。<br/>3. <b>端對端原則 (End-to-End Argument)：</b>最上層 TCP 已經具備端對端檢錯重傳能力，底層只需專注線速轉發 (Best-Effort)，底層錯誤由端點 TCP 統一修復即可。<br/>4. <b>即時應用反對重傳：</b>VoIP 語音或即時影像串流重視低延遲，封包掉落無礙，但重傳造成的抖動與延遲會摧毀即時體驗。"}, {"id": "e4", "title": "【案例題】Target 百貨 2013 聖誕季重大資安事件全流程剖析", "problem": "美國零售巨頭 Target 百貨於 2013 年遭遇重大資安外洩，4000 萬筆信用卡與 7000 萬筆客戶資料遭竊。請依據講義與 Kill Chain 概念回答：<br/>(1) 攻擊者最初如何滲透入 Target 網路？<br/>(2) 惡意軟體 BlackPOS 運作原理為何？<br/>(3) Target 在資安規劃 (Plan) 與防禦落實 (Protect) 上犯了哪些核心錯誤？", "solution": "<b>(1) 入侵途徑：</b>外包冷凍空調廠商 (Fazio Mechanical) 員工遭遇魚叉式釣魚郵件 (Spear Phishing)，外包連線帳密遭竊，攻擊者藉由該合法供應商入口連線長驅直入。<br/><b>(2) BlackPOS 原理：</b>為記憶體刮取程式 (RAM Scraper)。收銀 POS 刷卡機在交易時，卡號雖在硬碟與傳輸中加密，但於記憶體中解密驗證。BlackPOS 趁明文短暫停留於 RAM 時直接刮取竊取。<br/><b>(3) 核心錯誤：</b><br/>• 違反「全面安全 (Comprehensive Security)」：忽略外包廠商供應鏈弱點。<br/>• 缺乏「縱深防禦與微隔離 (Defense in Depth / Segmentation)」：外包入口與核心 POS 網路未作 VLAN 安全隔離，導致攻擊者得以橫向移動。<br/>• 事件回應 (Response) 失靈：安全軟體已發出警報，但管理階層忽視，未能在 Kill Chain 結束前攔截。"}, {"id": "e5", "title": "【機制與表格題】Stateful Packet Inspection (SPI) 防火牆連線狀態過濾", "problem": "SPI 防火牆如何區分「Connection-Opening State」與「Ongoing Communication State」？若有一組惡意 SYN 封包與一組合法已核可連線的純 ACK 封包到達防火牆，SPI 分別如何處置？", "solution": "<b>1. 狀態區分機制：</b><br/>• <b>Connection-Opening State (連線發起)：</b>封包帶有 <code>SYN</code> 旗標。此階段最具風險，SPI 防火牆投入最多資源，逐行與存取控制清單 (ACL) 比對。若符合允許規則，則將該連線之五元組 (來源/目的 IP、Port、協定) 記錄於 <b>State Table</b> 中。<br/>• <b>Ongoing Communication State (通訊進行中)：</b>連線已建立後的後續封包。SPI 僅高速比對 State Table，若存在於核可連線表中即刻放行，不重複查閱龐大 ACL 表，處理開銷僅佔整體 1% 以下。<br/><b>2. 處置流程：</b><br/>• <b>惡意 SYN 封包：</b>與 ACL 比對，未符合任何允許規則，觸發預設規則 (Default Rule) 直接 <b>Drop (拋棄)</b> 並記錄於 Log。<br/>• <b>合法純 ACK 封包：</b>直接命中 State Table 中的核可連線記錄，<b>立即放行通過 (Pass)</b>。"}, {"id": "e6", "title": "【畫圖與流程題】IEEE 802.1X Port-Based 網路存取控制運作流程", "problem": "為了防止不明人士直接將筆電插上公司牆壁 RJ-45 網路孔入侵，企業常導入 IEEE 802.1X 標準。請說明 802.1X 的三大角色，並闡述中央驗證伺服器 (Central Authentication Server) 帶來的兩大管理優勢。", "solution": "<b>1. 三大角色：</b><br/>• <b>Supplicant (請求者)：</b>欲連網之終端使用者設備 (PC/筆電)。<br/>• <b>Authenticator (認證者)：</b>連接終端的工作組交換器 (Workgroup Switch)。在通過認證前，該連接埠僅允許 EAPOL 認證封包通過，阻斷一切正常網路傳輸。<br/>• <b>Central Authentication Server (中央認證伺服器)：</b>通常為 RADIUS 伺服器，儲存全公司帳號密碼與權限資料庫。<br/><b>2. 中央伺服器之兩大管理優勢：</b><br/>• <b>Consistency (管理一致性)：</b>資安規則統一維護於中央伺服器，攻擊者無法藉由尋找單一設定錯誤的邊緣交換器入侵。<br/>• <b>Rapid Changes (人員異動即時生效)：</b>員工離職或權限變更時，只需在中央伺服器停用帳號，全網數百台交換器即刻同步生效，大幅節省逐台設定的人力與維護成本 (SLC Cost)。"}, {"id": "e7", "title": "【運算題】資安風險分析 (Risk Analysis) 與防護效益計算", "problem": "某企業評估資料庫防護方案，無防護時遭受資料竊取之單次損害為 $200,000 美元，發生機率為每年 20%。現有兩項對策方案：<br/>• <b>對策 A：</b>年建置與維護成本 $15,000 美元，可將攻擊機率降至每年 5%，成功時損害減至 $100,000 美元。<br/>• <b>對策 B：</b>年建置與維護成本 $30,000 美元，可將攻擊機率降至每年 1%，成功時損害減至 $50,000 美元。<br/>請計算無防護、對策 A 與對策 B 之年度預期損失 (Expected Annual Damage)，並評估哪項方案在經濟上最合算？", "solution": "<b>年度總成本 = 預期損失 (機率 $\\times$ 損害) + 防護對策成本</b><br/>1. <b>無防護：</b><br/>$$\\text{總成本} = 20\\% \\times \\$200,000 + \\$0 = \\$40,000$$<br/>2. <b>對策 A：</b><br/>$$\\text{預期損失} = 5\\% \\times \\$100,000 = \\$5,000$$<br/>$$\\text{總成本} = \\$5,000 + \\$15,000 = \\$20,000$$<br/>3. <b>對策 B：</b><br/>$$\\text{預期損失} = 1\\% \\times \\$50,000 = \\$500$$<br/>$$\\text{總成本} = \\$500 + \\$30,000 = \\$30,500$$<br/><b>【決策結論】</b>：<br/>對策 A 的總成本最低 ($20,000 < $30,500 < $40,000)，每年為企業節省 $20,000 美元淨利潤。對策 B 雖將技術風險壓到最低，但昂貴成本反而造成經濟浪費。符合 Risk Analysis「非消除所有風險，而是在合理成本下控制風險」的指導原則！"}, {"id": "e8", "title": "【機制題】Switch Table 轉發追蹤與廣播風暴成因", "problem": "某企業網路中，Switch 剛開機其 Switch Table 尚為空。主機 A (Port 1) 發送 Frame 給主機 B (Port 2)，接著主機 B 回覆給主機 A。請描述：<br/>(1) Switch 在收到 A 的訊框時進行哪些動作？<br/>(2) Switch 在收到 B 的回覆時進行哪些動作？<br/>(3) 若兩台交換器之間接了兩條線路而未啟動 RSTP，會引發什麼嚴重後果？", "solution": "<b>(1) 收到 A 的 Frame 時：</b><br/>• <b>Learning：</b>讀取 Source MAC = A，將「MAC A $\\leftrightarrow$ Port 1」寫入 Switch Table。<br/>• <b>Flooding：</b>查閱 Destination MAC = B，因表中無 B 的資料 (Unknown Unicast)，Switch 將該 Frame 向除 Port 1 以外的所有啟用 Port 廣播發出。<br/><b>(2) 收到 B 的 Reply 時：</b><br/>• <b>Learning：</b>讀取 Source MAC = B，將「MAC B $\\leftrightarrow$ Port 2」寫入 Switch Table。<br/>• <b>Forwarding：</b>查閱 Destination MAC = A，發現表中已有 A 位於 Port 1，故<b>精準僅從 Port 1 轉發</b>，不再 Flooding。<br/><b>(3) 未啟動 RSTP 之雙線路後果：</b><br/>會形成實體迴圈 (Physical Loop)。廣播訊框會在兩台 Switch 間無限循環轉發，成指數級放大，引發<b>廣播風暴 (Broadcast Storm)</b>，耗盡交換器 CPU 與頻寬，並使 Switch Table 發生記憶體位址震盪 (Flapping)，全網瞬間癱瘓。"}];
+    const SIM_TF = [{"q": "1. In cloud computing, IaaS requires the client to manage the operating system, while SaaS does not.", "a": true, "e": "【正確】IaaS (如 AWS EC2) 僅提供虛擬硬體，OS 與軟體由客戶自管；SaaS (如 Google Docs) 全由雲端廠商代管。"}, {"q": "2. Server virtualization involves creating multiple physical servers from a single virtual machine.", "a": false, "e": "【錯誤】顛倒了！是從「單一實體伺服器 (Physical Server)」切分出多個「虛擬機器 (Virtual Machines)」。"}, {"q": "3. The primary reason Netflix built Open Connect is to reduce the computing workload on AWS servers.", "a": false, "e": "【錯誤】Open Connect 是 CDN 影音遞送快取網路，目的是降低「影音串流骨幹頻寬與延遲」，運算編碼仍在 AWS。"}, {"q": "4. A frame always carries an IP packet inside its data field across a single network.", "a": true, "e": "【正確】在單一網路中傳輸時，IP 封包被封裝於訊框 (Frame) 的資料欄位 (Data Field) 內傳遞。"}, {"q": "5. In the TCP header, the SYN flag is used to synchronize sequence numbers during connection establishment.", "a": true, "e": "【正確】SYN 代表 Synchronize sequence numbers，三向交握時發起端用以告知對方初始序號。"}, {"q": "6. UDP is reliable protocol because it uses checksums to retransmit lost packets.", "a": false, "e": "【錯誤】UDP 雖然包含 Checksum 檢錯碼，但發現錯誤後直接丟棄，**絕不重傳**，故屬於 Unreliable 協定。"}, {"q": "7. Ethernet frames can have a variable-length data field from 46 to 1500 octets.", "a": true, "e": "【正確】標準乙太網路 MTU 為 1500 位元組，最小有效資料負載為 46 位元組 (不足則需 PAD 填補)。"}, {"q": "8. PCM digitizes human voice by sampling at 4000 Hz and using 16 bits per sample.", "a": false, "e": "【錯誤】標準 PCM 是以 8000 Hz 取樣 (奈奎斯特兩倍)，每取樣 8 bits，生成 64 kbps 語音通道。"}, {"q": "9. In the Target breach, attackers used BlackPOS to steal credit card numbers directly from encrypted disk storage.", "a": false, "e": "【錯誤】BlackPOS 是記憶體刮取程式 (RAM Scraper)，是從收銀機的 RAM 記憶體中攔截未加密明文，而非硬碟。"}, {"q": "10. Unlike viruses, worms can spread automatically across networks without user intervention.", "a": true, "e": "【正確】電腦蠕蟲 (Worm) 具備主動掃描漏洞與自我複製傳播能力，不需人為點擊執行。"}, {"q": "11. Symmetric key encryption algorithms like AES are significantly faster than public-key algorithms like RSA.", "a": true, "e": "【正確】對稱金鑰運算單純，比非對稱公鑰密碼快上百倍至千倍，故用於巨量資料傳輸。"}, {"q": "12. In public key encryption, a sender signs a message digest using the recipient's public key.", "a": false, "e": "【錯誤】數位簽章是發送者使用自己的「發送者私鑰 (Sender's Private Key)」進行簽署，非收件者公鑰。"}, {"q": "13. In Stateful Packet Inspection, the firewall inspects every ongoing packet against the entire ACL rule base.", "a": false, "e": "【錯誤】SPI 僅在 Connection-Opening 時比對 ACL，後續 Ongoing 封包僅快速比對 State Table 即放行。"}, {"q": "14. Next-Generation Firewalls (NGFWs) use Application Awareness to filter traffic based on actual application behavior rather than port numbers.", "a": true, "e": "【正確】NGFW 具備應用識別能力，能看穿偽裝在 Port 80/443 中的應用程式並予以管制。"}, {"q": "15. An Intrusion Detection System (IDS) will automatically drop packets when it detects an attack.", "a": false, "e": "【錯誤】IDS 僅偵測並發出警報 (Alarm)，不主動 Drop 封包；會主動阻斷丟包的是 IPS (入侵防禦系統)。"}, {"q": "16. Service Level Agreements (SLAs) typically specify best-case performance targets.", "a": false, "e": "【錯誤】SLA 明定的是「最低容忍效能 (Worst-case performance)」，若低於此水準即觸發罰則。"}, {"q": "17. Jitter is particularly harmful to delay-sensitive applications such as VoIP and video conferencing.", "a": true, "e": "【正確】Jitter 是延遲變異幅度，過大會造成音訊封包抵達時間不均，引發碎音與畫面停頓。"}, {"q": "18. Traffic shaping prevents network congestion by limiting or prioritizing incoming traffic at the access edge.", "a": true, "e": "【正確】流量整形透過在邊界限制非關鍵應用 (如 P2P) 或保留特定頻寬以積極預防壅塞。"}, {"q": "19. The SNMP manager uses the Set command to retrieve operational statistics from a managed device's MIB.", "a": false, "e": "【錯誤】取得統計資料使用的是 <code>Get</code> 指令；<code>Set</code> 是用來修改設備參數。"}, {"q": "20. In SDN architecture, the control plane is removed from individual switches and centralized in an SDN controller.", "a": true, "e": "【正確】SDN 將控制層集中至 Controller，交換硬體僅保留基於 OpenFlow 的轉發層 (Data plane)。"}, {"q": "21. Transmission lines connecting hosts to workgroup switches are called trunk lines.", "a": false, "e": "【錯誤】連接主機至工作組交換器的是 Access Line；連接交換器與交換器之間的是 Trunk Line。"}, {"q": "22. Cat 6 UTP cabling supports 10 Gbps transmission up to a maximum distance of 55 meters.", "a": true, "e": "【正確】Cat 6 跑 10 Gbps 標準限制距離為 55 公尺 (Cat 6A 增強屏蔽後可達 100 公尺)。"}, {"q": "23. Single-mode fiber has a larger core diameter than multi-mode fiber, which allows it to transmit light over longer distances.", "a": false, "e": "【錯誤】剛好相反！單模光纖 (SMF) 核心極細 (約 9 微米)，消除模態色散，故能傳輸長距離；多模光纖核心較粗 (50/62.5 微米)。"}, {"q": "24. Rapid Spanning Tree Protocol (802.1w) can converge a network topology change in sub-second times.", "a": true, "e": "【正確】RSTP 透過 Alternate Port 與交握機制，將收斂時間由傳統 STP 的數十秒大幅縮短至數百毫秒內。"}, {"q": "25. In IEEE 802.1X, the authenticator holds the central database of all user credentials.", "a": false, "e": "【錯誤】儲存全體憑證資料庫的是「中央認證伺服器 (Central Authentication Server, RADIUS)」，Authenticator 只是轉發的交換器。"}];
+    const YEAR_DETAILED = {"971": {"title": "97 學年度上學期期中考", "items": [{"q": "data communication vs. telecommunication", "a": "• data communication (資料通訊)：終端設備透過數位傳輸媒體 (如雙絞線、光纖) 交換電腦資料與封包。<br/>• telecommunication (電信通訊)：長距離語音、電報、電視等類比或混合訊號傳播，傳統採電路交換。"}, {"q": "Packet Switching vs. Circuit switching", "a": "• Packet Switching：資料切分成封包，統計多工共享線路，頻寬利用率最高。<br/>• Circuit Switching：通訊前需建立專屬實體連線，閒置時頻寬浪費，但延遲固定。"}, {"q": "connection-oriented protocol vs. connectionless protocol", "a": "• connection-oriented (如 TCP)：傳輸前三向交握建線，具序號確認與重傳，可靠度高。<br/>• connectionless (如 UDP)：不建線，封包各自獨立傳送，速度快但不保證抵達。"}, {"q": "Baseband Transmission vs. Broadband Transmission", "a": "• Baseband (基頻)：方波數位電位直接注入媒介，單一通道，成本低，LAN 主流。<br/>• Broadband (寬頻)：調變至射頻載波，分頻多工 (FDM) 支援多通道長距離。"}, {"q": "Baseband channel vs. Broadband channel", "a": "• Baseband channel：使用全媒介頻寬傳輸單一訊號。<br/>• Broadband channel：將總頻寬切割為多個獨立頻率之子通道並行傳輸。"}, {"q": "PSK mode vs. 802.1X mode (in 802.11)", "a": "• PSK (Pre-Shared Key)：所有設備共用同一密碼，一人洩漏全網皆破，適合家庭。<br/>• 802.1X：每人獨立帳號由中央 RADIUS 伺服器集中認證，適合企業。"}, {"q": "bit rate vs. baud rate", "a": "• baud rate：每秒傳送之訊號符元數 (Signal elements/sec)。<br/>• bit rate：每秒傳送之位元數 (Bits/sec)。公式：bit rate = baud rate * log2(N)。"}, {"q": "single network vs. internet", "a": "• single network：全網遵循相同第二層標準，由 Switch 轉發 Frame，使用 MAC 位址。<br/>• internet：連結多個不同 single networks，由 Router 跨網轉發 Packet，使用 IP 位址。"}, {"q": "LAN fiber vs. carrier fiber", "a": "• LAN fiber (多模 MMF)：850nm 短波長，芯粗，受限於模態色散，距離約 500m，便宜。<br/>• carrier fiber (單模 SMF)：1310/1550nm 雷射，芯細 (9微米)，無模態色散，距離數十公里，昂貴。"}, {"q": "access line vs. trunk line", "a": "• access line：連接主機與 Workgroup Switch，距離短，採 UTP 雙絞線。<br/>• trunk line：連接 Switch 與 Switch 或 Router，距離長、流量大，採光纖。"}, {"q": "frame vs. packet", "a": "• frame (訊框)：第二層傳輸單元，包含 MAC Header、Data 與 CRC Trailer。<br/>• packet (封包)：第三層傳輸單元，包在 frame 的 Data Field 內跨網傳遞。"}, {"q": "Switch 運作原理與 IEEE 802.1D STP 怎麼運作？", "a": "• Switch：依據 Source MAC 學習並更新 Switch Table，依據 Dest MAC 轉發。<br/>• 802.1D STP：透過 BPDU 選出 Root Bridge，將造成迴圈的備援埠 Blocked，主線斷線時啟用消除單點失效。"}, {"q": "有哪些 Wireless Propagation Problems？為何展頻能解決？", "a": "• 五大問題：平方反比衰減、吸收衰減、陰影死角、多重路徑干擾、電磁干擾 (EMI)。<br/>• 展頻原理：將訊號擴展至寬廣頻段發送，大幅提升抗多重路徑相位抵消與抗窄頻雜訊干擾之能力。"}]}, "981": {"title": "98 學年度上學期期中考", "items": [{"q": "解釋 SDLC cost 與 SLC cost，為何企業重視 SLC cost？", "a": "• SDLC cost 僅算初期開發建置費用；SLC cost 涵蓋上線後日常維運直至報廢除役的總成本。<br/>• 企業重視 SLC 是因系統上線後的維護成本佔整體 70%~80% 以上，初期省錢若設計不良將引發後續維運成本災難性暴增。"}, {"q": "介紹 Switch 運作原理，並繪圖解釋 Switch table 用途", "a": "• Switch Table 記錄 MAC 位址與 Port 映射。收訊框時學 Source MAC，轉發時查 Dest MAC。<br/>• 若命中則精準特定轉發；同 Port 則拋棄；未命中則對全體啟用 Port 泛洪 (Flooding)。"}, {"q": "為什麼不讓每層都 reliable？", "a": "1. 每台 Switch 若做 ACK/重傳硬體成本暴增；2. 現代實體層錯誤率極低；3. 端對端原則 (Transport Layer 已做)；4. 即時影音 (VoIP) 反對重傳延遲。"}, {"q": "為什麼 Jitter 對公司來說是很重要的問題？", "a": "• Jitter 是延遲變異幅度。VoIP 與視訊串流對抖動極其敏感，Jitter 過大會導致封包抵達時間不均，造成嚴重破音與畫面停格。"}, {"q": "QoS 中 SLA 包含了哪些規範？", "a": "• SLA 明定保證最低容忍效能 (Worst-case performance)，包含 Rated Throughput 下限、可用度 Availability (如 99.9%)、延遲與 Jitter 門檻，並明定未達標之違約罰則 (Penalties)。"}]}, "991": {"title": "99 學年度上學期期中考", "items": [{"q": "QoS 和 SLA 比較", "a": "• QoS 為技術量測與控制工具 (指標包含 Speed, Availability, Error, Latency, Jitter)。<br/>• SLA 是服務提供商與客戶之法定契約，訂定 QoS 最低標準與賠償罰則。"}, {"q": "Baseband 和 Broadband 比較", "a": "• Baseband 直接注入方波電位，成本低，LAN 主流。<br/>• Broadband 調變至射頻載波，FDM 分頻多工，傳輸遠，設備昂貴。"}, {"q": "LAN fiber 和 Carrier fiber 比較", "a": "• LAN fiber (MMF 多模)：850nm，模態色散，數百公尺。<br/>• Carrier fiber (SMF 單模)：1310/1550nm，無模態色散，數十公里。"}, {"q": "Service Band 和 Golden Band 比較", "a": "• Service Band：主管機關劃分給特定用途之無線頻段 (如 FM、蜂巢式網路)。<br/>• Golden Band (黃金頻段)：約 500MHz~3GHz，兼具穿透力與頻寬之最佳無線頻譜。"}, {"q": "PSK 和 802.1X (in 802.11i) 比較", "a": "• PSK：共用同一金鑰密碼，家庭用。<br/>• 802.1X：個人獨立憑證/帳號由中央 RADIUS 伺服器集中認證，企業用。"}, {"q": "Switch 運作與 802.1w RSTP 解決 Hierarchical 網路問題 (需畫圖)", "a": "• 階層式網路部署備援線路會形成「實體迴圈」，導致廣播風暴。<br/>• RSTP 透過 BPDU 將備援連接埠邏輯阻斷 (Alternate/Discarding 狀態)，主線斷線時數百毫秒內無縫重啟備援線路。"}]}, "1001": {"title": "100 學年度上學期期中考", "items": [{"q": "Access Line vs. Trunk Line", "a": "• Access Line：主機至 Workgroup Switch，距離短，採 UTP。<br/>• Trunk Line：Switch 至 Switch/Router，距離長、流量大，採光纖。"}, {"q": "QoS vs. SLA", "a": "• QoS 是技術量測指標，SLA 是具法律約束力之最低效能保證合約。"}, {"q": "Full Mesh vs. hub-and-spoke (in network topology)", "a": "• Full Mesh：全站點兩兩互連，可靠度極高、容錯強，但線路租金極為昂貴。<br/>• Hub-and-Spoke：所有分點連至中央核心，線路成本低，但中央站點為單點失效盲點。"}, {"q": "Rated speed vs. Throughput", "a": "• Rated speed：規格宣稱最高理論速率。<br/>• Throughput：扣除 Overhead 實測的有效傳輸速率，Throughput 恆小於 Rated speed。"}, {"q": "Momentary traffic peaks vs. Congestion Prevention", "a": "• Momentary traffic peaks：突發性流量超出容量引發排隊佇列延遲。<br/>• Congestion Prevention (Traffic Shaping)：在邊界過濾或限制非關鍵流量以防患未然。"}, {"q": "Reliable Communication 意義與 TCP 實現方式", "a": "• Reliable：協定能自動檢錯並主動重傳更正 (Error correction by retransmission)。<br/>• TCP 實現：三向交握建立連線、Sequence Number 排序、ACK 確認號、Retransmission Timer 逾時重傳。"}, {"q": "請解釋 OAM&P", "a": "• Operations (營運)：日常流量與效能調控。<br/>• Administration (行政)：計費與 SLA 稽核。<br/>• Maintenance (維護)：排障修復與預防性檢修。<br/>• Provisioning (佈建)：新服務安裝、配置、異動重構與除役。"}, {"q": "Security Planning 四項原則與意義", "a": "1. Risk Analysis (風險與經濟成本平衡)；2. Comprehensive Security (全面防堵攻擊入口)；3. Defense in Depth (多層獨立縱深防禦)；4. Least Permissions (最小存取權限)。"}, {"q": "Traffic shaping 是什麼？與網管關係及除 compression 外的方式？", "a": "• 流量整形是在網路邊界主動限制或過濾進來流量。<br/>• 其他方式：Filtering (直接過濾 P2P/無關流量)、Rate Limiting (限制特定應用頻寬比例)、Priority 排程。"}, {"q": "分組報告大題", "a": "• 標準三段式作答：1. 報告主題與內容 (如 NGFW 深度封包檢測)；2. 與課程關聯 (第三章縱深防禦與第四章政策管理)；3. 個人具體心得。"}]}, "1011": {"title": "101 學年度上學期期中考", "items": [{"q": "Data link vs. Route", "a": "• Data link：訊框在單一網路內的傳輸路徑。<br/>• Route：封包在跨國跨網 internet 的端對端全路徑。跨越 N 個網路全程只有 1 條 Route，但有 N 條 Data Links。"}, {"q": "virus vs. worm", "a": "• virus：需依附宿主程式，隨宿主執行而感染，需人為觸發。<br/>• worm：獨立程式，主動掃描漏洞自我複製傳播，無需人為介入。"}, {"q": "QoS vs. SLA", "a": "• QoS 為技術指標度量，SLA 為具備違約罰則之最低效能保證商業合約。"}, {"q": "SDLC vs. SLC", "a": "• SDLC 僅計初期開發費用；SLC 計入系統全生命週期 (含數年營運維護)，企業更重視 SLC。"}, {"q": "Momentary traffic peaks vs. Congestion Prevention", "a": "• 尖峰擁塞解法包含過度配置、優先權與頻寬保留；預防技術則是在邊界進行流量整形限制。"}, {"q": "請畫圖解釋 Digital Signature Authentication 的原理 (10%)", "a": "• 簽章端以私鑰加密雜湊值 (Hash)，驗證端以簽章端公鑰解密核對，具備不可否認性、完整性與真實性。"}, {"q": "請舉例說明 OAM&P (20%)", "a": "• Operations (動態路由調度)、Administration (SLA 結算)、Maintenance (故障維修與韌體升級)、Provisioning (開通新客戶 VLAN 與 IP 路由)。"}, {"q": "請說明 Security Planning 的四項原則 (20%)", "a": "• Risk Analysis, Comprehensive Security, Defense in Depth, Least Permissions 完整定義與推導。"}, {"q": "分組報告大題 (10%)", "a": "• 依非自身組別之主題，書寫主要內容、理論連結與個人收穫。"}]}, "1021": {"title": "102 學年度上學期期中考", "items": [{"q": "Circuit switching vs. packet switching", "a": "• 電路交換專屬線路頻寬浪費；封包交換切碎資料統計多工共享線路。"}, {"q": "QoS vs. SLA", "a": "• QoS 技術工具與 SLA 法律合約因果關係。"}, {"q": "ADSL vs. Cable", "a": "• ADSL：利用電話雙絞線，非對稱頻寬，獨立迴路專屬至機房 DSLAM。<br/>• Cable Modem：利用有線電視同軸電纜，社區用戶共享總頻寬，尖峰時段易掉速。"}, {"q": "Baseband vs. Broadband", "a": "• 基頻數位訊號直接注入媒介；寬頻調變至高頻射頻載波支援 FDM。"}, {"q": "說明 Threat environment, Plan, Protect, Response 關係 (最好畫圖)", "a": "• 繪製封閉四方塊循環：Threat 輸入 Plan $\rightarrow$ Plan 指導 Protect $\rightarrow$ Protect 遭突破觸發 Respond $\rightarrow$ Respond 檢討反饋回 Plan。"}, {"q": "舉例說明 OAMP", "a": "• 營運日常監控、行政計費審核、維護修復換件、佈建開通資源。"}, {"q": "分組報告大題 (10%)", "a": "• 三段式結構作答。"}]}, "1031": {"title": "103 學年度上學期期中考", "items": [{"q": "OAM&P 在網路管理的意義", "a": "• 大型網路與電信營運之四項基本營運功能 (Operations, Administration, Maintenance, Provisioning)。"}, {"q": "QoS 舉兩個例子。簡單說明 QoS 跟 SLA 的關聯。", "a": "• QoS 舉例：Throughput 保證不低於 100Mbps、Jitter 變異度低於 2%。SLA 依此訂定違約罰則門檻。"}, {"q": "Network Message 分為 Header、Data Field、Trailer 分別說明", "a": "• Header (導引控制，必備)、Data Field (資料負載)、Trailer (表尾檢錯碼，僅 Ethernet Frame 有，TCP/IP 無)。"}, {"q": "為什麼課本說現今網路是 Hybrid TCP/IP-OSI Architectural？", "a": "• 第 1、2 層遵循 OSI / IEEE 標準 (Ethernet, Wi-Fi)；第 3、4、5 層遵循 IETF TCP/IP 標準 (IP, TCP, HTTP)。"}, {"q": "說明 Wireless Propagation Problems", "a": "• 平方反比衰減、吸收衰減、陰影死角、多重路徑干擾、電磁干擾 (EMI)。"}, {"q": "說明 802.1w (RSTP) 與 802.1X", "a": "• 802.1w：快速生成樹阻斷迴圈消除單點失效；802.1X：Port-based 網路存取認證與中央 RADIUS 伺服器。"}, {"q": "說明 Wireless hidden terminal problem", "a": "• 兩節點彼此阻擋無法互相感應，同時對 AP 發送造成嚴重碰撞。以 RTS / CTS 握手解決。"}, {"q": "分組報告大題 (10%)", "a": "• 三段式結構作答。"}]}, "1041": {"title": "104 學年度上學期期中考 (含原始考卷照片)", "items": [{"q": "RFC vs. IETF", "a": "• IETF：網際網路工程任務組，負責推動標準的非官方民主組織。<br/>• RFC：由 IETF 發布之網際網路正式技術備忘錄與標準文件。"}, {"q": "Malware vs. Zero-day attack", "a": "• Malware：所有惡意軟體的通稱 (病毒、蠕蟲、木馬)。<br/>• Zero-day attack：廠商尚未知曉且未釋出修補檔前發動之針對性漏洞攻擊。"}, {"q": "Authentication vs. Digital certificate", "a": "• Authentication：身分驗證程序 (證明你是你所宣稱的人)。<br/>• Digital certificate：由第三方公正機構 CA 簽署的身分證書，防公鑰置換。"}, {"q": "QoS metrics vs. SLA", "a": "• QoS metrics 為速度/延遲/抖動等量測工具；SLA 為具備違約罰則之服務品質合約。"}, {"q": "Switch operation vs. Rapid Spanning Tree Protocol (RSTP)", "a": "• Switch operation：基於 Switch Table 進行單點轉發。<br/>• RSTP：在多交換器階層拓樸中消除實體迴圈並在主線斷線時數百毫秒重啟備援。"}, {"q": "說明訊息分割 (Message Fragmentation) 兩大原因", "a": "• 1. 錯誤修正效益 (Error Correction，只需重傳損毀小封包)；2. 通道統計多工 (Multiplexing，防單一封包霸佔線路)。"}, {"q": "美國 Target 零售巨頭資安入侵案例剖析", "a": "• Fazio 冷凍空調外包釣魚帳密竊取 $\rightarrow$ 內網無微隔離橫向移動 $\rightarrow$ POS 植入 BlackPOS 記憶體刮取信用卡 $\rightarrow$ 警報忽視管理失靈。"}, {"q": "SNMP 協定 (Manager, Agent, MIB) 如何提升 Network Visibility？", "a": "• Manager 集中輪詢 Get/Set，Agent 維護 MIB 即時數據，異常主動 Trap，實現全網圖形化拓樸與主動排障。"}, {"q": "分組報告與課堂學習心得", "a": "• 三段式結構作答。"}]}, "1061": {"title": "106 學年度上學期期中考", "items": [{"q": "英文是非題 20 題 (20%)", "a": "• 請至「⚡ 106/107 歷年是非真題測驗」專題頁進行線上互動即時測驗。"}, {"q": "QoS 舉兩個例子。簡單說明 QoS 跟 SLAs 的關聯 (20%)", "a": "• 舉例 Throughput 與 Jitter。SLA 訂定最低容忍效能與違約罰則，網管以 QoS 監控技術確保 SLA 達標。"}, {"q": "畫圖說明 Threat environment, Plan, Protect, Response 之間的關係，再個別介紹 (20%)", "a": "• 繪製封閉反饋循環圖，介紹外在威脅環境、規劃四大原則、日常防護落實與遭突破事件應變回饋。"}, {"q": "畫圖說明 Digital Certificate Authentication。它與其他 Authentication 比有什麼好處？(20%)", "a": "• 繪製 Client-CA-Server 時序圖。優勢：徹底杜絕中間人攻擊 (MITM)，不需雙方預先共享密碼，適合全球規模電子商務。"}, {"q": "分組報告心得大題 (挑兩組，20%)", "a": "• 挑選非自身組別之兩組報告，書寫主要內容、理論連結與個人收穫。"}]}, "1071": {"title": "107 學年度上學期期中考", "items": [{"q": "英文是非題 20 題 (20%)", "a": "• 涵蓋 Best effort, EUI-48, Packet inside frame, 100m UTP, RSTP 單點失效等核心是非題。"}, {"q": "QoS 是甚麼？Jitter 和 Aggregate Throughput 是甚麼？甚麼是 SLA？QoS 與 SLA 之間的關聯性？", "a": "• QoS 為服務品質指標；Jitter 為延遲時間變異度；Aggregate Throughput 為全體共享總吞吐量；SLA 為具罰則之法定合約。"}, {"q": "詳盡說明並舉例 Threat environment, Plan, Protect, Respond 之間的關係", "a": "• 威脅環境定義目標；規劃原則訂定對策；防護落實控制；應變檢討修訂政策。"}, {"q": "(a) 說明 Wireless Propagation Problems (b) 說明何者為「Golden Zone」並且與前者有何關聯性", "a": "• (a) 平方反比衰減、吸收衰減、陰影死角、多重路徑干擾、EMI。<br/>• (b) Golden Zone (500MHz~3GHz) 兼具低頻強穿透繞射 (克服陰影與吸收) 與充足頻寬 (克服傳輸容量) 之黃金平衡。"}, {"q": "分組報告心得大題 (挑兩組，20%)", "a": "• 挑選非自身組別之兩組報告，書寫主要內容、理論連結與個人收穫。"}]}};
+
+    const FREQUENCY_DATA = [
+      { rank: 1, title: "QoS 指標與 SLA 服務等級協議", years: "97, 98, 99, 100, 101, 102, 103, 104, 106, 107", count: 10, rate: "100%", tag: "badge-high", level: "極高 (必考核心)", mod: "qos" },
+      { rank: 2, title: "資安管理循環 (Threat, Plan, Protect, Response) 與四大原則", years: "100, 101, 102, 104, 106, 107", count: 6, rate: "60%", tag: "badge-high", level: "極高 (手繪大題)", mod: "security" },
+      { rank: 3, title: "交換器運作 (Switch Table) 與生成樹協定 (STP / 802.1w RSTP)", years: "97, 98, 99, 103, 104, 106, 107", count: 5, rate: "50%", tag: "badge-high", level: "高 (核心機制)", mod: "switch" },
+      { rank: 4, title: "電信與網路營運框架：OAM&P", years: "100, 101, 102, 103", count: 4, rate: "40%", tag: "badge-mid", level: "高 (常態大題)", mod: "oamp" },
+      { rank: 5, title: "無線電波傳播問題 (Propagation Problems) 與展頻 / Golden Band", years: "97, 99, 103, 107", count: 4, rate: "40%", tag: "badge-mid", level: "高 (實體傳播)", mod: "wireless" },
+      { rank: 6, title: "數位憑證認證 (Digital Certificate Authentication) 原理", years: "101, 104, 106", count: 3, rate: "30%", tag: "badge-mid", level: "高 (手繪時序圖)", mod: "crypto" },
+      { rank: 7, title: "基頻傳輸與寬頻傳輸 (Baseband vs. Broadband)", years: "97, 99, 102, 106, 107", count: 3, rate: "30%", tag: "badge-mid", level: "中 (名詞比較)", mod: "physical" },
+      { rank: 8, title: "瞬間流量高峰與壅塞防範 (Momentary Traffic Peaks vs. Congestion)", years: "100, 101, 104", count: 3, rate: "30%", tag: "badge-mid", level: "中 (流量工程)", mod: "qos" },
+      { rank: 9, title: "存取線路與骨幹中繼線路 (Access Line vs. Trunk Line)", years: "97, 99, 100, 106, 107", count: 3, rate: "30%", tag: "badge-mid", level: "中 (名詞比較)", mod: "physical" },
+      { rank: 10, title: "連線導向 / 非連線導向與 Reliable 機制 (TCP vs. UDP)", years: "97, 98, 100, 106, 107", count: 3, rate: "30%", tag: "badge-normal", level: "中 (傳輸協定)", mod: "protocol" },
+      { rank: 11, title: "系統生命週期成本 (SDLC cost vs. SLC cost)", years: "98, 101", count: 2, rate: "20%", tag: "badge-normal", level: "中 (管理經濟)", mod: "protocol" },
+      { rank: 12, title: "分封交換與電路交換 (Packet Switching vs. Circuit Switching)", years: "97, 102", count: 2, rate: "20%", tag: "badge-normal", level: "中 (通訊架構)", mod: "protocol" },
+      { rank: 13, title: "惡意程式類型 (Virus vs. Worm vs. Trojan / Zero-day)", years: "101, 104, 106, 107", count: 2, rate: "20%", tag: "badge-normal", level: "中 (資安概念)", mod: "security" },
+      { rank: 14, title: "課堂分組報告心得大題 (非自身題目之內容、關聯與心得)", years: "100, 101, 102, 103, 104, 106, 107", count: 7, rate: "70%", tag: "badge-high", level: "必考送分 (10-20%)", mod: "report" }
+    ];
+
+    const QUIZ_DATA = [
+      { id: 1, question: "1. The Internet is a 'best effort' delivery system.", answer: true, explain: "【正確】網際網路 IP 協定本質為 Best-effort，僅盡最大努力轉發，不保證封包不遺失、不保證抵達順序、不保證傳輸延遲。" },
+      { id: 2, question: "2. Frames are carried inside packet that have delivery information.", answer: false, explain: "【錯誤】顛倒了！封裝順序中，封包是包裹在訊框內部 (Packets are carried inside frames)。" },
+      { id: 3, question: "3. EUI-48 address is the new name for Media Access Control (MAC) address.", answer: true, explain: "【正確】IEEE 將傳統 48-bit MAC 位址正式統一定名為 EUI-48。" },
+      { id: 4, question: "4. There are two reasons for message fragmentation: error correction and multiplexing.", answer: true, explain: "【正確】訊息分割的兩大主因即為：提升錯誤重傳效率與實現通道統計多工共享。" },
+      { id: 5, question: "5. It is possible that a single network exists with some devices using different standards.", answer: true, explain: "【正確】單一網路中可以允許相容的不同標準混存 (如 Ethernet 混接 100BASE-TX 與 1000BASE-T)。" },
+      { id: 6, question: "6. A link is the path that a packet takes from the source host to the destination host across an internet.", answer: false, explain: "【錯誤】跨越 internet 的端對端路徑稱為 Route；相鄰節點間稱為 Physical Link，單一網路內稱為 Data Link。" },
+      { id: 7, question: "7. TCP is reliable protocol, while Ethernet is not.", answer: true, explain: "【正確】TCP 具備 ACK 與重傳修正機制 (Reliable)；Ethernet 僅透過 CRC 檢錯，發現錯誤直接拋棄而不負責重傳。" },
+      { id: 8, question: "8. Not all messages have all three parts of Header, Data Field and Trailer.", answer: true, explain: "【正確】TCP 與 IP 封包完全沒有 Trailer；部分純控制訊息 (如 TCP SYN/ACK) 之 Data Field 為空。" },
+      { id: 9, question: "9. Converting outgoing analog signals into digital ones is call 'decoding'.", answer: false, explain: "【錯誤】發送端將類比訊號轉成數位稱為 Encoding (編碼)；接收端將數位轉回類比才是 Decoding。" },
+      { id: 10, question: "10. OSI is the standard agency while ISO is a standard framework.", answer: false, explain: "【錯誤】剛好相反！ISO 才是標準機構 (Agency)；OSI 是參考模型架構 (Framework)。" },
+      { id: 11, question: "11. Phishing is the use of programs that disguise themselves as system file.", answer: false, explain: "【錯誤】偽裝成系統檔案的是特洛伊木馬；Phishing 是社交工程偽冒釣魚欺詐。" },
+      { id: 12, question: "12. Trojan horse is a vulnerability-specific attack that occurs before a patch is available.", answer: false, explain: "【錯誤】在修補程式發布前發動的漏洞攻擊稱為「零日攻擊 (Zero-day Attack)」，並非特洛伊木馬。" },
+      { id: 13, question: "13. A Trojan Horse cannot spread from one computer to another by itself.", answer: true, explain: "【正確】特洛伊木馬不具備自我複製能力，必須誘騙使用者主動下載執行。" },
+      { id: 14, question: "14. Security is primarily a management issue, not a technology issue.", answer: true, explain: "【正確】資安本質是管理、流程與人員意識問題，純技術無法保證全盤安全。" },
+      { id: 15, question: "15. RSTP is designed to solve the problem of single point failure in the hierarchical Ethernet switch network.", answer: true, explain: "【正確】RSTP 透過啟用備援線路消除單點故障，同時邏輯阻斷多餘線路以防止實體迴圈廣播風暴。" },
+      { id: 16, question: "16. In baseband transmission, the signal is injected directly into the medium.", answer: true, explain: "【正確】基頻傳輸的特徵是將數位電位訊號直接注入傳輸媒介，不經過射頻載波調變。" },
+      { id: 17, question: "17. Transmission lines that connect switches to other switches are called 'trunk line'.", answer: true, explain: "【正確】交換器連接交換器的主幹骨幹線路稱為 Trunk Line。" },
+      { id: 18, question: "18. A switch has to know the frame’s entire path through the network.", answer: false, explain: "【錯誤】Switch 僅查閱 Switch Table 決定下一個對應的 Port，完全不需要知道全路徑。" },
+      { id: 19, question: "19. Wireshark is useful network diagnostic tool, but it can only look at the content of Ethernet frames.", answer: false, explain: "【錯誤】Wireshark 是全功能封包剖析工具，可解碼至最高層應用層協定。" },
+      { id: 20, question: "20. The maximum distance in LANs using UTP lines is usually 500 meters.", answer: false, explain: "【錯誤】標準 UTP 雙絞線在區域網路的最大規範距離為 100 公尺 (100 meters)。" },
+      { id: 21, question: "21. Transmission systems that are very fast are usually called broadband systems even when they do not use radio channels.", answer: true, explain: "【正確】現代網路術語中，高速傳輸系統即使不使用無線電通道，也普遍被泛稱為寬頻。" }
+    ];
+
+    const DETAILED_MODULES = [
+      { id: "m-qos", category: "qos", title: "QoS (Quality of Service) 與 SLA (Service Level Agreement) 核心解析", examFreq: "出現 10 次 (全勤)", content: `<p><strong>QoS 五大指標：</strong>Speed (Rated vs. Throughput)、Availability (可用度)、Error Rates (錯誤率)、Latency (延遲)、Jitter (延遲變異度)。<br/><strong>SLA 本質：</strong>保證最低容忍效能 (Worst-case) 之具法律效力契約，伴隨未達標罰則。住家型用戶因維護成本高不簽 SLA。<br/><strong>因果推導：</strong>QoS 是技術度量工具，SLA 是商業合約規範，網管以 QoS 確保符合 SLA 門檻。</p>` },
+      { id: "m-security", category: "security", title: "企業資安戰略循環 (Threat -> Plan -> Protect -> Respond) 與資安規劃四大原則", examFreq: "出現 6 次 (必考手繪)", content: `<p><strong>資安四大原則：</strong><br/>1. Risk Analysis：在威脅與防護成本間取得平衡，合理降低風險。<br/>2. Comprehensive Security：封閉所有攻擊入口，不留死角。<br/>3. Defense in Depth：多層獨立防禦，任一失效其他仍能阻擋。<br/>4. Least Permissions：最小權限存取控管。<br/><strong>循環機制：</strong>Respond 檢討反饋回 Plan 修正政策。</p>` },
+      { id: "m-switch", category: "switch", title: "交換器原理 (Switch Operation) 與 802.1w RSTP 破除迴圈機制", examFreq: "出現 5 次", content: `<p><strong>Switch Table 三部曲：</strong>Learning (學 Source MAC)、Forwarding/Filtering (依 Dest MAC 轉發或丟棄)、Flooding (未知或廣播全發)。<br/><strong>802.1w RSTP：</strong>透過 BPDU 選出 Root Bridge，邏輯阻斷備援埠 (Alternate/Discarding 狀態)，主線路斷線時於數百毫秒內無縫重啟備援線路。</p>` },
+      { id: "m-crypto", category: "crypto", title: "數位簽章 (Digital Signature) 與數位憑證認證 (Digital Certificate)", examFreq: "出現 3 次 (必考手繪)", content: `<p><strong>數位簽章：</strong>以發送者私鑰加密 Hash，具備真實性、完整性與不可否認性。<br/><strong>數位憑證：</strong>由第三方公正機構 CA 簽署伺服器公鑰，防止公鑰置換之中間人攻擊 (MITM)。</p>` },
+      { id: "m-oamp", category: "oamp", title: "電信與網管框架 OAM&P 深度解析", examFreq: "出現 4 次", content: `<p><strong>Operations (營運)：</strong>日常效能監控與流量最佳化。<br/><strong>Administration (行政)：</strong>帳號審查、計費與 SLA 管理。<br/><strong>Maintenance (維護)：</strong>排障修復與預防性維護。<br/><strong>Provisioning (佈建)：</strong>安裝設備、劃分 VLAN、分配 IP，異動重構與除役銷毀。</p>` },
+      { id: "m-wireless", category: "wireless", title: "無線傳播五大問題、展頻技術與 Golden Band", examFreq: "出現 4 次", content: `<p><strong>五大問題：</strong>平方反比衰減 (距離加倍剩 1/4)、吸收性衰減 (水氣/植物)、陰影死角 (障礙物阻擋)、多重路徑干擾 (相位抵消，最嚴重)、電磁干擾 (EMI)。<br/><strong>展頻技術：</strong>將窄頻擴展至廣闊頻寬發送，大幅提高抗干擾能力。<br/><strong>Golden Band：</strong>500 MHz 至 3 GHz 兼具穿透力與頻寬之黃金頻段。</p>` },
+      { id: "m-physical", category: "physical", title: "實體傳輸媒介：Baseband vs. Broadband / Access vs. Trunk / 光纖與雙絞線", examFreq: "出現 3 次", content: `<p><strong>Baseband：</strong>方波電位直接注入媒介，便宜簡單，LAN 主流。<br/><strong>Broadband：</strong>調變至高頻載波，FDM 分頻多工，傳輸遠，設備昂貴。<br/><strong>光纖：</strong>MMF 多模 (850nm, 芯粗, 模態色散, 短距) vs. SMF 單模 (1310/1550nm, 芯細9微米, 無模態色散, 長距)。</p>` },
+      { id: "m-protocol", category: "protocol", title: "網路架構與傳輸層協定：Packet Switching / Reliable 機制 / 訊息分割", examFreq: "出現 3 次", content: `<p><strong>Packet Switching：</strong>統計多工共享線路。<br/><strong>Reliable 不每層都做之理由：</strong>硬體交換成本過高、現代實體層錯誤率極低、端對端原則、即時應用 (VoIP) 反對重傳延遲。<br/><strong>訊息分割兩大主因：</strong>錯誤修正效率 (Error correction) 與通道統計多工 (Multiplexing)。</p>` }
+    ];
+
+    // --- 頁面啟動初始化 ---
+    document.addEventListener("DOMContentLoaded", function() {
+      renderLectures(LECTURE_CHAPTERS);
+      renderSimCompares();
+      renderSimEssays();
+      renderSimTf();
+      renderFrequencyTable();
+      renderModules(DETAILED_MODULES);
+      renderYearPills();
+      renderYearContent("1071");
+      renderQuiz();
+    });
+
+    // --- Tab 切換核心 ---
+    function switchTab(tabId) {
+      const tabs = ["tab-lectures", "tab-simulation", "tab-handwriting", "tab-years", "tab-frequency", "tab-modules", "tab-quiz"];
+      tabs.forEach(t => {
+        const el = document.getElementById(t);
+        const btn = document.getElementById("btn-" + t);
+        if (el && btn) {
+          if (t === tabId) {
+            el.classList.remove("hidden");
+            btn.classList.add("tab-active");
+            btn.classList.remove("text-slate-400");
+          } else {
+            el.classList.add("hidden");
+            btn.classList.remove("tab-active");
+            btn.classList.add("text-slate-400");
+          }
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // --- 講義重點渲染 ---
+    function renderLectures(list) {
+      const container = document.getElementById("lectureContainer");
+      container.innerHTML = list.map(ch => `
+        <div class="bg-slate-900/80 border border-slate-700/80 rounded-xl p-6 shadow-sm hover:border-slate-600 transition" id="card-${ch.id}">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-3 border-b border-slate-800">
+            <div>
+              <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">${ch.number}</span>
+              <h3 class="text-lg font-bold text-white mt-0.5">${ch.title}</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">${ch.slides}</span>
+              <span class="text-xs px-2.5 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 font-medium">${ch.badge}</span>
+            </div>
+          </div>
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${ch.sections.map(s => `
+              <div class="p-4 bg-slate-950/60 border border-slate-800/80 rounded-lg space-y-2">
+                <h4 class="text-sm font-bold text-sky-300 flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+                  ${s.sub}
+                </h4>
+                <div class="text-xs text-slate-300 leading-relaxed">
+                  ${s.detail}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filterChapter(cat) {
+      const btns = document.querySelectorAll(".ch-btn");
+      btns.forEach(b => {
+        if ((cat === 'all' && b.textContent.includes('全部')) || b.getAttribute('onclick').includes(cat)) {
+          b.className = "ch-btn px-3 py-1 rounded-lg text-xs bg-sky-500 text-white font-medium";
+        } else {
+          b.className = "ch-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700";
+        }
+      });
+      if (cat === 'all') {
+        renderLectures(LECTURE_CHAPTERS);
+      } else {
+        const filtered = LECTURE_CHAPTERS.filter(c => c.id === cat);
+        renderLectures(filtered);
+      }
+    }
+
+    // --- 模擬考場切換 ---
+    function switchSimSection(secId) {
+      const secs = ["sim-compares", "sim-essays", "sim-tf"];
+      secs.forEach(s => {
+        const el = document.getElementById(s);
+        const btn = document.getElementById("btn-" + s);
+        if (s === secId) {
+          el.classList.remove("hidden");
+          btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-500 text-white transition";
+        } else {
+          el.classList.add("hidden");
+          btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+        }
+      });
+    }
+
+    function renderSimCompares() {
+      const container = document.getElementById("simComparesList");
+      container.innerHTML = SIM_COMPARES.map((item, idx) => `
+        <div class="p-4 bg-slate-900/60 border border-slate-800 rounded-xl space-y-2.5">
+          <div class="flex items-center justify-between">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-5 h-5 rounded bg-sky-500/20 text-sky-400 text-xs flex items-center justify-center font-bold">${idx+1}</span>
+              ${item.q}
+            </h4>
+            <button onclick="toggleSingleAnswer('comp-${idx}')" class="text-xs text-sky-400 hover:underline">展開/收合解答</button>
+          </div>
+          <div id="comp-${idx}" class="compare-ans text-xs text-slate-300 leading-relaxed p-3 bg-slate-950/70 border border-slate-800/80 rounded-lg">
+            ${item.a}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderSimEssays() {
+      const container = document.getElementById("simEssaysList");
+      container.innerHTML = SIM_ESSAYS.map((item, idx) => `
+        <div class="p-5 bg-slate-900/60 border border-slate-800 rounded-xl space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <h4 class="text-sm font-bold text-amber-300 flex items-center gap-2">
+              <span class="w-5 h-5 rounded bg-amber-500/20 text-amber-400 text-xs flex items-center justify-center font-bold">${idx+1}</span>
+              ${item.title}
+            </h4>
+            <button onclick="toggleSingleAnswer('essay-${idx}')" class="text-xs text-amber-400 hover:underline">展開/收合解析</button>
+          </div>
+          <div class="text-xs text-slate-200 leading-relaxed font-medium bg-slate-950/40 p-3 rounded border border-slate-800/60">
+            ${item.problem}
+          </div>
+          <div id="essay-${idx}" class="essay-ans text-xs text-slate-300 leading-relaxed p-4 bg-slate-950/80 border border-slate-700/80 rounded-lg space-y-2">
+            ${item.solution}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    let simAnswered = {};
+    function renderSimTf() {
+      const container = document.getElementById("simTfList");
+      container.innerHTML = SIM_TF.map((item, idx) => `
+        <div class="p-4 bg-slate-900/70 border border-slate-800 rounded-xl space-y-2.5">
+          <div class="text-sm font-medium text-slate-200">${item.q}</div>
+          <div class="flex items-center gap-3">
+            <button onclick="checkSimTfAnswer(${idx}, true)" id="btn-st-${idx}" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">
+              (O) 正確
+            </button>
+            <button onclick="checkSimTfAnswer(${idx}, false)" id="btn-sf-${idx}" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">
+              (X) 錯誤
+            </button>
+          </div>
+          <div id="sim-tf-ans-${idx}" class="hidden text-xs p-3 rounded-lg border leading-relaxed">
+            ${item.e}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function checkSimTfAnswer(idx, userChoice) {
+      if (simAnswered[idx]) return;
+      const item = SIM_TF[idx];
+      const isCorrect = userChoice === item.a;
+      simAnswered[idx] = true;
+
+      const btnT = document.getElementById(`btn-st-${idx}`);
+      const btnF = document.getElementById(`btn-sf-${idx}`);
+      const ansBox = document.getElementById(`sim-tf-ans-${idx}`);
+
+      btnT.disabled = true;
+      btnF.disabled = true;
+
+      if (userChoice === true) {
+        btnT.classList.add(isCorrect ? "bg-emerald-600" : "bg-rose-600", "text-white");
+      } else {
+        btnF.classList.add(isCorrect ? "bg-emerald-600" : "bg-rose-600", "text-white");
+      }
+
+      ansBox.classList.remove("hidden");
+      if (isCorrect) {
+        ansBox.classList.add("bg-emerald-950/40", "border-emerald-800/60", "text-emerald-300");
+      } else {
+        ansBox.classList.add("bg-rose-950/40", "border-rose-800/60", "text-rose-300");
+      }
+
+      let score = 0;
+      Object.keys(simAnswered).forEach(k => {
+        const b = document.getElementById(`sim-tf-ans-${k}`);
+        if (b && b.classList.contains("text-emerald-300")) score++;
+      });
+      document.getElementById("simScore").textContent = score;
+    }
+
+    function resetSimTf() {
+      simAnswered = {};
+      document.getElementById("simScore").textContent = 0;
+      renderSimTf();
+    }
+
+    function toggleSingleAnswer(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle("hidden");
+    }
+
+    function toggleAllAnswers(className) {
+      const els = document.querySelectorAll("." + className);
+      const isAnyVisible = Array.from(els).some(e => !e.classList.contains("hidden"));
+      els.forEach(e => {
+        if (isAnyVisible) e.classList.add("hidden");
+        else e.classList.remove("hidden");
+      });
+    }
+
+    // --- 歷年考卷清單渲染 (包含逐題詳解與 1041 考卷原件照片) ---
+    function renderYearPills() {
+      const container = document.getElementById("yearPillContainer");
+      const years = Object.keys(YEAR_DETAILED).reverse();
+      container.innerHTML = years.map((y, idx) => `
+        <button onclick="renderYearContent('${y}')" id="pill-${y}" 
+          class="year-pill px-3.5 py-1.5 rounded-lg text-xs font-medium transition ${idx === 0 ? 'bg-sky-500 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}">
+          ${y} 學年度
+        </button>
+      `).join("");
+    }
+
+    function renderYearContent(yearKey) {
+      const pills = document.querySelectorAll(".year-pill");
+      pills.forEach(p => {
+        if (p.id === `pill-${yearKey}`) {
+          p.className = "year-pill px-3.5 py-1.5 rounded-lg text-xs font-medium bg-sky-500 text-white transition";
+        } else {
+          p.className = "year-pill px-3.5 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+        }
+      });
+
+      const data = YEAR_DETAILED[yearKey];
+      const area = document.getElementById("yearContentArea");
+      
+      let photoHtml = "";
+      if (yearKey === "1041") {
+        photoHtml = `
+          <div class="p-4 bg-slate-900/90 border border-amber-500/40 rounded-xl space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="text-xs font-bold text-amber-300 flex items-center gap-2">
+                <span>📸 104 學年度實體考卷照片（中央資管碩一張學長 39 分評分試卷原件）</span>
+              </div>
+              <span class="text-xs text-slate-400">點擊圖片可新分頁放大檢視</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <a href="期中1.jpg" target="_blank" class="block rounded-lg overflow-hidden border border-slate-700 hover:border-amber-400 transition">
+                <img src="期中1.jpg" alt="104期中考卷第一頁" class="w-full h-44 object-cover object-top hover:scale-105 transition duration-300">
+                <div class="text-[11px] text-center p-1.5 bg-slate-950 text-slate-300">第 1 頁（評分 39 分・名詞解釋）</div>
+              </a>
+              <a href="期中2.jpg" target="_blank" class="block rounded-lg overflow-hidden border border-slate-700 hover:border-amber-400 transition">
+                <img src="期中2.jpg" alt="104期中考卷第二頁" class="w-full h-44 object-cover object-top hover:scale-105 transition duration-300">
+                <div class="text-[11px] text-center p-1.5 bg-slate-950 text-slate-300">第 2 頁（Target 案例與 SNMP）</div>
+              </a>
+              <a href="期中3.jpg" target="_blank" class="block rounded-lg overflow-hidden border border-slate-700 hover:border-amber-400 transition">
+                <img src="期中3.jpg" alt="104期中考卷第三頁" class="w-full h-44 object-cover object-top hover:scale-105 transition duration-300">
+                <div class="text-[11px] text-center p-1.5 bg-slate-950 text-slate-300">第 3 頁（資安流程與心得大題）</div>
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      area.innerHTML = `
+        <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-700">
+            <h3 class="text-base font-bold text-white">${data.title} 題目卷全覽（含逐題解答）</h3>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-400">共 ${data.items.length} 大題</span>
+              <button onclick="toggleAllAnswers('year-q-ans')" class="text-xs text-sky-400 hover:underline">全部展開/收合解答</button>
+            </div>
+          </div>
+
+          ${photoHtml}
+
+          <div class="mt-4 space-y-3">
+            ${data.items.map((item, idx) => `
+              <div class="p-3.5 bg-slate-900/60 border border-slate-800 rounded-lg space-y-2">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-start gap-2.5">
+                    <span class="w-5 h-5 rounded bg-slate-800 text-sky-400 text-xs flex items-center justify-center font-bold flex-shrink-0 mt-0.5">${idx+1}</span>
+                    <div class="text-sm text-slate-200 font-semibold">${item.q}</div>
+                  </div>
+                  <button onclick="toggleSingleAnswer('yq-${yearKey}-${idx}')" class="text-xs text-sky-400 hover:underline flex-shrink-0">查看答案</button>
+                </div>
+                <div id="yq-${yearKey}-${idx}" class="year-q-ans text-xs text-slate-300 leading-relaxed p-3 bg-slate-950/80 border border-slate-800/80 rounded">
+                  ${item.a}
+                </div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    // --- 頻率表格渲染 ---
+    function renderFrequencyTable() {
+      const tbody = document.getElementById("frequencyTableBody");
+      tbody.innerHTML = FREQUENCY_DATA.map(item => `
+        <tr class="hover:bg-slate-800/50 transition">
+          <td class="py-3 px-4 font-bold text-sky-400 text-center">#${item.rank}</td>
+          <td class="py-3 px-4 font-semibold text-white">${item.title}</td>
+          <td class="py-3 px-4 text-xs text-slate-400">${item.years}</td>
+          <td class="py-3 px-4 text-center font-bold text-emerald-400">${item.count} 次</td>
+          <td class="py-3 px-4 text-center text-xs font-semibold text-slate-300">${item.rate}</td>
+          <td class="py-3 px-4 text-center">
+            <span class="text-xs px-2.5 py-1 rounded-full font-medium ${item.tag}">${item.level}</span>
+          </td>
+          <td class="py-3 px-4 text-xs">
+            <button onclick="jumpToModule('${item.mod}')" class="text-sky-400 hover:text-sky-300 underline font-medium">查看詳解</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function jumpToModule(category) {
+      switchTab('tab-modules');
+      filterModule(category);
+    }
+
+    function renderModules(list) {
+      const container = document.getElementById("moduleCardsContainer");
+      if (list.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400">查無符合題目。</div>`;
+        return;
+      }
+      container.innerHTML = list.map(m => `
+        <div class="bg-slate-800/40 border border-slate-700/60 rounded-xl p-5 hover:border-slate-600 transition">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-3 border-b border-slate-700/80 mb-3">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+              ${m.title}
+            </h3>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 font-medium">
+              ${m.examFreq}
+            </span>
+          </div>
+          <div class="text-sm text-slate-300 leading-relaxed">
+            ${m.content}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function filterModule(cat) {
+      const btns = document.querySelectorAll(".mod-filter-btn");
+      btns.forEach(b => {
+        if ((cat === 'all' && b.textContent.includes('全部')) || b.getAttribute('onclick').includes(cat)) {
+          b.className = "mod-filter-btn px-3 py-1 rounded-lg text-xs bg-sky-500 text-white font-medium";
+        } else {
+          b.className = "mod-filter-btn px-3 py-1 rounded-lg text-xs bg-slate-800 text-slate-300 hover:bg-slate-700";
+        }
+      });
+      if (cat === "all") {
+        renderModules(DETAILED_MODULES);
+        document.getElementById("moduleCountText").textContent = `顯示全部 ${DETAILED_MODULES.length} 個題目模組`;
+      } else {
+        const filtered = DETAILED_MODULES.filter(m => m.category === cat);
+        renderModules(filtered);
+        document.getElementById("moduleCountText").textContent = `篩選顯示 ${filtered.length} 個相關模組`;
+      }
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = QUIZ_DATA.map(item => `
+        <div class="p-4 bg-slate-900/70 border border-slate-800 rounded-xl space-y-2.5">
+          <div class="text-sm font-medium text-slate-200">${item.question}</div>
+          <div class="flex items-center gap-3">
+            <button onclick="checkAnswer(${item.id}, true)" id="btn-t-${item.id}" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">
+              (O) 正確
+            </button>
+            <button onclick="checkAnswer(${item.id}, false)" id="btn-f-${item.id}" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700 transition">
+              (X) 錯誤
+            </button>
+          </div>
+          <div id="quiz-ans-${item.id}" class="hidden text-xs p-3 rounded-lg border leading-relaxed">
+            ${item.explain}
+          </div>
+        </div>
+      `).join("");
+    }
+
+    let answered = {};
+    function checkAnswer(id, userChoice) {
+      if (answered[id]) return;
+      const item = QUIZ_DATA.find(q => q.id === id);
+      const isCorrect = userChoice === item.answer;
+      answered[id] = true;
+
+      const btnT = document.getElementById(`btn-t-${id}`);
+      const btnF = document.getElementById(`btn-f-${id}`);
+      const ansBox = document.getElementById(`quiz-ans-${id}`);
+
+      btnT.disabled = true;
+      btnF.disabled = true;
+
+      if (userChoice === true) {
+        btnT.classList.add(isCorrect ? "bg-emerald-600" : "bg-rose-600", "text-white");
+      } else {
+        btnF.classList.add(isCorrect ? "bg-emerald-600" : "bg-rose-600", "text-white");
+      }
+
+      ansBox.classList.remove("hidden");
+      if (isCorrect) {
+        ansBox.classList.add("bg-emerald-950/40", "border-emerald-800/60", "text-emerald-300");
+      } else {
+        ansBox.classList.add("bg-rose-950/40", "border-rose-800/60", "text-rose-300");
+      }
+
+      let score = 0;
+      Object.keys(answered).forEach(k => {
+        const b = document.getElementById(`quiz-ans-${k}`);
+        if (b && b.classList.contains("text-emerald-300")) score++;
+      });
+      document.getElementById("quizScore").textContent = score;
+    }
+
+    function resetQuiz() {
+      answered = {};
+      document.getElementById("quizScore").textContent = 0;
+      renderQuiz();
+    }
+
+    document.getElementById("globalSearch").addEventListener("input", function(e) {
+      const q = e.target.value.trim().toLowerCase();
+      if (!q) {
+        renderLectures(LECTURE_CHAPTERS);
+        return;
+      }
+      switchTab('tab-lectures');
+      const filtered = LECTURE_CHAPTERS.map(ch => {
+        const matchedSecs = ch.sections.filter(s => 
+          s.sub.toLowerCase().includes(q) || s.detail.toLowerCase().includes(q)
+        );
+        if (ch.title.toLowerCase().includes(q) || matchedSecs.length > 0) {
+          return { ...ch, sections: matchedSecs.length > 0 ? matchedSecs : ch.sections };
+        }
+        return null;
+      }).filter(Boolean);
+      renderLectures(filtered);
+    });
+
+    function copyDiagram(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("已成功複製考場默寫骨架！");
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.remove("opacity-0", "pointer-events-none");
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "pointer-events-none");
+      }, 2500);
+    }
+  </script>
+</body>
+</html>

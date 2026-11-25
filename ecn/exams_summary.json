@@ -1,0 +1,99 @@
+{
+  "97 學年度上學期 (971) 期中考": [
+    "名詞解釋比較：data communication vs. telecommunication",
+    "封包交換與電路交換比較：Packet Switching vs. Circuit Switching",
+    "連線導向與非連線導向比較：connection-oriented protocol vs. connectionless protocol",
+    "基頻傳輸與寬頻傳輸比較：Baseband Transmission vs. Broadband Transmission",
+    "基頻通道與寬頻通道比較：Baseband channel vs. Broadband channel",
+    "無線安全認證模式比較：PSK mode vs. 802.1X mode",
+    "傳輸速率比較：bit rate vs. baud rate",
+    "網路規模比較：single network vs. internet",
+    "光纖線路比較：LAN fiber vs. carrier fiber",
+    "線路型態比較：access line vs. trunk line",
+    "傳輸單元比較：frame vs. packet",
+    "問答題：請舉例介紹 Switch 運作原理，另外在階層式 Ethernet LAN 中 IEEE 802.1D STP 怎麼運作？",
+    "問答題：有哪些 Wireless Propagation Problems？為何展頻 (Spread Spectrum) 能解決這些問題？請詳述兩項技術？"
+  ],
+  "98 學年度上學期 (981) 期中考": [
+    "問答題：解釋 SDLC cost 與 SLC cost，並解釋為何企業比較重視 SLC cost？",
+    "問答題：介紹 Switch 運作原理，並繪圖解釋其 Switch table 的用途。",
+    "問答題：為什麼不讓網路架構中的每一層都具備 Reliable 機制？",
+    "問答題：為什麼 Jitter 對公司來說是很重要的問題？",
+    "問答題：QoS 中 SLA 包含了哪些規範？"
+  ],
+  "99 學年度上學期 (991) 期中考": [
+    "名詞解釋比較：QoS vs. SLA",
+    "名詞解釋比較：Baseband vs. Broadband",
+    "名詞解釋比較：LAN fiber vs. Carrier fiber",
+    "名詞解釋比較：Service Band vs. Golden Band",
+    "名詞解釋比較：PSK vs. 802.1X (in 802.11i)",
+    "問答題：描述 Switch 是怎麼運作的 (需畫圖)？另 802.1w Rapid Spanning Tree Protocol (RSTP) 是怎麼解決 Hierarchical 網路問題？"
+  ],
+  "100 學年度上學期 (1001) 期中考": [
+    "名詞解釋比較：Access Line vs. Trunk Line",
+    "名詞解釋比較：QoS vs. SLA",
+    "名詞解釋比較：Full Mesh vs. hub-and-spoke (in network topology)",
+    "名詞解釋比較：Rated speed vs. Throughput",
+    "名詞解釋比較：Momentary traffic peaks vs. Congestion Prevention",
+    "問答題：請簡單說明 Reliable Communication 的意義並以 TCP 為例說明如何實現 Reliability。",
+    "問答題：請解釋 OAM&P。",
+    "問答題：請說明 Security Planning 的四項原則並解釋各項意義為何。",
+    "問答題：Traffic shaping 是什麼？跟網管有什麼關係？除了 compression 之外還有什麼哪些 traffic shaping 的方式？",
+    "問答題：分組報告心得與課程關聯（自由發揮題）"
+  ],
+  "101 學年度上學期 (1011) 期中考": [
+    "名詞解釋比較：Data link vs. Route",
+    "名詞解釋比較：virus vs. worm",
+    "名詞解釋比較：QoS vs. SLA",
+    "名詞解釋比較：SDLC vs. SLC",
+    "名詞解釋比較：Momentary traffic peaks vs. Congestion Prevention",
+    "問答題：請畫圖解釋 Digital Signature Authentication 的原理。",
+    "問答題：請舉例說明 OAM&P。",
+    "問答題：請說明 Security Planning 的四項原則並分別詳細說明各項意義。",
+    "問答題：分組報告心得與課程關聯（自由發揮題）"
+  ],
+  "102 學年度上學期 (1021) 期中考": [
+    "名詞解釋比較：Circuit switching vs. packet switching",
+    "名詞解釋比較：QoS vs. SLA",
+    "名詞解釋比較：ADSL vs. Cable",
+    "名詞解釋比較：Baseband vs. Broadband",
+    "問答題：說明 Threat environment, Plan, Protect, Response 之間的關係，最好畫圖說明。",
+    "問答題：舉例說明 OAM&P。",
+    "問答題：分組報告心得與課程關聯（自由發揮題）"
+  ],
+  "103 學年度上學期 (1031) 期中考": [
+    "問答題：OAM&P 在網路管理的意義。",
+    "問答題：QoS 舉兩個例子。簡單說明 QoS 跟 SLA 的關聯。",
+    "問答題：Network Message 分為 Header、Data Field、Trailer，分別說明。",
+    "問答題：為什麼課本說現今的網路是 Hybrid TCP/IP-OSI Architectural？",
+    "問答題：說明 Wireless Propagation Problems？",
+    "問答題：說明 802.1w (RSTP) 與 802.1X。",
+    "問答題：說明 Wireless hidden terminal problem。",
+    "問答題：分組報告心得與課程關聯（自由發揮題）"
+  ],
+  "104 學年度上學期 (1041) 期中考 (試卷照片實體)": [
+    "名詞解釋比較：RFC vs. IETF",
+    "名詞解釋比較：Malware vs. Zero-day attack",
+    "名詞解釋比較：Authentication vs. Digital certificate",
+    "名詞解釋比較：QoS metrics vs. SLA",
+    "名詞解釋比較：Switch operation vs. Rapid Spanning Tree Protocol (RSTP)",
+    "問答題：訊息分割 (Message Fragmentation) 的兩大原因（Error correction 與 Multiplexing）及其機制。",
+    "問答題：美國 Target 零售巨頭資安入侵案例分析（供應商跳板攻擊、APT 與資安縱深防禦缺失）。",
+    "問答題：SNMP 網路管理架構（Manager, Agent, MIB）如何提升 Network Visibility（網路可視性）？",
+    "問答題：資安管理流程（Planning -> Protect -> Respond）與流量壅塞防範心得（自由發揮題）。"
+  ],
+  "106 學年度上學期 (1061) 期中考": [
+    "是非題：20 題英文是非題（含 Best effort, Frames vs Packets, EUI-48, Fragmentation, Route vs Link, TCP reliability, Header/Trailer, Analog/Digital encoding, OSI vs ISO, Phishing, APT, Trojan, Security management, Baseband, Trunk links, Switch path knowledge, Wireshark, UTP 100m, Connectionless sequence number 等）",
+    "問答題：QoS 舉兩個例子。簡單說明 QoS 跟 SLAs 的關聯。",
+    "問答題：畫圖說明 Threat environment, Plan, Protect, Response 之間的關係，再個別介紹。",
+    "問答題：畫圖說明 Digital Certificate Authentication。它與其他 Authentication 比有什麼好處？",
+    "問答題：分組報告心得與課程關聯（自由發揮題）"
+  ],
+  "107 學年度上學期 (1071) 期中考": [
+    "是非題：20 題英文是非題（與 106 年重疊度極高，加入 RSTP 單點失效、Broadband 定義等）",
+    "問答題：QoS 是什麼？Jitter 和 Aggregate Throughput 是什麼？什麼是 SLA？QoS 與 SLA 之間的關聯性？",
+    "問答題：詳盡說明並舉例 Threat environment, Plan, Protect, Respond 之間的關係。",
+    "問答題：(a) 說明 Wireless Propagation Problems？(b) 說明何者為「Golden Zone / Golden Band」並且與前者有何關聯性？",
+    "問答題：分組報告心得與課程關聯（自由發揮題）"
+  ]
+}

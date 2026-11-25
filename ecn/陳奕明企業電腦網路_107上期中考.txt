@@ -1,0 +1,4 @@
+﻿1. 20題是非題（20%），與106年相似度極高2. QoS是甚麼？Jitter和aggrate throuthput是神麼？甚麼是SLA？QoS與SLA之間的關聯性？
+3. 詳盡說明並舉例threat enviroment, plan, protect, respond之間的關係。
+4. (a)說明wireless propagation problems(10%)？(b)說明何者為「Golden Zone」並且與前者有何關聯性(5%)？
+5. 同學們在課堂上作了多次和課程內容有關的分組報告，請就你印象最深刻的   二組，說明該報告的，已報告過的同學請註明你的題目：(20%)   (1) 主要內容   (2) 和課程的哪一部分有什麼關係   (3) 心得  （不可以包括你自己的題目，有報告過的同學請寫出你報告過的題目

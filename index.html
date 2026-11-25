@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>資管所考試複習整合中心｜Exam Review Hub</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --border-hover: #94a3b8;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-hover: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 10px -4px rgba(15, 23, 42, 0.05);
+      --accent-co: #059669;
+      --accent-crypto: #2563eb;
+      --accent-os: #0284c7;
+      --accent-ecn: #7c3aed;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-sub {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    .quick-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .quick-links a {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .quick-links a:hover {
+      background: #f1f5f9;
+      color: var(--text-main);
+      border-color: var(--border);
+    }
+
+    main {
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 3.5rem;
+      flex: 1;
+    }
+
+    .hero {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .summary-pill {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 780px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.25rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--card-accent, #0f172a);
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-hover);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .course-code {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--card-accent);
+      background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .scope-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-subtle);
+      background: #f1f5f9;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-main);
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .topic {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+    }
+
+    .card-footer {
+      padding-top: 1rem;
+      border-top: 1px solid #f1f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-note {
+      font-size: 0.8rem;
+      color: var(--text-subtle);
+    }
+
+    .btn-enter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--card-accent);
+      padding: 0.55rem 1.05rem;
+      border-radius: 10px;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .btn-enter:hover {
+      opacity: 0.92;
+      transform: translateX(1px);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-mark">EX</div>
+        <div>
+          <div class="brand-title">考試複習整合中心</div>
+          <div class="brand-sub">Exam Review Hub</div>
+        </div>
+      </div>
+      <nav class="quick-links" aria-label="科目快速導覽">
+        <a href="./co/index.html">計算機組織</a>
+        <a href="./crypto/index.html">密碼學</a>
+        <a href="./os/index.html">作業系統</a>
+        <a href="./ecn/index.html">企業電腦網路</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>四科考試複習總覽</h1>
+        <p>單一入口整合計算機組織、密碼學、作業系統（期末範圍）與企業電腦網路複習系統。</p>
+      </div>
+      <div class="summary-pill">共 4 個科目系統</div>
+    </section>
+
+    <section class="grid">
+      <!-- 計算機組織 -->
+      <article class="card" style="--card-accent: var(--accent-co);">
+        <div>
+          <div class="card-top">
+            <span class="course-code">CO3020</span>
+            <span class="scope-badge">期末考範圍（Ch4）</span>
+          </div>
+          <h2>計算機組織</h2>
+          <p class="card-desc">聚焦 Chapter 4 單週期處理器設計、主控制訊號真值表、ALU 雙層解碼、互動資料路徑檢測器與課後習題實戰。</p>
+          <div class="topics">
+            <span class="topic">Ch4 單週期處理器</span>
+            <span class="topic">Datapath Lab</span>
+            <span class="topic">Exercise 4 大考題</span>
+            <span class="topic">Ex 4.1 ~ 4.15</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="progress-note" id="stat-co">支援深淺色模式與動態出題</span>
+          <a class="btn-enter" href="./co/index.html">進入複習 &rarr;</a>
+        </div>
+      </article>
+
+      <!-- 密碼學 -->
+      <article class="card" style="--card-accent: var(--accent-crypto);">
+        <div>
+          <div class="card-top">
+            <span class="course-code">CRYPTO</span>
+            <span class="scope-badge">期末考範圍（1.5 / 1.7 / 1.8）</span>
+          </div>
+          <h2>現代與後量子密碼學</h2>
+          <p class="card-desc">涵蓋 CCA 與 AE、Diffie-Hellman 與 RSA、橢圓曲線與數位簽章重點講義，搭配 105 題選擇題與限時模擬考。</p>
+          <div class="topics">
+            <span class="topic">1.5 CCA 與 AE</span>
+            <span class="topic">1.7 DH 與 RSA</span>
+            <span class="topic">1.8 橢圓曲線與簽章</span>
+            <span class="topic">105 題選擇題</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="progress-note" id="stat-crypto">已作答：載入中...</span>
+          <a class="btn-enter" href="./crypto/index.html">進入複習 &rarr;</a>
+        </div>
+      </article>
+
+      <!-- 作業系統 -->
+      <article class="card" style="--card-accent: var(--accent-os);">
+        <div>
+          <div class="card-top">
+            <span class="course-code">OS MASTER</span>
+            <span class="scope-badge">期末考範圍（Ch6 ~ Ch8）</span>
+          </div>
+          <h2>作業系統</h2>
+          <p class="card-desc">收錄記憶體管理、虛擬記憶體、次級儲存核心章節、老師投影片必考手繪圖、選擇題、非選題與觀念抽認卡。</p>
+          <div class="topics">
+            <span class="topic">Ch6 記憶體與 TLB</span>
+            <span class="topic">Ch7 虛擬記憶體</span>
+            <span class="topic">Ch8 磁碟排程與 RAID</span>
+            <span class="topic">必考手繪架構圖</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="progress-note" id="stat-os">載入本機學習進度...</span>
+          <a class="btn-enter" href="./os/index.html">進入複習 &rarr;</a>
+        </div>
+      </article>
+
+      <!-- 企業電腦網路 -->
+      <article class="card" style="--card-accent: var(--accent-ecn);">
+        <div>
+          <div class="card-top">
+            <span class="course-code">ECN</span>
+            <span class="scope-badge">完整保留</span>
+          </div>
+          <h2>企業電腦網路</h2>
+          <p class="card-desc">完整保留企業電腦網路課程章節重點、考古題庫與是非題練習，方便隨時查閱與後續擴充期末範圍。</p>
+          <div class="topics">
+            <span class="topic">雲端與網路標準</span>
+            <span class="topic">網路安全與管理</span>
+            <span class="topic">Ethernet 802.3 LANs</span>
+            <span class="topic">歷屆考古題庫</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="progress-note">完整收錄題庫與講義素材</span>
+          <a class="btn-enter" href="./ecn/index.html">進入複習 &rarr;</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Exam Review Hub ｜ 離線與 GitHub Pages 皆可直接運行，各科作答進度儲存於瀏覽器 LocalStorage
+  </footer>
+
+  <script>
+    (function loadDashboardStats() {
+      // Crypto progress
+      try {
+        const raw = localStorage.getItem('final_mcq_answers');
+        const cryptoEl = document.getElementById('stat-crypto');
+        if (raw && cryptoEl) {
+          const parsed = JSON.parse(raw);
+          const count = Object.keys(parsed).length;
+          cryptoEl.textContent = '已作答：' + count + ' / 105 題';
+        } else if (cryptoEl) {
+          cryptoEl.textContent = '已作答：0 / 105 題';
+        }
+      } catch (e) {}
+
+      // OS progress
+      try {
+        const raw = localStorage.getItem('OS_MASTER_PROGRESS_V1');
+        const osEl = document.getElementById('stat-os');
+        if (raw && osEl) {
+          const p = JSON.parse(raw);
+          const ans = p.answeredCount || 0;
+          const fc = (p.masteredFlashcardIds || []).length;
+          osEl.textContent = '累計答題：' + ans + ' 題｜抽認卡已掌握：' + fc + ' 張';
+        } else if (osEl) {
+          osEl.textContent = '尚未開始作答';
+        }
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
